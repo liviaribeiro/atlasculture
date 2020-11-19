@@ -1,6 +1,5 @@
 from django.contrib import admin
-from admindivisions.models import Region, Departement, Commune
-
+from admindivisions.models import Region, Departement, Commune, EpciType, Epci
 
 # Register your models here.
 
@@ -16,3 +15,5 @@ class CommuneAdmin(admin.ModelAdmin):
 admin.site.register(Region, RegionAdmin)
 admin.site.register(Departement, DepartementAdmin)
 admin.site.register(Commune, CommuneAdmin)
+admin.site.register(EpciType)
+admin.site.register(Epci)
