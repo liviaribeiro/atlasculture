@@ -1,1 +1,1 @@
-web: gunicorn catourne.wsgi
+web: gunicorn atlasculture.wsgi
