@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.serializers import serialize
-import folium
 from .models import Region, Commune
 from django.contrib.gis.geos import GEOSGeometry
 
