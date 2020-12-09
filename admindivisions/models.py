@@ -6,6 +6,7 @@ class Region(models.Model):
     name = models.CharField(max_length=100)
     codeinsee = models.CharField(max_length=2)
     geom = models.MultiPolygonField(null=True)
+    #geom_simplified = models.MultiPolygonField(null=True)
     def __str__(self):
         return self.codeinsee
 
@@ -31,13 +32,24 @@ class Epci(models.Model):
     def __str__(self):
         return self.codesiren
 
+class ZonageRural(models.Model):
+    name = models.CharField(max_length=100)
+    gridens = models.IntegerField()
+    def __str__(self):
+        return self.name
+
 class Commune(models.Model):
     name = models.CharField(max_length=100)
     codeinsee = models.CharField(max_length=5)
     departement = models.ForeignKey(Departement, on_delete=models.CASCADE)
     epci = models.ForeignKey(Epci, on_delete=models.CASCADE, null=True)
     geom = models.MultiPolygonField(null=True)
+    geom_simplified = models.MultiPolygonField(null=True)
+    zonage_rural = models.ForeignKey(ZonageRural, on_delete=models.CASCADE, null=True)
+    year = models.CharField(max_length=4, null=True)
     def __str__(self):
         return self.codeinsee
+
+
 
 

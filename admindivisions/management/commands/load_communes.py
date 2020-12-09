@@ -3,16 +3,18 @@ import pandas as pd
 from django.core.management.base import BaseCommand
 from admindivisions.models import Departement, Commune
 from django.contrib.gis.geos import MultiPolygon, Polygon
+from django.contrib.gis.geos import GEOSGeometry
+import os
+from atlasculture.settings import BASE_DIR
 
 class Command(BaseCommand):
 
-    def add_arguments(self, parser):
-        parser.add_argument('json_file', type=str)
-
     def handle(self, *args, **options):
-        """
-        df = pd.read_csv(options['csv_file'])
+        
+    
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/communes2019.csv')
 
+        df = pd.read_csv(csv_file)
         for i in df.index:
             codeinsee = df['com'][i]
             name = df['libelle'][i]
@@ -24,8 +26,10 @@ class Command(BaseCommand):
 
                 Commune.objects.get_or_create(codeinsee=codeinsee,
                 name = name,
-                departement=departement
+                departement=departement,
+                year=2019
                 )
+        
         """
 
         with open(options['json_file']) as f:
@@ -38,31 +42,12 @@ class Command(BaseCommand):
             com = Commune.objects.get(codeinsee=codeinsee)
             print(com)
             
-            if type_geom == 'Polygon':
-                
-                poly = data['geometry']['coordinates']
-                if len(poly) > 1 :
-                    ext_coords = poly[0]
-                    int_coords = []
-                    for i in range(1,len(poly)):
-                        int_coords.append(poly[i])
-                    com.geom = MultiPolygon([Polygon(ext_coords, int_coords[0])])
-                else :
-                    com.geom = MultiPolygon([Polygon(poly[0])])
+            geo_simplified = GEOSGeometry.simplify(com.geom, tolerance=0.02)
+            
+            if isinstance(geo_simplified, Polygon):
+                geo_simplified = MultiPolygon(geo_simplified)
 
-            else :
-                multipoly = []
-                for poly in data['geometry']['coordinates']: 
-                    if len(poly) > 1 :
-                        ext_coords = poly[0]
-                        int_coords = []
-                        for i in range(1,len(poly)):
-                            int_coords.append(poly[i])
-                        
-                        multipoly.append(Polygon(ext_coords, int_coords[0]))
-                    else:
-                        multipoly.append(Polygon(poly[0]))
-                    
-                com.geom = MultiPolygon(multipoly)
+            com.geom_simplified = geo_simplified
 
             com.save()
+        """

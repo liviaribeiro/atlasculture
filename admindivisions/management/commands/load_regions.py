@@ -3,17 +3,18 @@ import pandas as pd
 from django.core.management.base import BaseCommand
 from admindivisions.models import Region
 from django.contrib.gis.geos import MultiPolygon, Polygon
+from django.contrib.gis.geos import GEOSGeometry
+import os
+from atlasculture.settings import BASE_DIR
 
 
 class Command(BaseCommand):
 
-    def add_arguments(self, parser):
-        parser.add_argument('json_file', type=str)
-
     def handle(self, *args, **options):
         
-        """
-        df = pd.read_csv(options['csv_file'])
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/region2020.csv')
+
+        df = pd.read_csv(csv_file)
 
         for i in df.index:
             codeinsee = df['reg'][i]
@@ -32,31 +33,12 @@ class Command(BaseCommand):
             region = Region.objects.get(codeinsee=codeinsee)
             print(region)
             
-            if type_geom == 'Polygon':
-                
-                poly = data['geometry']['coordinates']
-                if len(poly) > 1 :
-                    ext_coords = poly[0]
-                    int_coords = []
-                    for i in range(1,len(poly)):
-                        int_coords.append(poly[i])
-                    region.geom = MultiPolygon([Polygon(ext_coords, int_coords[0])])
-                else :
-                    region.geom = MultiPolygon([Polygon(poly[0])])
+            geo_simplified = GEOSGeometry.simplify(region.geom, tolerance=0.02)
+            
+            if isinstance(geo_simplified, Polygon):
+                geo_simplified = MultiPolygon(geo_simplified)
 
-            else :
-                multipoly = []
-                for poly in data['geometry']['coordinates']: 
-                    if len(poly) > 1 :
-                        ext_coords = poly[0]
-                        int_coords = []
-                        for i in range(1,len(poly)):
-                            int_coords.append(poly[i])
-                        
-                        multipoly.append(Polygon(ext_coords, int_coords[0]))
-                    else:
-                        multipoly.append(Polygon(poly[0]))
-                    
-                region.geom = MultiPolygon(multipoly)
+            region.geom_simplified = geo_simplified
 
             region.save()
+            """

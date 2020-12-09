@@ -1,0 +1,144 @@
+@font-face {
+    font-family: "Marianne";
+    src:url("/static/css/fonts/Marianne-ExtraBold.woff");
+    src:url("/static/css/fonts/Marianne-ExtraBold.otf");
+    font-weight:800;
+}
+
+@font-face {
+    font-family: "Marianne";
+    src:url("/static/css/fonts/Marianne-Bold.woff");
+    src:url("/static/css/fonts/Marianne-Bold.otf");
+    src:url("/static/css/fonts/Marianne-Bold.woff2");
+    font-weight:700;
+}
+
+@font-face {
+    font-family: "Marianne";
+    src:url("/static/css/fonts/Marianne-Medium.woff");
+    src:url("/static/css/fonts/Marianne-Medium.otf");
+    src:url("/static/css/fonts/Marianne-Medium.woff2");
+    font-weight:500;
+}
+
+@font-face {
+    font-family: "Marianne";
+    src:url("/static/css/fonts/Marianne-Regular.woff");
+    src:url("/static/css/fonts/Marianne-Regular.otf");
+    src:url("/static/css/fonts/Marianne-Regular.woff2");
+    font-weight:400;
+}
+
+@font-face {
+    font-family: "Marianne";
+    src:url("/static/css/fonts/Marianne-Light.woff");
+    src:url("/static/css/fonts/Marianne-Light.otf");
+    src:url("/static/css/fonts/Marianne-Light.woff2");
+    font-weight:300;
+}
+
+@font-face {
+    font-family: "Marianne";
+    src:url("/static/css/fonts/Marianne-Thin.woff");
+    src:url("/static/css/fonts/Marianne-Thin.otf");
+    src:url("/static/css/fonts/Marianne-Thin.woff2");
+    font-weight:200;
+  
+}
+    
+
+.title {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.title2 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #FFFFFF;
+}
+
+.subtitle {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #00AC8C;
+}
+
+.subtitle2 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+}
+
+.subtitle3 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.parag {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.orange {
+    color: #FF6F4C;
+}
+
+.f {
+    border-top: 1px solid #CECECE;
+    border-bottom: 1px solid #CECECE;
+    width: 80%; 
+}
+
+.vl {
+    border-left: 4px solid #FF6F4C;
+    height: 185px;
+    margin-top: 10px;
+  }
+
+li{
+    margin-top: 10px;
+}
+
+ul {
+    padding-left: 1rem;
+}
+.container-subtitle {
+    max-width:553px;
+}
+
+.btn1 {
+
+    background-color: #00AC8C;
+    color: #FFFFFF;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+input::placeholder {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+@media (max-width: 768px) {  
+    .title {font-size:36px;} 
+    .subtitle {font-size:28px;} 
+    .subtitle2 {font-size:20px;} 
+    .vl {display: none;}
+    .narrow {display: none;}
+  }
+
+
+@media (max-width: 544px) {  
+    .title {font-size:24px;} 
+    .subtitle {font-size:20px;} 
+    .subtitle2 {font-size:14px;} 
+    
+  }

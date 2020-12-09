@@ -3,6 +3,8 @@ import pandas as pd
 from django.core.management.base import BaseCommand
 from admindivisions.models import Departement, Region, Epci, EpciType
 from django.contrib.gis.geos import MultiPolygon, Polygon
+from atlasculture.settings import BASE_DIR
+import os
 
 """
 source : https://www.insee.fr/fr/information/2510634
@@ -10,13 +12,10 @@ source : https://www.insee.fr/fr/information/2510634
 
 class Command(BaseCommand):
 
-    def add_arguments(self, parser):
-        parser.add_argument('json_file', type=str)
-
     def handle(self, *args, **options):
 
         #load EPCI types
-        """
+        
         epci_types = [
             {"acronym": "CA", "name": "Communauté d'agglomération"},
             {"acronym": "CC", "name": "Communauté de communes"},
@@ -27,11 +26,12 @@ class Command(BaseCommand):
             entry, return_code = EpciType.objects.get_or_create(
                 acronym=et["acronym"], name=et["name"]
             )
-        """
+        
 
         #load EPCI
-        """
-        df = pd.read_csv(options['csv_file'])
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/epci2020.csv')
+
+        df = pd.read_csv(csv_file)
 
         for i in df.index:
             epci_type = EpciType.objects.get(acronym=df['NATURE_EPCI'][i])  
@@ -83,4 +83,4 @@ class Command(BaseCommand):
                 epci.geom = MultiPolygon(multipoly)
 
             epci.save()
-        
+        """

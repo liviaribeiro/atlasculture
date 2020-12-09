@@ -1,0 +1,185 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Update a choropleth layer by zoom level</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+    
+</head>
+<body>
+ 
+<div id="map"></div>
+<nav id="menu" class='filter-group'></nav>
+
+ 
+<script>
+
+    //create map
+	mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
+        var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [4.079306, 48.293024],
+        minZoom: 3,
+        zoom: 5
+    });
+ 
+    var zoomThreshold = 6;
+    var zoomComThreshold = 8;
+    
+    //load layers
+    map.on('load', function () {
+       
+        //add region source
+        map.addSource('region', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.1z057c8j'
+        });
+        
+        //add region layer
+        map.addLayer(
+            {
+                'id': 'Regions',
+                'source': 'region',
+                'source-layer': 'REGION-28jqta',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': '#91e6ae',
+                    'fill-opacity': 0.75,
+                    'fill-outline-color': '#629e77'
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'visible'
+                }
+            }  
+        );
+        
+        //add departement source
+        map.addSource('departement', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.63r281uo'
+        });
+        
+        //add departement layer
+        map.addLayer(
+            {
+                'id': 'Departements',
+                'source': 'departement',
+                'source-layer': 'DEPARTEMENT-17t0qj',
+                'minzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': '#e691d4',
+                    'fill-opacity': 0.75,
+                    'fill-outline-color': '#a36596'
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'visible'
+                }
+            }  
+        );
+        
+        //add commune source
+        map.addSource('commune', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.communes-tiles'
+        });
+
+        // add commune layer
+        map.addLayer(
+            {
+                'id': 'Communes',
+                'source': 'commune',
+                'source-layer': 'communes',
+                'minzoom': zoomComThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': '#9194e6',
+                    'fill-opacity': 0.75,
+                    'fill-outline-color': '#595b94'
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'visible'
+                }
+            }  
+        );    
+       
+        //add zonage rural source
+        map.addSource('zonage rural', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.9i592veo'
+        });
+        
+        //add zonage rural l
+        map.addLayer(
+            {
+                'id': 'Zonage Rural',
+                'source': 'zonage rural',
+                'source-layer': 'COMMUNE_CARTO_RURAL_SIMPLE-5gxgvm',
+                'type': 'fill',
+                'paint': {
+                    'fill-color':[
+                        "step",
+                        ["get", "ZONAGE_RURAL"],        
+                        "#ff3d3d",
+                        1.1,
+                        "#f9a4c9",
+                        2.1,
+                        '#a9fc92',
+                        3.1,
+                        "#528603",
+                        4,
+                        "#528603"
+                        ],'fill-opacity': 0.75
+                },
+                'layout': {
+                    // make layer visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+       
+    });
+
+    // enumerate ids of the layers
+    var toggleableLayerIds = ['Zonage Rural'];
+    
+    // set up the corresponding toggle button for each layer
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+        var layers = document.getElementById('menu');
+        
+        var input = document.createElement('input');
+        input.type = 'checkbox';
+        input.id = id;
+        input.checked = false;
+        layers.appendChild(input);
+
+        var label = document.createElement('label');
+        label.setAttribute('for', id);
+        label.textContent = id;
+        layers.appendChild(label);
+
+
+        input.addEventListener('change', function (e) {
+            map.setLayoutProperty(
+                id,
+                'visibility',
+                e.target.checked ? 'visible' : 'none'
+                );
+        });
+    }
+</script>
+ 
+</body>
+</html>

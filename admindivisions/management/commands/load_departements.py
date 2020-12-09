@@ -3,15 +3,17 @@ import pandas as pd
 from django.core.management.base import BaseCommand
 from admindivisions.models import Departement, Region
 from django.contrib.gis.geos import MultiPolygon, Polygon
+import os
+from atlasculture.settings import BASE_DIR
 
 class Command(BaseCommand):
 
-    def add_arguments(self, parser):
-        parser.add_argument('json_file', type=str)
 
     def handle(self, *args, **options):
-        """
-        df = pd.read_csv(options['csv_file'])
+        
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/departement2020.csv')
+
+        df = pd.read_csv(csv_file)
 
         for i in df.index:
             codeinsee = df['dep'][i]
@@ -63,4 +65,5 @@ class Command(BaseCommand):
                 dep.geom = MultiPolygon(multipoly)
 
             dep.save()
+            """
 
