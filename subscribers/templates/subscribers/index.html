@@ -15,11 +15,12 @@
 
 <body>
     <nav class="navbar navbar-light bg-white">
-        <div class="container-fluid justify-content-md-start p-0">
+        <div class="container n justify-content-start">
           <a class="navbar-brand" href="#">
-            <img src="{% static 'image 4.png' %}" style="height:78px; margin-left:140px;"/></a>
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'Group 46.png' %}" style="height:52px; margin-left:20px"/></a>
+                <img src="{% static 'image 4.png' %}" style="height:78px; margin-right:20px"/></a>
+                    <p class="b1">Atlas Culture des territoires
+                    <br><span class="b2">Visualiser les politiques culturelles en France</span></p>
+            </div>
         </div>
       </nav>
 
@@ -43,16 +44,16 @@
             <div class="row">
               <div class="col-md-4 text-center" >
                         <img src="{% static 'image 9.png' %}" style="height:78px;"/>
-                <p class="subtitle2 text-center" style="height:99px"><span style="font-weight:bold;">Cartographie et datavisualisations</span> 
+                <p class="subtitle2 text-center" style="min-height:99px"><span style="font-weight:500;">Cartographie et datavisualisations</span> 
                     <br> interactives avancées</p>
               </div>
               <div class="col-md-4 text-center">
                 <img src="{% static 'Group 30.png' %}" style="height:78px;"/>
-                <p class="subtitle2 text-center" style="height:99px"><span style="font-weight:bold;">Analyses</span> des <br>tendances à l’échelon <br>régional et national</p>              
+                <p class="subtitle2 text-center" style="min-height:99px"><span style="font-weight:500;">Analyses</span> des <br>tendances à l’échelon <br>régional et national</p>              
               </div>
               <div class="col-md-4 text-center">
                 <img src="{% static 'Rectangle 130.png' %}" style="height:78px;"/>
-                <p class="subtitle2 text-center" style="height:99px"><span style="font-weight:bold;">Données consolidées</span> par<br> le service statistique du <br> ministère de la Culture </p>
+                <p class="subtitle2 text-center" style="min-height:99px"><span style="font-weight:500;">Données consolidées</span> par<br> le service statistique du <br> ministère de la Culture </p>
               </div>
             </div>
         </div>
@@ -64,10 +65,10 @@
               </div>
              
                 <div class="row justify-content-center pt-5">
-                    <div class="col-4" style="width: 290px;">
+                    <div class="col-md-4" style="width: 290px;">
                     <input type="password"  style="width: 273px; height:40px;" id="email" placeholder=" Courriel">
                 </div>
-                <div class="col-4" style="width: 290px;">
+                <div class="col-md-4" style="width: 290px;">
                     <button type="submit" style="width: 273px; height:40px;" class="btn btn1" >S'inscrire à la liste de diffusion</button>
                 </div>
                 </div>
@@ -81,60 +82,60 @@
                     <div class="row">
                         <div class="col-auto">
                             <p class="subtitle3">Avant</p>
-                            <p class="parag">Une publication <br>de 249 pages</p>
+                            <p>Une publication <br>de 249 pages</p>
                             <img src="{% static 'image 13.png' %}" style="height:130px;"/>
                         </div>
-                        <div class="col-md-4">
-                            <img class="narrow" src="{% static '64797 1.png' %}" style="height:100px;"/>
+                        <div class="col-md-4 narrow">
+                            <img  src="{% static '64797 1.png' %}" style="height:100px;"/>
                         </div>
                     </div>
               
                 </div>
-              <div class="col-md-5">
-                <p class="subtitle3">Dès juin 2021 </p>
-                <ul>
-                    <li class="parag">Des données enrichies et plus fines</li>
-                    <li class="parag">La possibilité de croiser et comparer</li>
-                    <li class="parag">Un travail éditorial pour éclairer les chiffres</li>
-                    <li class="parag">L'intégralité des données sur data.gouv.fr</li>
-                    <li class="parag">Un outil accessible, simple d'usage</li>
-                </ul>
-                              
-              </div>
-              <div class="col-md-auto vl"></div>
-              <div class="col-md-auto">
-                <p class="subtitle3 orange">En ce moment </p>
-                <p class="parag">Nous travaillons sur la production 
-                    <br>statistique, le prototypage et les 
-                    <br>tests auprès des utilisateurs. 
-                    <br><br>N’hésitez pas à nous communiquer 
-                    <br>votre courriel pour en savoir plus ! 
-                </p>
-            </div>
+                <div class="col-md-5">
+                    <p class="subtitle3">Dès juin 2021 </p>
+                        <ul>
+                            <li>Des données enrichies et plus fines</li>
+                            <li>La possibilité de croiser et comparer</li>
+                            <li>Un travail éditorial pour éclairer les chiffres</li>
+                            <li>L'intégralité des données sur data.gouv.fr</li>
+                            <li>Un outil accessible, simple d'usage</li>
+                        </ul>
+                                
+                </div>
+                <div class="col-md-auto vl"></div>
+                <div class="col-md-auto">
+                    <p class="subtitle3 orange">En ce moment </p>
+                    <p>Nous travaillons sur la production 
+                        <br>statistique, le prototypage et les 
+                        <br>tests auprès des utilisateurs. 
+                        <br><br>N’hésitez pas à nous communiquer 
+                        <br>votre courriel pour en savoir plus ! 
+                    </p>
+                </div>
             </div>
         </div>
 
         <div class="container py-4 f">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="{% static 'image 4.png' %}" style="height:150px;"/>
+                    <img src="{% static 'image 4.png' %}" class="logof" />
                 </div>
                 <div class="col-md-6" >
                     <div class="row" >
-                    <p class="parag my-3">L’Atlas Culture des territoires est un projet lauréat du programme 
+                    <p class="my-3">L’Atlas Culture des territoires est un projet lauréat du programme 
                         Entrepreneurs d’intérêt général, porté par le Département des études, 
                         de la prospective et des statistiques du ministère de la Culture (Deps).
                     </p>
                     </div>
                         <div class="row">
                             <div class="col">
-                                <p class="parag" style="font-weight: 700;">culture.gouv.fr</p>
+                                <a href="https://www.culture.gouv.fr/" style="font-weight: 700;">culture.gouv.fr</a>
                             </div>
                             <div class="col">
-                                <p class="parag" style="font-weight: 700;">etalab.gouv.fr</p>
+                                <a href="https://etalab.gouv.fr/" style="font-weight: 700;">etalab.gouv.fr</a>
                             </div>
                             <div class="col">
-                                <p class="parag" style="font-weight: 700;">data.gouv.fr</p>
+                                <a href="https://data.gouv.fr/" style="font-weight: 700;">data.gouv.fr</a>
                             </div>
                         </div>
                     </div>
@@ -144,8 +145,30 @@
         
     </main>
 
-    <footer class="container">
-        <p>&copy; Company 2017-2020</p>
+    <footer class="footer">
+        <div class="container f1 py-3">
+            <div class="row">
+               <div class="col-md-8">
+                   <div class="row">
+                        <div class="col-auto">
+                            <a href="#" style="font-size: 12px;">Accessibilité</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" style="font-size: 12px;">Mentions légales</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" style="font-size: 12px;">Données personnelles</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" style="font-size: 12px;">Nous contacter</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <p class="f2" style="font-size: 12px;">&copy; Ministère de la Culture 2020</p>
+                </div>
+            </div>
+        </div>
       </footer>
 
     </body>

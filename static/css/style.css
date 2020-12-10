@@ -79,10 +79,37 @@
     font-size: 24px;
 }
 
-.parag {
+p {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 16px;
+}
+
+a {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #383838;
+}
+
+a:link {
+    font-size: 16px;
+    text-decoration: none;
+    color: #383838;
+}
+
+.b1 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #383838;
+}
+
+.b2 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #383838;
 }
 
 .orange {
@@ -95,11 +122,34 @@
     width: 80%; 
 }
 
+.f1 {
+    width: 80%; 
+}
+
+.f2 {
+    text-align-last:end; 
+}
+
+
+.n {
+    width: 80%; 
+}
+
+.logof {
+    height:150px;
+}
+
 .vl {
     border-left: 4px solid #FF6F4C;
     height: 185px;
     margin-top: 10px;
   }
+
+.c {
+    border: 1px solid #CECECE;;
+    height: 16px;
+    width: 0;
+}
 
 li{
     margin-top: 10px;
@@ -107,7 +157,11 @@ li{
 
 ul {
     padding-left: 1rem;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
 }
+
 .container-subtitle {
     max-width:553px;
 }
@@ -131,14 +185,13 @@ input::placeholder {
     .title {font-size:36px;} 
     .subtitle {font-size:28px;} 
     .subtitle2 {font-size:20px;} 
+    .b1 {font-size:14px;} 
+    .b2 {font-size:14px;} 
+    .subtitle2 {font-size:20px;} 
     .vl {display: none;}
+    p {font-size:14px;} 
+    ul {font-size:14px;} 
     .narrow {display: none;}
-  }
-
-
-@media (max-width: 544px) {  
-    .title {font-size:24px;} 
-    .subtitle {font-size:20px;} 
-    .subtitle2 {font-size:14px;} 
-    
+    .logof { height:78px;}
+    .f2 {text-align-last:start; }
   }
