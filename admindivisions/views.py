@@ -4,7 +4,6 @@ from django.core.serializers import serialize
 from .models import Region, Commune
 from django.contrib.gis.geos import GEOSGeometry
 
-
 # Create your views here.
 def map(request):
     communes = Commune.objects.all() 

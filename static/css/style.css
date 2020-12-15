@@ -81,7 +81,7 @@
 
 p {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 16px;
 }
 
@@ -119,6 +119,10 @@ a:link {
 .f {
     border-top: 1px solid #CECECE;
     border-bottom: 1px solid #CECECE;
+    width: 80%; 
+}
+
+.c1 {
     width: 80%; 
 }
 

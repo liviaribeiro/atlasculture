@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-white">
+        <div class="container n justify-content-start">
+          <a class="navbar-brand" href="#">
+                <img src="{% static 'image 4.png' %}" style="height:78px; margin-right:20px"/></a>
+                    <p class="b1">Atlas Culture des territoires
+                    <br><span class="b2">Visualiser les politiques culturelles en France</span></p>
+            </div>
+        </div>
+      </nav>
+
+
+    <main role="main">
+        {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                  {% block content %}{% endblock %}
+                </div>
+            </div>
+      </main>
+
+      <div class="container f1 py-3">
+        <div class="row">
+           <div class="col-md-8">
+               <div class="row">
+                    <div class="col-auto">
+                        <a href="{% url 'accessibilite' %}" style="font-size: 12px;">Accessibilité</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" style="font-size: 12px;">Mentions légales</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" style="font-size: 12px;">Données personnelles</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" style="font-size: 12px;">Nous contacter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <p class="f2" style="font-size: 12px;">&copy; Ministère de la Culture 2020</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
