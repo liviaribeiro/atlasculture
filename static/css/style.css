@@ -63,14 +63,16 @@
 .subtitle {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 24px;
     color: #00AC8C;
+    line-height:28px;
 }
 
 .subtitle2 {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 24px;
+    line-height:33px;
 }
 
 .subtitle3 {
@@ -79,10 +81,35 @@
     font-size: 24px;
 }
 
+.subtitle4 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height:28px;
+}
+
+.subtitle5 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #00AC8C;
+    line-height:38px;
+}
+
+.pp {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height:24px;
+    text-align:"justify";
+    text-justify: inter-word;
+}
+
 p {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 16px;
+    line-height:33px;
 }
 
 a {
@@ -98,7 +125,7 @@ a:link {
     color: #383838;
 }
 
-.b1 {
+a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 500;
     font-size: 20px;
@@ -118,15 +145,16 @@ a:link {
 
 .f {
     border-top: 1px solid #CECECE;
-    border-bottom: 1px solid #CECECE;
     width: 80%; 
 }
 
 .c1 {
-    width: 80%; 
+    width: 54%; 
+    
 }
 
 .f1 {
+    border-top: 1px solid #CECECE;
     width: 80%; 
 }
 
@@ -162,7 +190,7 @@ li{
 ul {
     padding-left: 1rem;
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 16px;
 }
 
@@ -177,6 +205,11 @@ ul {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 16px;
+}
+
+ .btn1:hover{
+    background-color: #8ACDB0;
+    color: #FFFFFF;
 }
 
 input::placeholder {

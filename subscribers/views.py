@@ -21,3 +21,9 @@ def index(request):
 
 def accessibilite(request):
     return render(request, 'subscribers/accessibilite.html')
+
+def legal(request):
+    return render(request, 'subscribers/legal.html')
+
+def privacy(request):
+    return render(request, 'subscribers/privacy.html')
