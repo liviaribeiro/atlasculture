@@ -8,11 +8,11 @@
             <div class="container text-center">
               <h1 class="title">Visualiser les dynamiques culturelles</h1>
             </div>
-            <div class="container text-left p-4 px-0 container-subtitle" >
+            <div class="container text-left p-4 container-subtitle">
               <p><span class="subtitle">Dès juin 2021, un atlas en ligne</span>
               <br><span class="subtitle2">pour outiller les acteurs de la culture
-                  <br>et partager la connaissance de la vie culturelle
-                  <br>à toutes et à tous<span></p>
+                  et partager la connaissance de la vie culturelle
+                  à toutes et à tous<span></p>
             </div>
             </div>
         </div>
@@ -20,22 +20,22 @@
         <div class="container p-5">
             <!-- Example row of columns -->
             <div class="row px-5">
-              <div class="col-lg-4 text-center" >
-                    <img src="{% static 'image 9.png' %}" style="height:80px;"/>
-                    <div style="margin: 0 auto;text-align: center; width: 266px;">
+              <div class="col-lg-4 text-center c2" >
+                    <img alt="Image écran" src="{% static 'image 9.png' %}" style="height:80px;"/>
+                    <div style="margin: 0 auto;text-align: center; max-width: 266px;">
                         <p class="subtitle4 text-center" ><span style="font-weight:500;">Cartographie et datavisualisations</span> 
                         <br> interactives avancées</p>
                     </div>
               </div>
-              <div class="col-lg-4 text-center">
-                <img src="{% static 'Group 30.png' %}" style="height:80px;"/>
-                <div style="margin: 0 auto;text-align: center; width: 266px;">
+              <div class="col-lg-4 text-center c2">
+                <img alt="Image livre" src="{% static 'Group 30.png' %}" style="height:80px;"/>
+                <div style="margin: 0 auto;text-align: center; max-width: 266px;">
                 <p class="subtitle4 text-center" style="min-height:84px;"><span style="font-weight:500;">Analyses</span> des tendances pour les régions et la France</p>              
                 </div>
              </div>
-              <div class="col-lg-4 text-center" >
-                <img src="{% static 'Rectangle 130.png' %}" style="height:80px;"/>
-                <div style="margin: 0 auto;text-align: center; width: 266px;">
+              <div class="col-lg-4 text-center c2" >
+                <img alt="Image base de données"src="{% static 'Rectangle 130.png' %}" style="height:80px;"/>
+                <div style="margin: 0 auto;text-align: center; max-width: 266px;">
                 <p class="subtitle4 text-center" style="min-height:84px;"><span style="font-weight:500;">Données consolidées</span> par<br> le service statistique du <br> ministère de la Culture </p>
             </div>
             </div>
@@ -52,34 +52,34 @@
                 </div>
                 
                 <div class="row justify-content-center pt-5">
-                    <div class="col-md-4" style="width: 290px;">
+                    <div class="col-md-4" style="max-width: 290px;">
                         {{form.email}}
                     </div>
-                    <div class="col-md-4" style="width: 290px;">
-                        <button type="submit" style="width: 273px; height:40px;" class="btn btn1" >S'inscrire à la liste de diffusion</button>
+                    <div class="col-md-4" style="max-width: 290px;">
+                        <button type="submit" style="max-width: 273px; min-height:40px;" class="btn btn1" >S'inscrire à la liste de diffusion</button>
                     </div>
                 </div>
             </form>
            
         </div>
 
-        <div class="container p-5">
+        <div class="container px-md-5 py-5">
             <!-- Example row of columns -->
-            <div class="row" style="margin-left:10%;">
-                <div class="col-md-3">
+            <div class="row r1">
+                <div class="col-md-3 c3">
                     <div class="row">
                         <div class="col-auto">
                             <p class="subtitle3">Avant</p>
                             <p style="line-height:24px;">Une publication <br>de 249 pages</p>
-                            <img src="{% static 'image 13.png' %}" style="height:130px;"/>
+                            <img alt="Image atlas papier" src="{% static 'image 13.png' %}" style="height:130px;"/>
                         </div>
                         <div class="col-md-4 narrow">
-                            <img  src="{% static '64797 1.png' %}" style="height:100px;"/>
+                            <img alt="Image flèche" src="{% static '64797 1.png' %}" style="height:100px;"/>
                         </div>
                     </div>
               
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 c3">
                     <p class="subtitle3">Dès juin 2021 </p>
                         <ul>
                             <li>Des données enrichies et plus fines</li>
@@ -90,7 +90,7 @@
                         </ul>
                                 
                 </div>
-                <div class="col-md-auto vl"></div>
+                <div class="col-md-auto vl c3"></div>
                 <div class="col-md-auto">
                     <p class="subtitle3 orange">En ce moment </p>
                     <p style="line-height:24px;">Nous travaillons sur la production 
@@ -103,26 +103,26 @@
             </div>
         </div>
 
-        <div class="container py-4 f">
+        <div class="container py-5 f">
             <div class="row px-0">
                 <div class="col-md-6 px-0">
-                    <img src="{% static 'image 4.png' %}" class="logof" />
+                    <img alt="Logo Ministère de la Culture" src="{% static 'image 4.png' %}" class="logof" />
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-6 px-0" >
                     <div class="row" >
-                    <p class="my-3" style="line-height:24px;">L’Atlas Culture des territoires est un projet lauréat du programme 
+                    <p class="my-3 p1" style="line-height:24px;">L’Atlas Culture des territoires est un projet lauréat du programme 
                         Entrepreneurs d’intérêt général, porté par le Département des études, 
                         de la prospective et des statistiques du ministère de la Culture (Deps).
                     </p>
                     </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col mb-3">
                                 <a href="https://www.culture.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">culture.gouv.fr</a>
                             </div>
-                            <div class="col">
+                            <div class="col mb-3">
                                 <a href="https://etalab.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">etalab.gouv.fr</a>
                             </div>
-                            <div class="col">
+                            <div class="col mb-3">
                                 <a href="https://data.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">data.gouv.fr</a>
                             </div>
                         </div>

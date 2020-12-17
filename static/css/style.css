@@ -107,7 +107,7 @@
 
 p {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 16px;
     line-height:33px;
 }
@@ -153,6 +153,14 @@ a.b1 {
     
 }
 
+.c3 {
+    margin-bottom: 20px;   
+}
+
+.c2 {
+    margin-bottom: 20px;   
+}
+
 .f1 {
     border-top: 1px solid #CECECE;
     width: 80%; 
@@ -190,7 +198,7 @@ li{
 ul {
     padding-left: 1rem;
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 16px;
 }
 
@@ -201,7 +209,7 @@ ul {
 .btn1 {
 
     background-color: #00AC8C;
-    color: #FFFFFF;
+    color: #000000;
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 16px;
@@ -209,7 +217,7 @@ ul {
 
  .btn1:hover{
     background-color: #8ACDB0;
-    color: #FFFFFF;
+    color: #000000;
 }
 
 input::placeholder {
@@ -218,17 +226,26 @@ input::placeholder {
     font-size: 16px;
   }
 
+.r1 {
+    margin-left:10%;
+}
+
 @media (max-width: 768px) {  
     .title {font-size:36px;} 
     .subtitle {font-size:28px;} 
     .subtitle2 {font-size:20px;} 
+    .subtitle5 {font-size:20px;} 
+    .subtitle4 {font-size:18px;} 
+    .pp {font-size:16px;}
     .b1 {font-size:14px;} 
     .b2 {font-size:14px;} 
     .subtitle2 {font-size:20px;} 
     .vl {display: none;}
-    p {font-size:14px;} 
-    ul {font-size:14px;} 
+    .p1 {font-size:14px;} 
     .narrow {display: none;}
     .logof { height:78px;}
     .f2 {text-align-last:start; }
+    .c3 {margin-bottom: 40px; }
+    .c1 {width: 80%;}
+    .r1 { margin-left:5%;}
   }
