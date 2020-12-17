@@ -239,6 +239,7 @@ input::placeholder {
     .subtitle4 {font-size:18px;} 
     .pp {font-size:16px;}
     .b1 {font-size:14px;} 
+    a.b1 {font-size:14px;} 
     .b2 {font-size:14px;} 
     .subtitle2 {font-size:20px;} 
     .vl {display: none;}
