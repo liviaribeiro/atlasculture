@@ -5,14 +5,13 @@
 
 
         <div class="container-fluid pt-5"  style="min-height:360px;background-image: url('{% static 'image 6.jpg' %}');background-size:cover;">
-            <div class="container text-center">
+            <div class="container mt-5 text-center">
               <h1 class="title">Visualiser les dynamiques culturelles</h1>
             </div>
-            <div class="container text-left p-4 container-subtitle">
-              <p><span class="subtitle">Dès juin 2021, un atlas en ligne</span>
-              <br><span class="subtitle2">pour outiller les acteurs de la culture
-                  et partager la connaissance de la vie culturelle
-                  à toutes et à tous<span></p>
+            <div class="container text-center p-4 container-subtitle">
+              <p><span class="subtitle">Dès juin 2021, un atlas interactif</span>
+              <br><span class="subtitle2">destiné aux acteurs de la culture
+                  et accessible à tous<span></p>
             </div>
             </div>
         </div>
@@ -48,7 +47,7 @@
             <form method="POST">
                 {% csrf_token %}
                 <div class="container text-center">
-                    <h1 class="title2">Suivre les actualités de l’Atlas Culture des territoires </h1>
+                    <h1 class="title2">Cet outil vous intéresse ? Restons en contact pour vous le présenter avant sa mise en ligne</h1>
                 </div>
                 
                 <div class="row justify-content-center pt-5">
@@ -71,7 +70,8 @@
                         <div class="col-auto">
                             <p class="subtitle3">Avant</p>
                             <p style="line-height:24px;">Une publication <br>de 249 pages</p>
-                            <img alt="Image atlas papier" src="{% static 'image 13.jpg' %}" style="height:130px;"/>
+                            <a href="https://www.culture.gouv.fr/Sites-thematiques/Etudes-et-statistiques/Publications2/Collections-d-ouvrages/Atlas-regional-de-la-culture/Atlas-regional-de-la-culture-2018" target="_blank" rel="noopener noreferrer">
+                            <img alt="Image atlas papier" src="{% static 'image 13.jpg' %}" style="height:130px;"/></a>
                         </div>
                         <div class="col-md-4 narrow">
                             <img alt="Image flèche" src="{% static '64797 1.png' %}" style="height:100px;"/>
@@ -82,11 +82,11 @@
                 <div class="col-md-5 c3">
                     <p class="subtitle3">Dès juin 2021 </p>
                         <ul>
-                            <li>Des données enrichies et plus fines</li>
+                            <li>Des données relatives au champ culturel enrichies : équipements, politiques publiques territoriales, dépenses, emploi et entreprises </li>
+                            <li>Des donnes disponibles à un échelon plus fin</li>
                             <li>La possibilité de croiser et de comparer</li>
                             <li>Un travail d'analyse des données pour éclairer les chiffres</li>
                             <li>L'intégralité des données sur data.gouv.fr</li>
-                            <li>Un outil accessible, simple d'usage</li>
                         </ul>
                                 
                 </div>
@@ -106,7 +106,7 @@
         <div class="container py-5 f">
             <div class="row px-0">
                 <div class="col-md-6 px-0">
-                    <img alt="Logo Ministère de la Culture" src="{% static 'image 4.png' %}" class="logof" />
+                    <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" class="logof" />
                 </div>
                 <div class="col-md-6 px-0" >
                     <div class="row" >
