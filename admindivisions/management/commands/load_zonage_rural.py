@@ -27,11 +27,11 @@ class Command(BaseCommand):
             com.save()
         """
 
-        with open('admindivisions/data/COMMUNE_CARTO_SIMPLE.json') as f:
+        with open('admindivisions/data/COMMUNE_CARTO_SIMPLIFIED.json') as f:
             data = json.load(f)
 
         for feature in data['features']: 
-            com = Commune.objects.get(codeinsee=feature['properties']['INSEE_COM'])
+            com = Commune.objects.get(codeinsee=feature['properties']['INSEE_COM'], year="2020")
             feature["properties"].update({"ZONAGE_RURAL":int(com.zonage_rural.gridens)})
         
         with open('admindivisions/data/COMMUNE_CARTO_RURAL_SIMPLE.json', 'w') as f:

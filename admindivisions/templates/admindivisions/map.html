@@ -8,6 +8,15 @@
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/@turf/turf@3.5.2/turf.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
+
 
 <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
     
@@ -24,22 +33,30 @@
 	mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
         var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/light-v10',
+        style: 'mapbox://styles/mapbox/light-v9',
         center: [4.079306, 48.293024],
         minZoom: 3,
         zoom: 5
     });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+    map.addControl(new MapboxLanguage({
+        defaultLanguage: 'fr'
+    }));
  
     var zoomThreshold = 6;
     var zoomComThreshold = 8;
-    
+    var hoveredStateId = null;
+
+
     //load layers
     map.on('load', function () {
-       
+
         //add region source
         map.addSource('region', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.1z057c8j'
+            'url': 'mapbox://liviaribeiro.3qf6fysf'
         });
         
         //add region layer
@@ -47,25 +64,125 @@
             {
                 'id': 'Regions',
                 'source': 'region',
-                'source-layer': 'REGION-28jqta',
+                'source-layer': 'REGION_SIMPLIFIED',
                 'maxzoom': zoomThreshold,
                 'type': 'fill',
                 'paint': {
-                    'fill-color': '#91e6ae',
-                    'fill-opacity': 0.75,
-                    'fill-outline-color': '#629e77'
+                    'fill-color': "#627BC1",
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        0.25,
+                        0
+                        ]
                 },
                 'layout': {
-                    // make layer not visible by default
                     'visibility': 'visible'
                 }
             }  
         );
+
+        //add region popup layer
+        map.addLayer(
+            {
+                'id': 'Regions_popup',
+                'source': 'region',
+                'source-layer': 'REGION_SIMPLIFIED',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': "#627BC1",
+                    'fill-opacity': 0
+                },
+                'layout': {
+                    'visibility': 'visible'
+                }
+            }  
+        );
+
+        map.addLayer({
+            'id': 'Regions_line',
+            'type': 'line',
+            'source': 'region',
+            'source-layer': 'REGION_SIMPLIFIED',
+            'maxzoom': zoomThreshold,
+            'layout': {
+                'visibility': 'none'
+            },
+            'paint': {
+                'line-color': '#ffffff',
+                'line-width': 1
+            }
+        });
+
+        map.on('click', 'Regions', function (e) {
+            var polygon = e.features[0].geometry.coordinates;
+            var fit = new L.Polygon(polygon).getBounds();
+            var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+            var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+            var center = new mapboxgl.LngLatBounds(southWest, northEast).getCenter();
+            console.log(fit)
+            map.flyTo({
+            center: center, zoom:7
+            });
+        });
+
+        var popup = new mapboxgl.Popup({
+            closeButton: false
+        });
+
+        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on('mousemove', 'Regions', function (e) {
+            if (e.features.length > 0) {
+                if (hoveredStateId) {
+                    map.setFeatureState(
+                    { source: 'region', sourceLayer: 'REGION_SIMPLIFIED', id: hoveredStateId },
+                        { hover: false }
+                    );
+                }
+
+                hoveredStateId = e.features[0].id;
+
+                map.setFeatureState(
+                    { source: 'region', sourceLayer: 'REGION_SIMPLIFIED', id: hoveredStateId },
+                    { hover: true }
+                    );
+                }
+                
+        });
         
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on('mouseleave', 'Regions', function () {
+                if (hoveredStateId) {
+            map.setFeatureState(
+                { source: 'region', sourceLayer: 'REGION_SIMPLIFIED', id: hoveredStateId },
+                { hover: false }
+                );
+            }
+            hoveredStateId = null;
+        });
+
+
+        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on('mousemove', 'Regions_popup', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setText(e.features[0].properties.NOM_REG)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Regions_popup', function () {
+            popup.remove();
+        });
+
         //add departement source
         map.addSource('departement', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.63r281uo'
+            'url': 'mapbox://liviaribeiro.76ba45w7'
         });
         
         //add departement layer
@@ -73,13 +190,18 @@
             {
                 'id': 'Departements',
                 'source': 'departement',
-                'source-layer': 'DEPARTEMENT-17t0qj',
+                'source-layer': 'DEPARTEMENT_SIMPLIFIED',
                 'minzoom': zoomThreshold,
+                'maxzoom': zoomComThreshold,
                 'type': 'fill',
                 'paint': {
-                    'fill-color': '#e691d4',
-                    'fill-opacity': 0.75,
-                    'fill-outline-color': '#a36596'
+                    'fill-color': "#627BC1",
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        0.25,
+                        0
+                        ]
                 },
                 'layout': {
                     // make layer not visible by default
@@ -87,11 +209,75 @@
                 }
             }  
         );
+
+        map.addLayer({
+            'id': 'Departements_line',
+            'type': 'line',
+            'source': 'departement',
+            'source-layer': 'DEPARTEMENT_SIMPLIFIED',
+            'minzoom': zoomThreshold,
+            'maxzoom': zoomComThreshold,
+            'layout': {
+                'visibility': 'none'
+            },
+            'paint': {
+                'line-color': '#ffffff',
+                'line-width': 1
+            }
+        });
+
+        map.on('click', 'Departements', function (e) {
+            var polygon = e.features[0].geometry.coordinates;
+            var fit = new L.Polygon(polygon).getBounds();
+            var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+            var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+            var center = new mapboxgl.LngLatBounds(southWest, northEast).getCenter();
+            console.log(fit)
+            map.flyTo({
+            center: center, zoom:9
+            });
+        });
+
+        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on('mousemove', 'Departements', function (e) {
+            if (e.features.length > 0) {
+            if (hoveredStateId) {
+        map.setFeatureState(
+            { source: 'departement', sourceLayer: 'DEPARTEMENT_SIMPLIFIED', id: hoveredStateId },
+            { hover: false }
+            );
+        }
+        hoveredStateId = e.features[0].id;
+        map.setFeatureState(
+            { source: 'departement', sourceLayer: 'DEPARTEMENT_SIMPLIFIED', id: hoveredStateId },
+            { hover: true }
+            );
+        }
+        popup.setLngLat(e.lngLat)
+                    .setText(e.features[0].properties.NOM_DEP)
+                    .addTo(map);
+                
+        });
         
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on('mouseleave', 'Departements', function () {
+                if (hoveredStateId) {
+            map.setFeatureState(
+                { source: 'departement', sourceLayer: 'DEPARTEMENT_SIMPLIFIED', id: hoveredStateId },
+                { hover: false }
+                );
+            }
+            hoveredStateId = null;
+            popup.remove();
+        });
+        
+
         //add commune source
         map.addSource('commune', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.communes-tiles'
+            'url': 'mapbox://liviaribeiro.1d5mkyd4'
         });
 
         // add commune layer
@@ -99,13 +285,18 @@
             {
                 'id': 'Communes',
                 'source': 'commune',
-                'source-layer': 'communes',
+                'source-layer': 'COMMUNE_SIMPLIFIED',
                 'minzoom': zoomComThreshold,
+                'maxzoom': 10,
                 'type': 'fill',
                 'paint': {
-                    'fill-color': '#9194e6',
-                    'fill-opacity': 0.75,
-                    'fill-outline-color': '#595b94'
+                    'fill-color': "#627BC1",
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        0.25,
+                        0
+                        ]
                 },
                 'layout': {
                     // make layer not visible by default
@@ -113,19 +304,256 @@
                 }
             }  
         );    
-       
+        
+        map.addLayer({
+            'id': 'Communes_line',
+            'type': 'line',
+            'source': 'commune',
+            'source-layer': 'COMMUNE_SIMPLIFIED',
+            'minzoom': zoomComThreshold,
+            'layout': {
+                'visibility': 'none'
+            },
+            'paint': {
+                'line-color': '#ffffff',
+                'line-width': 1
+            }
+        });
+
+        map.on('click', 'Communes', function (e) {
+            var polygon = e.features[0].geometry.coordinates;
+            var fit = new L.Polygon(polygon).getBounds();
+            var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+            var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+            var center = new mapboxgl.LngLatBounds(southWest, northEast).getCenter();
+            console.log(fit)
+            map.flyTo({
+            center: center, zoom:10
+            });
+        });
+
+        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on('mousemove', 'Communes', function (e) {
+            if (e.features.length > 0) {
+            if (hoveredStateId) {
+        map.setFeatureState(
+            { source: 'commune', sourceLayer: 'COMMUNE_SIMPLIFIED', id: hoveredStateId },
+            { hover: false }
+            );
+        }
+        hoveredStateId = e.features[0].id;
+        map.setFeatureState(
+            { source: 'commune', sourceLayer: 'COMMUNE_SIMPLIFIED', id: hoveredStateId },
+            { hover: true }
+            );
+            popup.setLngLat(e.lngLat)
+                    .setText(e.features[0].properties.NOM_COM)
+                    .addTo(map);
+        }
+        });
+        
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on('mouseleave', 'Communes', function () {
+                if (hoveredStateId) {
+            map.setFeatureState(
+                { source: 'commune', sourceLayer: 'COMMUNE_SIMPLIFIED', id: hoveredStateId },
+                { hover: false }
+                );
+            }
+            hoveredStateId = null;
+            popup.remove();
+        });
+        
+        //add cadrage source
+        map.addSource('cadrage', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.13vs779l'
+        });
+
+        
+        // add densité moyenne layer
+        map.addLayer(
+            {
+                'id': 'Densité Moyenne',
+                'source': 'cadrage',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "DENSITE17"],
+                        "hsl(207, 66%, 98%)",
+                        50,
+                        "#c8e0f4",
+                        100,
+                        "hsl(207, 64%, 70%)",
+                        1000,
+                        "hsl(207, 63%, 44%)",
+                        10000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );    
+
+        map.on('mousemove', 'Densité Moyenne', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
+                        +(e.features[0].properties.DENSITE17).toFixed(2)+'hab/km2 </p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Densité Moyenne', function () {
+            popup.remove();
+        });
+
+
+        //add  niveau de vie médian layer
+        map.addLayer(
+            {
+                'id': 'Niveau de vie médian',
+                'source': 'cadrage',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "NIVEAUDEVIE17"],
+                        "#FFFFFF",
+                        0,
+                        "hsl(207, 66%, 98%)",
+                        20000,
+                        "#c8e0f4",
+                        24000,
+                        "hsl(207, 64%, 70%)",
+                        28000,
+                        "hsl(207, 63%, 44%)",
+                        34000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                    
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );    
+
+        //add indice relatif à la jeunesse
+        map.addLayer(
+            {
+                'id': 'Indice relatif à la jeunesse',
+                'source': 'cadrage',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "INDICEJEUNESSE17"],
+                        "#FFFFFF",
+                        0,
+                        "hsl(207, 66%, 98%)",
+                        50,
+                        "#c8e0f4",
+                        80,
+                        "hsl(207, 64%, 70%)",
+                        100,
+                        "hsl(207, 63%, 44%)",
+                        150,
+                        "hsl(207, 66%, 23%)",
+                        ],
+                    'fill-opacity': 0.75,
+                    
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );  
+
+        //add évolution de la population
+        map.addLayer(
+            {
+                'id': 'Évolution de la population',
+                'source': 'cadrage',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        [
+                            "get",
+                            "TYPOLOGIEEVOL1217"
+                        ],
+                        "hsl(240, 0%, 63%)",
+                        1,
+                        "hsl(0, 85%, 51%)",
+                        2,
+                        "#f674b1",
+                        3,
+                        "#fcb0d4",
+                        4,
+                        "hsl(207, 96%, 78%)",
+                        5,
+                        "hsl(207, 68%, 52%)",
+                        6,
+                        "#143f61"
+                        ],
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );      
+
+        //add population source
+         map.addSource('population', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.1n6485zf'
+        });
+
+        //add population layer
+        map.addLayer(
+            {
+            'id': 'Population',
+            'type': 'circle',
+            'source': 'population',
+            'source-layer': 'COMMUNE_CARTO_POINTS_CADRAGE-6p2apo',
+            'paint': {
+                'circle-radius': ['*', 30, ['/',['sqrt', ["get", "POPULATION"]],['sqrt', 2187526]]],
+                'circle-color': "hsla(0, 71%, 68%, 0.5)"
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+        });
+
         //add zonage rural source
         map.addSource('zonage rural', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.9i592veo'
+            'url': 'mapbox://liviaribeiro.32c0jrtl'
         });
         
-        //add zonage rural l
+        //add zonage rural layer
         map.addLayer(
             {
                 'id': 'Zonage Rural',
                 'source': 'zonage rural',
-                'source-layer': 'COMMUNE_CARTO_RURAL_SIMPLE-5gxgvm',
+                'source-layer': 'COMMUNE_CARTO_RURAL_SIMPLE-7gdwr0',
                 'type': 'fill',
                 'paint': {
                     'fill-color':[
@@ -148,38 +576,224 @@
                 }
             }  
         );
+
+        //add zone d'emploi source
+        map.addSource("zone emploi", {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.a9e2kc06'
+        });
+        
+        //add zone d'emploi layer
+        map.addLayer(
+            {
+                'id': "Zone d'emploi",
+                'source': 'zone emploi',
+                'source-layer': 'fond_ZE2020_geo20-6lgoy1',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': '#627BC1',
+                    'fill-opacity':0.5
+                },
+                'layout': {
+                    // make layer visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('click', "Zone d'emploi", function (e) {
+            new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.lb_clst)
+            .addTo(map);
+        });
+
+        map.loadImage(
+            'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('custom-marker', image);})
+
+        //add zonage action coeur de ville
+        map.addSource('acv', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.2f6ii8rh',
+            'cluster': true,
+            'clusterMaxZoom': 14, // Max zoom to cluster points on
+            'clusterRadius': 50 
+        });
+
+        map.addLayer({
+            'id': 'Action coeur de ville',
+            'type': 'symbol',
+            'source': 'acv',
+            'source-layer': 'COMMUNE_CARTO_ACV-834rrb',
+            'layout': {
+            'icon-image': [
+                "case",
+                [
+                    "match",
+                    ["get", "ACV"],
+                    ["000000"],
+                    false,
+                    true
+                ],
+                "custom-marker",
+                ""
+                ],
+            'icon-size': 0.5,
+            'visibility': 'none',
+            'icon-allow-overlap': true
+            },
+        });
+
+        map.on('click', "Action coeur de ville", function (e) {
+            new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.NOM_COM)
+            .addTo(map);
+        });
+
+        map.addSource('equipements', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.br32ow17',
+        });
+
+        map.addLayer({
+            'id': 'Equipements',
+            'type': 'circle',
+            'source': 'equipements',
+            'source-layer': 'EQUIPEMENTS',
+            'filter': ['has', 'point_count'],
+            'paint': {
+                'circle-color': '#51bbd6',
+                'circle-radius': 15,
+            },
+            'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+        });
+
+        map.addLayer({
+            'id': 'equipements-count',
+            'type': 'symbol',
+            'source': 'equipements',
+            'source-layer': 'EQUIPEMENTS',
+            'filter': ['has', 'point_count'],
+            'layout': {
+                'text-field': '{point_count}',
+                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-size': 12,
+                'visibility': 'none'
+            },
+           
+        });
+
+        map.addLayer({
+            'id': 'unclustered-equipement',
+            'type': 'circle',
+            'source': 'equipements',
+            'source-layer': 'EQUIPEMENTS',
+            'filter': ['!', ['has', 'point_count']],
+            'paint': {
+                'circle-color': '#ff5500',
+                'circle-radius': 5,
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#fff'
+            },
+            'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+        });
+        
+        // When a click event occurs on a feature in
+        // the unclustered-point layer, open a popup at
+        // the location of the feature, with
+        // description HTML from its properties.
+        map.on('click', 'unclustered-equipement', function (e) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var name = e.features[0].properties.nom;
+            var adresse = e.features[0].properties.adresse;
+            
+            // Ensure that if the map is zoomed out such that
+            // multiple copies of the feature are visible, the
+            // popup appears over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            
+            new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(
+                 name + adresse
+            )
+            .addTo(map);
+        });
        
     });
 
     // enumerate ids of the layers
-    var toggleableLayerIds = ['Zonage Rural'];
+    var toggleableLayerIds = ["Zone d'emploi", "Zonage Rural", "Population", "Densité Moyenne", "Niveau de vie médian", "Indice relatif à la jeunesse", "Évolution de la population", "Action coeur de ville", "Equipements"];
     
     // set up the corresponding toggle button for each layer
     for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
-        var layers = document.getElementById('menu');
         
-        var input = document.createElement('input');
-        input.type = 'checkbox';
-        input.id = id;
-        input.checked = false;
-        layers.appendChild(input);
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = '';
+        link.textContent = id;
+        
+        link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+        
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+        
+        // toggle layer visibility by changing the layout object's visibility property
+        if (visibility === 'visible') {
+            if (clickedLayer == 'Equipements'){
+                map.setLayoutProperty('equipements-count', 'visibility', 'none');
+                map.setLayoutProperty('unclustered-equipement', 'visibility', 'none');
+            }
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            map.setLayoutProperty('Regions_popup', 'visibility', 'visible');
+            map.setLayoutProperty('Departements', 'visibility', 'visible');
+            map.setLayoutProperty('Communes', 'visibility', 'visible');
+            this.className = '';
+        } else {
+        this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            if (clickedLayer == 'Equipements'){
+                map.moveLayer('Regions');
+                map.moveLayer('Departements');
+                map.moveLayer('Communes');
+                map.setLayoutProperty('Regions_popup', 'visibility', 'none');
+                map.setLayoutProperty('equipements-count', 'visibility', 'visible');
+                map.setLayoutProperty('unclustered-equipement', 'visibility', 'visible');
+                map.setLayoutProperty('Regions_line', 'visibility', 'none');
+                map.setLayoutProperty('Departements_line', 'visibility', 'none');
+                map.setLayoutProperty('Communes_line', 'visibility', 'none');
+            }
+            if (clickedLayer != 'Equipements'){
+                map.moveLayer('Regions_line');
+                map.moveLayer('Regions');
+                map.moveLayer('Departements');
+                map.moveLayer('Departements_line');
+                map.moveLayer('Communes');
+                map.moveLayer('Communes_line');
+            }
 
-        var label = document.createElement('label');
-        label.setAttribute('for', id);
-        label.textContent = id;
-        layers.appendChild(label);
-
-
-        input.addEventListener('change', function (e) {
-            map.setLayoutProperty(
-                id,
-                'visibility',
-                e.target.checked ? 'visible' : 'none'
-                );
-        });
-    }
-</script>
+        }
+        };
+        
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+        }
+        </script>
  
 </body>
 </html>

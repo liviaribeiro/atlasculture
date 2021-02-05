@@ -1,288 +1,208 @@
 import pandas as pd 
 import requests
 import math
-from equipements.models import (Equipement_Type, Label, Discipline_Equipement, Source,
- Equipement, Cinema, Bibliotheque, Monument_Historique)
+from equipements.models import (Equipement_Type, Label, Source, Domaine,
+ Equipement, Cinema, Bibliotheque, Librairie, Architecture, Monument_Historique, Unesco)
 from admindivisions.models import Commune
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
 from atlasculture.settings import BASE_DIR
 import os
 
-
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        """
-        equipements = Equipement.objects.all()
-        df = pd.DataFrame(columns=('Source', 'Discipline', 'Equipement', 'Nom', 'Adresse', 'Adresse Normalisée',
-            "Complement d'adresse", "Code Postal", "Commune", "Commune Normalisée", "Code_INSEE", "Code_INSEE_Arrondt",
-            "Labels", "Type_Cinema", "Nombre_de_fauteuils_de_cinema", "Nombre_de_salles_de_cinema", "Ecrans_3D",
-            "Typologie_Bibliotheque", "Surface_Bibliotheque", "Surface_Reseau_Biblio", "Proprietaire_Monument_historique",
-            "Identifiant_origine", "Coordonnées GPS"))
+        excel_file = os.path.join(BASE_DIR, 'equipements/data/Basilic - Base des lieux culturels (28012021).xlsx')
 
-        for eq in equipements:
-            if eq.equipement_type.name == "Cinéma":
-                type_cinema = eq.cinema.cinema_type
-                number_chairs = eq.cinema.number_chairs
-                number_rooms = eq.cinema.number_rooms
-                rooms_3d = eq.cinema.rooms_3d
-            else:
-                type_cinema = ""
-                number_chairs = ""
-                number_rooms = ""
-                rooms_3d = ""
-                
-            if eq.equipement_type.name == "Bibliotheque":
-                typologie_biblio = eq.bibliotheque.typology
-                surface_biblio = eq.bibliotheque.surface
-                surface_network_biblio = eq.bibliotheque.surface_network
-            else:
-                typologie_biblio = ""
-                surface_biblio = ""
-                surface_network_biblio = ""
-
-            if eq.equipement_type.name == "Monument Historique":
-                owner_MH = df.monument_historique.owner
-            else:
-                owner_MH = ""
-
-            if eq.commune is None:
-                commune = ""
-                codeinsee = ""
-            else:
-                commune = eq.commune
-                codeinsee = eq.commune.codeinsee
-
-            df.append({'Source': eq.source, 'Discipline':eq.discipline, 'Equipement':eq.equipement_type, 'Nom':eq.name,
-            'Adresse':eq.address, 'Adresse Normalisée':eq.formatted_address, "Complement d'adresse":eq.complement_address,
-            "Code Postal":eq.postal_code, "Commune":commune, "Commune Normalisée":eq.city, "Code_INSEE":codeinsee,
-            "Code_INSEE_Arrondt":eq.codeinsee_arrondt, "Labels":eq.labels, "Type_Cinema":type_cinema,
-            "Nombre_de_fauteuils_de_cinema":number_chairs, "Nombre_de_salles_de_cinema":number_rooms, "Ecrans_3D":rooms_3d,
-            "Typologie_Bibliotheque":typologie_biblio, "Surface_Bibliotheque":surface_biblio, 
-            "Surface_Reseau_Biblio":surface_network_biblio, "Proprietaire_Monument_historique":owner_MH,
-            "Identifiant_origine":eq.id_origin, "Coordonnées GPS":eq.gps}, ignore_index=True)
-            
-        print(df)
-        #df.to_excel('export.xlsx')
-        """
-
-
-        # pour les MH : prendre le premier code insee de la liste
+        df = pd.read_excel(excel_file)
+        #df = df.head(50)
+        df = df.fillna("")
         
-        file_path = os.path.join(BASE_DIR, 'data/Base Equipements DEPS_last_fix_address cinema.xlsx')
+        for i in df.index:
+            id_DEPS = df['Identifiant_Deps'][i]
+            codeinsee = df['Code_Insee'][i]
 
-        df = pd.read_excel(file_path)
+            if df['Region'][i] == "Collectivité d'outre mer":
+                print(id_DEPS, codeinsee)
+                continue
+            
+            if df['Region'][i] == "Etranger":
+                print(id_DEPS, codeinsee)
+                continue
 
-        print("OK")
-
-        for i in df.index: 
-            print(i)
             source = df['Source'][i]
-            discipline = df['Discipline'][i]
+            domaine = df['Domaine'][i]
+            sous_domaine = df['Sous_domaine'][i]
+            fonction1 = df['Fonction_01'][i]
+            fonction2 = df['Fonction_02'][i]
             equipement_type = df['Equipement'][i]
-            name = df['Nom'][i]
-            address = df['Adresse'][i]
-            formatted_address = df['Adresse corrigé'][i]
-            complement_address = df["Complement d'adresse"][i]
-            postal_code = str(df['Code_Postal'][i])
-            city = df['Ville corrigé'][i]
-            codeinsee = str(df['Code_Insee'][i])
-            codeinsee_arrondt = str(df['Code_Insee_Arrondt'][i])
-            label1 = df['Nom_Label'][i]
-            label2 = df['Label_2'][i]
+            nom = df['Nom'][i]
+            adresse = df['Adresse'][i]
+            complement_adresse = df['Complement_Adresse'][i]
+            
+            codeinsee_secondaires = []
+            
+            codeinsee2 = df['Code_Insee_02'][i]
+            codeinsee3 = df['Code_Insee_03'][i]
+            codeinsee4 = df['Code_Insee_04'][i]
+            codeinsee5 = df['Code_Insee_05'][i]
+            codeinsee6 = df['Code_Insee_06'][i]
+            codeinsee7 = df['Code_Insee_07'][i]
+            codeinsee8 = df['Code_Insee_08'][i]
+            codeinsee9 = df['Code_Insee_09'][i]
+            codeinsee10 = df['Code_Insee_10'][i]
+            codeinsee11 = df['Code_Insee_11'][i]
+            codeinsee12 = df['Code_Insee_12'][i]
+            codeinsee13 = df['Code_Insee_13'][i]
+            codeinsee14 = df['Code_Insee_14'][i]
+            codeinsee15 = df['Code_Insee_15'][i]
+
+            if codeinsee2 != "":   
+                codeinsee_secondaires.append(codeinsee2)
+            if codeinsee3 != "":  
+                codeinsee_secondaires.append(codeinsee3)
+            if codeinsee4 != "": 
+                codeinsee_secondaires.append(codeinsee4)
+            if codeinsee5 != "": 
+                codeinsee_secondaires.append(codeinsee5)
+            if codeinsee6 != "":   
+                codeinsee_secondaires.append(codeinsee6)
+            if codeinsee7 != "":   
+                codeinsee_secondaires.append(codeinsee7)
+            if codeinsee8 != "":   
+                codeinsee_secondaires.append(codeinsee8)
+            if codeinsee9 != "":   
+                codeinsee_secondaires.append(codeinsee9)
+            if codeinsee10 != "":   
+                codeinsee_secondaires.append(codeinsee10)
+            if codeinsee11 != "":   
+                codeinsee_secondaires.append(codeinsee11)
+            if codeinsee12 != "":  
+                codeinsee_secondaires.append(codeinsee12)
+            if codeinsee13 != "":   
+                codeinsee_secondaires.append(codeinsee13)
+            if codeinsee14 != "":   
+                codeinsee_secondaires.append(codeinsee14)
+            if codeinsee15 != "":   
+                codeinsee_secondaires.append(codeinsee15)
+
+            codeinsee_arrondt = df['Code_Insee_Arrondt'][i]
+            
+            #cinema
             cinema_type = df['Type_Cinema'][i]
-            number_chairs =df['Nombre_de_fauteuils_de_cinema'][i]
+            number_chairs = df['Nombre_de_fauteuils_de_cinema'][i]
             number_rooms = df['Nombre_de_salles_de_cinema'][i]
             rooms_3d = df['Ecrans_3D'][i]
-            typology_biblio = df['Typologie_Bibliotheque'][i]
-            surface_biblio = df['Surface_Bibliotheque'][i]
-            surface_network_biblio = df['Surface_Reseau_Biblio'][i]
-            owner_MH = df["Proprietaire_Monument_historique"][i]
-            id_origin = df["Identifiant_origine"][i]
-            gps = df["Coordonnées GPS"][i]
+            #mh
+            owner = df['Proprietaire_Monument_historique'][i]
+            #bibliotheque
+            typology = df['Typologie_Bibliotheque'][i]
+            surface = df['Surface_Bibliotheque'][i]
+            surface_network = df['Surface_Reseau_Biblio'][i]
+            code_bib = df['code_bib'][i]
+            code_ua = df['code_ua'][i]
+            #library
+            typology = df['Type_Librairie'][i]
+            label_year = df['Annee_Label_Librairie'][i]
+            #architecture = 
+            precision_architecture = df['Precision_Architecture'][i]
+            #unesco
+            precision_unesco = df['Precision_site_Unesco'][i]
+            pays = df['Pays_Monument_Unesco'][i]
+        
+            id_origine = df['Identifiant_origine'][i]
+            gps = df['Coordonnées GPS [lat,lon]'][i]
 
-            discipline = Discipline_Equipement.objects.get(name__iexact=discipline)
-            source = Source.objects.get(name__iexact=source)
-            equipement_type = Equipement_Type.objects.get(name__iexact=equipement_type)
-            print(name)
+            gps = gps[1:-1].split(",")
+            lat = float(gps[0])
+            lon = float(gps[1])
+            gps = Point(lon,lat)
 
-            if type(address) == float:
-                address = None
-
-            if type(city) == float:
-                city = None
-
-            if type(formatted_address) == float:
-                formatted_address = None
+            try:
+                source = Source.objects.get(name__iexact=source)
+            except:
+                source = None
             
-            if type(complement_address) == float:
-                complement_address = None
-
-            if type(postal_code) == float:
-                postal_code = None
-
-            if type(codeinsee) == float:
-                codeinsee = None
-
-            if type(codeinsee_arrondt) == float:
-                codeinsee_arrondt = None
+            try:
+                domaine = Domaine.objects.get(name__iexact=domaine)
+            except:
+                domaine = None
             
-            if gps == " " or type(gps) == float :
-                gps = None
-            else:
-                gps = gps[1:-1].split(",")
-                gps = Point(float(gps[1]), float(gps[0]))
+            try:
+                sous_domaine = Domaine.objects.get(name__iexact=sous_domaine)
+            except:
+                sous_domaine = None
 
-            if type(id_origin) == float:
-                id_origin = None
+            try:
+                equipement_type = Equipement_Type.objects.get(name__iexact=equipement_type)
+            except:
+                equipement_type = None
+            
+            try:
+                fonction = Function.objects.get(name__iexact=fonction1)
+            except:
+                fonction = None
+            
+            try:
+                fonction_secondaire = Function.objects.get(name__iexact=fonction2)
+            except:
+                fonction_secondaire = None
 
-            if type(cinema_type) == float:
-                cinema_type = None
+            commune = Commune.objects.get(codeinsee=codeinsee, year="2020")
 
-            if type(number_chairs) == float:
-                number_chairs = None
+            communes_secondaires = []
 
-            if type(number_rooms) == float:
-                number_rooms = None
+            for code in codeinsee_secondaires:
+                com = Commune.objects.get(codeinsee=codeinsee, year="2020")
+                communes_secondaires.append(com)
 
-            if type(rooms_3d) == float:
-                rooms_3d = None
+            equipement, created = Equipement.objects.get_or_create(id_DEPS=id_DEPS,
+                source=source,
+                domaine=domaine,
+                sous_domaine=sous_domaine,
+                fonction=fonction,
+                fonction_secondaire=fonction_secondaire,
+                equipement_type=equipement_type,
+                nom=nom,
+                adresse=adresse,
+                complement_adresse=complement_adresse,
+                codeinsee_arrondt=codeinsee_arrondt,
+                commune=commune,
+                id_origine=id_origine,
+                gps=gps
+                )
 
-            if type(typology_biblio) == float:
-                typology_biblio = None
+            equipement.save()
 
-            if type(surface_biblio) == float:
-                surface = None
+            for com in communes_secondaires:
+                equipement.communes_secondaire.add(com)
 
-            if type(surface_network_biblio) == float:
-                surface_network = None
-
-            if type(owner_MH) == float:
-                owner_MH = None            
-
-            try: 
-                commune = Commune.objects.get(codeinsee=codeinsee)
-            except Commune.DoesNotExist:
-                commune = None
-
-            print("********")
-            print(equipement_type)
+            equipement.save()
 
             if equipement_type == "Cinéma":
-                cinema, created = Cinema.objects.get_or_create(source=source, discipline=discipline, equipement_type=equipement_type, name=name,
-                address=address,formatted_address=formatted_address, complement_address=complement_address, postal_code=postal_code,
-                codeinsee_arrondt=codeinsee_arrondt, commune=commune, id_origin=id_origin, gps=gps, cinema_type=cinema_type,
-                number_chairs=number_chairs,number_rooms=number_rooms,rooms_3d=rooms_3d, city=city, codeinsee=codeinsee)
-                print(cinema)
-                if created == False:
-                    print('doublon')
-                
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) == str:
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    label2 = Label.objects.get(name__iexact=label2.strip())
-                    cinema.labels.add(label1.pk, label2.pk)
-                
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) != str: 
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    cinema.labels.add(label1.pk)
+                cinema, created = Cinema.objects.get_or_create(equipement=equipement,cinema_type=cinema_type,
+                        number_chairs=number_chairs,
+                        number_rooms=number_rooms,
+                        rooms_3d=rooms_3d)
 
-            if equipement_type == "Bibliotheque":
-                bibliotheque, created = Bibliotheque.objects.get_or_create(source=source, discipline=discipline, equipement_type=equipement_type, name=name,
-                address=address,formatted_address=formatted_address, complement_address=complement_address, postal_code=postal_code,
-                codeinsee_arrondt=codeinsee_arrondt, commune=commune, id_origin=id_origin, gps=gps, typology=typology_biblio, surface=surface_biblio,
-                surface_network=surface_network_biblio, city=city, codeinsee=codeinsee)         
-                
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) == str:
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    label2 = Label.objects.get(name__iexact=label2.strip())
-                    bibliotheque.labels.add(label1.pk, label2.pk)
-                
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) != str: 
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    bibliotheque.labels.add(label1.pk)
+            if equipement_type == "Biliothèque municipale":
+                biblio, created = Bibliotheuqe.objects.get_or_create(equipement=equipement,typology=typology,
+                    surface=surface,
+                    surface_network=surface_network,
+                    code_bib=code_bib,
+                    code_ua=code_ua)
+                    
+            if equipement_type == "Librairie labellisée":
+                lib, created = Librairie.objects.get_or_create(equipement=equipement,typology=typology,
+                    label_year=label_year)
 
-            if equipement_type == "Monument Historique":
-                mh, created = Bibliotheque.objects.get_or_create(source=source, discipline=discipline, equipement_type=equipement_type, name=name,
-                address=address,formatted_address=formatted_address, complement_address=complement_address, postal_code=postal_code,
-                codeinsee_arrondt=codeinsee_arrondt, commune=commune, id_origin=id_origin, gps=gps, owner=owner_MH, city=city, codeinsee=codeinsee)
-
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) == str:
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    label2 = Label.objects.get(name__iexact=label2.strip())
-                    mh.labels.add(label1.pk, label2.pk)
-                
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) != str: 
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    mh.labels.add(label1.pk)
-
-            else:
-                eq, created = Equipement.objects.get_or_create(source=source, discipline=discipline, equipement_type=equipement_type, name=name,
-                address=address,formatted_address=formatted_address, complement_address=complement_address, postal_code=postal_code,
-                codeinsee_arrondt=codeinsee_arrondt, commune=commune, id_origin=id_origin, gps=gps, city=city, codeinsee=codeinsee)
-
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) == str:
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    label2 = Label.objects.get(name__iexact=label2.strip())
-                    eq.labels.add(label1.pk, label2.pk)
-                
-                if (type(label1) == str and label1 != "Non renseigné") and type(label2) != str: 
-                    label1 = Label.objects.get(name__iexact=label1.strip())
-                    eq.labels.add(label1.pk)
-                
+            if equipement_type == "Architecture contemporaine remarquable":
+                archi, created = Architecture.objects.get_or_create(quipement=equipement,precision_architecture=precision_architecture)
             
-"""
-sources =  ["Artcena"
-        "CNC",
-        "France Archives",
-        "Ministère de la Culture",
-        "Ministère de la Culture - Deps",
-        "Ministère de la Culture - DGCA",
-        "Ministère de la Culture - DGMIC",
-        "Ministère de la Culture - DGP",
-        "Ministère de la Culture - DPPDGPAT",
-        "Ministère de la Culture -DGCA",
-        "Ministère de la Culture- Centre National du Livre",
-        "Unesco"]
-
-for source in sources :
-    Source.objects.create(name=source)
-
-"""
-"""
-total = {
-            "Bibliotheque":{},
-            "Centre chorégraphique national":{},
-            "Centre D'Art Contemporain":{},
-            "Centre de développement chorégraphique national":{},
-            "Centre Dramatique National":{},
-            "Centre Dramatique Régional":{},
-            "Centre national de création musicale":{},
-            "Centre national des arts de la rue":{},
-            "Cinéma":{},
-            "Conservatoire":{},
-            "Enseignement superieur":{},
-            "Fonds Régional D'Art Contemporain":{},
-            "Jardin Remarquable":{},
-            "Librairie labellisée LIR ou LR":{},
-            "Maison des Illustres":{},
-            "Monument Historique":{},
-            "Monument national":{},
-            "MuseeDeFrance":{},
-            "Opéra national en région":{},
-            "Orchestre national en région":{},
-            "Patrimoine Mondial Unesco":{},
-            "Pôle national des arts du cirque":{},
-            "Scène Conventionnée":{},
-            "Scène Conventionnée mention Art et création":{},
-            "Scène de musiques actuelles":{},
-            "Scène Nationale":{},
-            "Service d'archives":{},
-            "Théâtre de ville":{},
-            "Théâtre lyrique d'intérêt national":{},
-            "Théâtre national":{},
-            "Théâtre privé":{},
-            "Zénith":{}
-        }
-"""
+            if equipement_type == "Monument historique":
+                mh, created = Monument_Historique.objects.get_or_create(quipement=equipement,owner=owner)
+            
+            if equipement_type == "Patrimoine mondial Unesco":
+                unesco, created = Unesco.objects.get_or_create(quipement=equipement,precision_unesco=precision_unesco,
+                    pays=pays)

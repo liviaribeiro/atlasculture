@@ -12,6 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         
+        """
         csv_file = os.path.join(BASE_DIR, 'admindivisions/data/region2020.csv')
 
         df = pd.read_csv(csv_file)
@@ -21,6 +22,19 @@ class Command(BaseCommand):
             name = df['libelle'][i]
             Region.objects.get_or_create(codeinsee=codeinsee,
             name = name)
+        """
+
+        with open('admindivisions/data/REGION.json') as f:
+            data = json.load(f)
+
+        i = 1
+        for feature in data['features']: 
+            feature["id"] = i
+            i += 1
+        
+        with open('admindivisions/data/REGION_ID.json', 'w') as f:
+            json.dump(data, f)
+        
 
         """
         with open(options['json_file']) as f:

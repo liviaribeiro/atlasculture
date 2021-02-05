@@ -38,6 +38,13 @@ class ZonageRural(models.Model):
     def __str__(self):
         return self.name
 
+class ZoneEmploi(models.Model):
+    code = models.CharField(max_length=4)
+    name = models.CharField(max_length=100)
+
+class ActionCoeurVille(models.Model):
+    code_acv = models.CharField(max_length=6)
+
 class Commune(models.Model):
     name = models.CharField(max_length=100)
     codeinsee = models.CharField(max_length=5)
@@ -47,9 +54,31 @@ class Commune(models.Model):
     geom_simplified = models.MultiPolygonField(null=True)
     zonage_rural = models.ForeignKey(ZonageRural, on_delete=models.CASCADE, null=True)
     year = models.CharField(max_length=4, null=True)
+    zone_emploi = models.ForeignKey(ZoneEmploi, on_delete=models.CASCADE, null=True)
+    acv = models.ForeignKey(ActionCoeurVille, on_delete=models.CASCADE, null=True)
     def __str__(self):
-        return self.codeinsee
+        return self.name
 
-
+class Cadrage(models.Model):
+    year = models.CharField(max_length=4, null=True)
+    population = models.IntegerField(null=True)
+    #5 years period
+    births = models.IntegerField(null=True)
+    #5 years period
+    deaths = models.IntegerField(null=True)
+    livingstandard = models.IntegerField(null=True)
+    commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True)
+    surface = models.FloatField(null=True)
+    density = models.FloatField(null=True)
+    plus65 = models.IntegerField(null=True)
+    less25 = models.IntegerField(null=True)
+    youthindex = models.FloatField(null=True)
+    soldenaturel = models.FloatField(null=True)
+    soldeapparent = models.FloatField(null=True)
+    evolution = models.FloatField(null=True)
+    typologie_evol = models.IntegerField(null=True)
+    #povertyrate = models.FloatField(null=True)
+    #householdshare = models.FloatField(null=True)
+    #activepopulation = models.IntegerField(null=True)
 
 

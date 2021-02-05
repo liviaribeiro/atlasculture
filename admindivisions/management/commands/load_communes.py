@@ -10,9 +10,11 @@ from atlasculture.settings import BASE_DIR
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        
-    
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/communes2019.csv')
+
+        com = Commune.objects.filter(year=2019)
+        print(len(com))
+        """
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/communes-2019.csv')
 
         df = pd.read_csv(csv_file)
         for i in df.index:
@@ -23,13 +25,14 @@ class Command(BaseCommand):
 
             if typecom == "COM":
                 departement = Departement.objects.get(codeinsee=dep)
-
+            
                 Commune.objects.get_or_create(codeinsee=codeinsee,
                 name = name,
                 departement=departement,
                 year=2019
                 )
-        
+       
+        """
         """
 
         with open(options['json_file']) as f:
