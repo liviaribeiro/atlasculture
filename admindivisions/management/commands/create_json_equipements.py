@@ -8,8 +8,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        with open('equipements/data/EQUIPEMENTS3.json', "w") as out:
-            serializers.serialize('geojson', Equipement.objects.all(), 
+        with open('equipements/data/EQUIPEMENTS4.json', "w") as out:
+            serializers.serialize('geojson', Equipement.objects.filter(domaine=6), 
                 geometry_field='gps', 
                 fields=('nom','domaine','adresse','source_name','commune_name',),
                 use_natural_foreign_keys=True,

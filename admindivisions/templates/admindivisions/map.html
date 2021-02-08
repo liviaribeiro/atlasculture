@@ -18,6 +18,7 @@ crossorigin=""></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
 
 
+
 <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
     
 </head>
@@ -26,20 +27,19 @@ crossorigin=""></script>
 <div id="map"></div>
 <nav id="menu" class='filter-group'></nav>
 
- 
 <script>
 
     //create map
 	mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
         var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/light-v9',
+        style: 'mapbox://styles/mapbox/streets-v9',
         center: [4.079306, 48.293024],
         minZoom: 3,
         zoom: 5
     });
 
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
 
     map.addControl(new MapboxLanguage({
         defaultLanguage: 'fr'
@@ -107,7 +107,7 @@ crossorigin=""></script>
             'source-layer': 'REGION_SIMPLIFIED',
             'maxzoom': zoomThreshold,
             'layout': {
-                'visibility': 'none'
+                'visibility': 'visible'
             },
             'paint': {
                 'line-color': '#ffffff',
@@ -170,7 +170,7 @@ crossorigin=""></script>
         map.on('mousemove', 'Regions_popup', function (e) {
             if (e.features.length > 0) {
                 popup.setLngLat(e.lngLat)
-                    .setText(e.features[0].properties.NOM_REG)
+                    .setHTML('<p>'+e.features[0].properties.NOM_REG+'</p')
                     .addTo(map);
                 }     
         });
@@ -218,7 +218,7 @@ crossorigin=""></script>
             'minzoom': zoomThreshold,
             'maxzoom': zoomComThreshold,
             'layout': {
-                'visibility': 'none'
+                'visibility': 'visible'
             },
             'paint': {
                 'line-color': '#ffffff',
@@ -255,7 +255,7 @@ crossorigin=""></script>
             );
         }
         popup.setLngLat(e.lngLat)
-                    .setText(e.features[0].properties.NOM_DEP)
+                    .setHTML('<p>'+e.features[0].properties.NOM_DEP+'</p>')
                     .addTo(map);
                 
         });
@@ -312,7 +312,7 @@ crossorigin=""></script>
             'source-layer': 'COMMUNE_SIMPLIFIED',
             'minzoom': zoomComThreshold,
             'layout': {
-                'visibility': 'none'
+                'visibility': 'visible'
             },
             'paint': {
                 'line-color': '#ffffff',
@@ -348,7 +348,7 @@ crossorigin=""></script>
             { hover: true }
             );
             popup.setLngLat(e.lngLat)
-                    .setText(e.features[0].properties.NOM_COM)
+                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'<p>')
                     .addTo(map);
         }
         });
@@ -482,6 +482,20 @@ crossorigin=""></script>
                 }
             }  
         );  
+
+        map.on('mousemove', 'Indice relatif à la jeunesse', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>Indice relatif à la jeunesse : '
+                        +(e.features[0].properties.INDICEJEUNESSE17).toFixed(0)+ '</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Indice relatif à la jeunesse', function () {
+            popup.remove();
+        });
+
 
         //add évolution de la population
         map.addLayer(
@@ -656,7 +670,7 @@ crossorigin=""></script>
 
         map.addSource('equipements', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.br32ow17',
+            'url': 'mapbox://liviaribeiro.80y3ut51',
         });
 
         map.addLayer({
@@ -708,6 +722,18 @@ crossorigin=""></script>
                 }
         });
         
+        // inspect a cluster on click
+        map.on('click', 'Equipements', function (e) {
+            var center = e.features[0].geometry.coordinates
+            var zoom = map.getZoom();
+            console.log(zoom)
+            if (zoom < 17) {
+                map.flyTo({
+                    center: center, zoom:zoom+2
+                });
+            }
+        });
+
         // When a click event occurs on a feature in
         // the unclustered-point layer, open a popup at
         // the location of the feature, with
@@ -716,6 +742,7 @@ crossorigin=""></script>
             var coordinates = e.features[0].geometry.coordinates.slice();
             var name = e.features[0].properties.nom;
             var adresse = e.features[0].properties.adresse;
+            var domaine = e.features[0].properties.domaine;
             
             // Ensure that if the map is zoomed out such that
             // multiple copies of the feature are visible, the
@@ -726,8 +753,98 @@ crossorigin=""></script>
             
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
-                .setHTML(
-                 name + adresse
+                .setHTML('<p>'+name+'</p>'+ 
+                '<p>'+adresse+'</p>'
+            )
+            .addTo(map);
+        });
+
+        map.addSource('llp', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.7f3cw4cy',
+        });
+
+        map.addLayer({
+            'id': 'Lieux de lecture publique',
+            'type': 'circle',
+            'source': 'llp',
+            'source-layer': 'BIBLIOTHEQUES',
+            'filter': ['has', 'point_count'],
+            'paint': {
+                'circle-color': '#51bbd6',
+                'circle-radius': 15,
+            },
+            'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+            },
+        });
+
+        map.addLayer({
+            'id': 'llp-count',
+            'type': 'symbol',
+            'source': 'llp',
+            'source-layer': 'BIBLIOTHEQUES',
+            'filter': ['has', 'point_count'],
+            'layout': {
+                'text-field': '{point_count}',
+                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-size': 12,
+                'visibility': 'none'
+            },
+        });
+
+        map.addLayer({
+            'id': 'unclustered-llp',
+            'type': 'circle',
+            'source': 'llp',
+            'source-layer': 'BIBLIOTHEQUES',
+            'filter': ['!', ['has', 'point_count']],
+            'paint': {
+                'circle-color': '#ff5500',
+                'circle-radius': 5,
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#fff'
+            },
+            'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                },
+        });
+        
+        // inspect a cluster on click
+        map.on('click', 'Lieux de lecture publique', function (e) {
+            var center = e.features[0].geometry.coordinates
+            var zoom = map.getZoom();
+            console.log(zoom)
+            if (zoom < 17) {
+                map.flyTo({
+                    center: center, zoom:zoom+2
+                });
+            }
+        });
+
+        // When a click event occurs on a feature in
+        // the unclustered-point layer, open a popup at
+        // the location of the feature, with
+        // description HTML from its properties.
+        map.on('click', 'unclustered-llp', function (e) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var name = e.features[0].properties.nom;
+            var adresse = e.features[0].properties.adresse;
+            var domaine = e.features[0].properties.domaine;
+            
+            // Ensure that if the map is zoomed out such that
+            // multiple copies of the feature are visible, the
+            // popup appears over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            
+            new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML('<p>'+name+'</p>'+ 
+                '<p>'+adresse+'</p>'
             )
             .addTo(map);
         });
@@ -735,7 +852,7 @@ crossorigin=""></script>
     });
 
     // enumerate ids of the layers
-    var toggleableLayerIds = ["Zone d'emploi", "Zonage Rural", "Population", "Densité Moyenne", "Niveau de vie médian", "Indice relatif à la jeunesse", "Évolution de la population", "Action coeur de ville", "Equipements"];
+    var toggleableLayerIds = ["Zone d'emploi", "Zonage Rural", "Population", "Densité Moyenne", "Niveau de vie médian", "Indice relatif à la jeunesse", "Évolution de la population", "Action coeur de ville", "Equipements", "Lieux de lecture publique"];
     
     // set up the corresponding toggle button for each layer
     for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -759,34 +876,35 @@ crossorigin=""></script>
                 map.setLayoutProperty('equipements-count', 'visibility', 'none');
                 map.setLayoutProperty('unclustered-equipement', 'visibility', 'none');
             }
+
+            if (clickedLayer == 'Lieux de lecture publique'){
+                map.setLayoutProperty('llp-count', 'visibility', 'none');
+                map.setLayoutProperty('unclustered-llp', 'visibility', 'none');
+            }
             map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            map.setLayoutProperty('Regions_popup', 'visibility', 'visible');
-            map.setLayoutProperty('Departements', 'visibility', 'visible');
-            map.setLayoutProperty('Communes', 'visibility', 'visible');
             this.className = '';
         } else {
         this.className = 'active';
             map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
             if (clickedLayer == 'Equipements'){
-                map.moveLayer('Regions');
+                /*map.moveLayer('Regions');
                 map.moveLayer('Departements');
-                map.moveLayer('Communes');
-                map.setLayoutProperty('Regions_popup', 'visibility', 'none');
+                map.moveLayer('Communes');*/
                 map.setLayoutProperty('equipements-count', 'visibility', 'visible');
                 map.setLayoutProperty('unclustered-equipement', 'visibility', 'visible');
-                map.setLayoutProperty('Regions_line', 'visibility', 'none');
-                map.setLayoutProperty('Departements_line', 'visibility', 'none');
-                map.setLayoutProperty('Communes_line', 'visibility', 'none');
             }
-            if (clickedLayer != 'Equipements'){
-                map.moveLayer('Regions_line');
-                map.moveLayer('Regions');
-                map.moveLayer('Departements');
-                map.moveLayer('Departements_line');
-                map.moveLayer('Communes');
-                map.moveLayer('Communes_line');
+            if (clickedLayer == 'Lieux de lecture publique'){
+                map.setLayoutProperty('llp-count', 'visibility', 'visible');
+                map.setLayoutProperty('unclustered-llp', 'visibility', 'visible');
+                map.moveLayer('Regions_line', clickedLayer);
+                map.moveLayer('Departements_line', clickedLayer);
+                map.moveLayer('Communes_line', clickedLayer);
             }
-
+            else {
+                map.moveLayer(clickedLayer, 'Regions_line');
+                map.moveLayer(clickedLayer,'Departements_line');
+                map.moveLayer(clickedLayer, 'Communes_line');
+            }
         }
         };
         
