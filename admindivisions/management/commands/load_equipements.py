@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        excel_file = os.path.join(BASE_DIR, 'equipements/data/Basilic - Base des lieux culturels (28012021).xlsx')
+        excel_file = os.path.join(BASE_DIR, 'equipements/data/Geoloc Biblios.xlsx')
 
         df = pd.read_excel(excel_file)
         #df = df.head(50)

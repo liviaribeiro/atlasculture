@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Update a choropleth layer by zoom level</title>
+<title>Atlas Culture</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
@@ -33,7 +33,7 @@ crossorigin=""></script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
         var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v9',
+        style: 'mapbox://styles/mapbox/streets-v10',
         center: [4.079306, 48.293024],
         minZoom: 3,
         zoom: 5
@@ -44,7 +44,8 @@ crossorigin=""></script>
     map.addControl(new MapboxLanguage({
         defaultLanguage: 'fr'
     }));
- 
+
+   
     var zoomThreshold = 6;
     var zoomComThreshold = 8;
     var hoveredStateId = null;
@@ -52,6 +53,12 @@ crossorigin=""></script>
 
     //load layers
     map.on('load', function () {
+
+        map.getStyle().layers.map(function (layer) {
+            if (layer.id.indexOf('road') >= 0) {
+            map.setLayoutProperty(layer.id, 'visibility', 'none');
+            }
+        });
 
         //add region source
         map.addSource('region', {
@@ -328,7 +335,7 @@ crossorigin=""></script>
             var center = new mapboxgl.LngLatBounds(southWest, northEast).getCenter();
             console.log(fit)
             map.flyTo({
-            center: center, zoom:10
+            center: center, zoom:12
             });
         });
 
@@ -449,6 +456,17 @@ crossorigin=""></script>
                 }
             }  
         );    
+        
+        var layers = map.getStyle().layers;
+        console.log(layers);
+        var firstSymbolId;
+        for (var i = 0; i < layers.length; i++) {
+            if (layers[i].type === 'symbol') {
+                firstSymbolId = layers[i].id;
+                break;
+            }
+        }
+        
 
         //add indice relatif à la jeunesse
         map.addLayer(
@@ -463,15 +481,15 @@ crossorigin=""></script>
                         ["get", "INDICEJEUNESSE17"],
                         "#FFFFFF",
                         0,
-                        "hsl(207, 66%, 98%)",
+                        "#FEF3CF",
                         50,
-                        "#c8e0f4",
+                        "#FDCF41",
                         80,
-                        "hsl(207, 64%, 70%)",
+                        "#FEF3CF",
                         100,
-                        "hsl(207, 63%, 44%)",
+                        "#F79142",
                         150,
-                        "hsl(207, 66%, 23%)",
+                        "#E10600",
                         ],
                     'fill-opacity': 0.75,
                     
@@ -480,7 +498,7 @@ crossorigin=""></script>
                     // make layer not visible by default
                     'visibility': 'none'
                 }
-            }  
+            }
         );  
 
         map.on('mousemove', 'Indice relatif à la jeunesse', function (e) {
@@ -669,10 +687,142 @@ crossorigin=""></script>
         });
 
         map.addSource('equipements', {
+            'type': 'geojson',
+            'data': "{% url 'equipements' %}",
+            'cluster': true,
+            'clusterMaxZoom': 14, // Max zoom to cluster points on
+            'clusterRadius': 50 
+        });
+
+
+        map.addLayer({
+            'id': 'Equipements',
+            'type': 'circle',
+            'source': 'equipements',
+            'filter': ['has', 'point_count'],
+            'paint': {
+            // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+            // with three steps to implement three types of circles:
+            //   * Blue, 20px circles when point count is less than 100
+            //   * Yellow, 30px circles when point count is between 100 and 750
+            //   * Pink, 40px circles when point count is greater than or equal to 750
+            'circle-color': [
+                'step',
+                ['get', 'point_count'],
+                '#51bbd6',
+                100,
+                '#f1f075',
+                750,
+                '#f28cb1'
+            ],
+            'circle-radius': [
+                'step',
+                ['get', 'point_count'],
+                20,
+                100,
+                30,
+                750,
+                40
+                ]
+            },
+            'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none',
+                },
+                
+        });
+
+        map.addLayer({
+            'id': 'equipements-count',
+            'type': 'symbol',
+            'source': 'equipements',
+            'filter': ['has', 'point_count'],
+            'layout': {
+                'text-field': '{point_count}',
+                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-size': 12,
+                'visibility': 'none',
+                'text-allow-overlap': true
+            },
+        
+        });
+
+        map.addLayer({
+            'id': 'unclustered-equipement',
+            'type': 'circle',
+            'source': 'equipements',
+            'filter': ['!', ['has', 'point_count']],
+            'paint': {
+                'circle-color': '#ff5500',
+                'circle-radius': 5,
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#fff'
+            },
+            'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none',
+                },
+                
+        });
+
+        // inspect a cluster on click
+        map.on('click', 'Equipements', function (e) {
+            var center = e.features[0].geometry.coordinates
+            var zoom = map.getZoom();
+            console.log(zoom)
+            if (zoom < 17) {
+                map.flyTo({
+                    center: center, zoom:zoom+2
+                });
+            }
+        });
+
+        // When a click event occurs on a feature in
+        // the unclustered-point layer, open a popup at
+        // the location of the feature, with
+        // description HTML from its properties.
+        map.on('click', 'unclustered-equipement', function (e) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var name = e.features[0].properties.nom;
+            var adresse = e.features[0].properties.adresse;
+            var domaine = e.features[0].properties.domaine;
+            
+            // Ensure that if the map is zoomed out such that
+            // multiple copies of the feature are visible, the
+            // popup appears over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            
+            new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML('<p>'+name+'</p>'+ 
+                '<p>'+adresse+'</p>'
+            )
+            .addTo(map);
+        });
+
+        map.addLayer({
+            'id': 'Lieux de lecture publique',
+            'type': 'circle',
+            'source': 'equipements',
+            'filter': ['==', 'domaine', '6'],
+            'paint': {
+                'circle-color': '#51bbd6',
+                'circle-radius': 15,
+            },
+            'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+            },
+        });
+        /*
+        map.addSource('equipements', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.80y3ut51',
         });
 
+        
         map.addLayer({
             'id': 'Equipements',
             'type': 'circle',
@@ -718,8 +868,9 @@ crossorigin=""></script>
             },
             'layout': {
                     // make layer not visible by default
-                    'visibility': 'none'
-                }
+                    'visibility': 'none',
+                },
+                
         });
         
         // inspect a cluster on click
@@ -757,7 +908,7 @@ crossorigin=""></script>
                 '<p>'+adresse+'</p>'
             )
             .addTo(map);
-        });
+        });*/
 
         map.addSource('llp', {
             'type': 'vector',
@@ -796,19 +947,16 @@ crossorigin=""></script>
 
         map.addLayer({
             'id': 'unclustered-llp',
-            'type': 'circle',
+            'type': 'symbol',
             'source': 'llp',
             'source-layer': 'BIBLIOTHEQUES',
             'filter': ['!', ['has', 'point_count']],
-            'paint': {
-                'circle-color': '#ff5500',
-                'circle-radius': 5,
-                'circle-stroke-width': 1,
-                'circle-stroke-color': '#fff'
-            },
             'layout': {
+                    'icon-image':"library-15",
+                    'icon-size':1,
                     // make layer not visible by default
-                    'visibility': 'none'
+                    'visibility': 'none',
+                    'icon-allow-overlap': true
                 },
         });
         
@@ -884,7 +1032,7 @@ crossorigin=""></script>
             map.setLayoutProperty(clickedLayer, 'visibility', 'none');
             this.className = '';
         } else {
-        this.className = 'active';
+            this.className = 'active';
             map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
             if (clickedLayer == 'Equipements'){
                 /*map.moveLayer('Regions');
@@ -899,11 +1047,24 @@ crossorigin=""></script>
                 map.moveLayer('Regions_line', clickedLayer);
                 map.moveLayer('Departements_line', clickedLayer);
                 map.moveLayer('Communes_line', clickedLayer);
+                map.moveLayer('place-town', clickedLayer);
             }
             else {
                 map.moveLayer(clickedLayer, 'Regions_line');
                 map.moveLayer(clickedLayer,'Departements_line');
                 map.moveLayer(clickedLayer, 'Communes_line');
+                map.moveLayer('place-city-sm');
+                map.moveLayer('place-city-md-s');
+                map.moveLayer('place-city-md-n');
+                map.moveLayer('place-city-lg-s');
+                map.moveLayer('place-city-lg-n');
+                map.moveLayer('place-town');
+                map.moveLayer('state-label-lg');
+                map.moveLayer('state-label-md');
+                map.moveLayer('state-label-sm');
+                map.moveLayer('country-label-lg');
+                map.moveLayer('country-label-md');
+                map.moveLayer('country-label-sm');
             }
         }
         };
