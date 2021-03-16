@@ -11,29 +11,31 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        """
         com = Commune.objects.filter(year=2019)
         print(len(com))
         """
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/communes-2019.csv')
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/communes2017.xlsx')
 
-        df = pd.read_csv(csv_file)
+        df = pd.read_excel(csv_file)
         for i in df.index:
-            codeinsee = df['com'][i]
-            name = df['libelle'][i]
-            dep = df['dep'][i]
-            typecom = df['typecom'][i]
+            codeinsee = df['CODGEO'][i]
+            print(codeinsee)
+            name = df['LIBGEO'][i]
+            dep = df['DEP'][i]
+            #typecom = df['typecom'][i]
 
-            if typecom == "COM":
-                departement = Departement.objects.get(codeinsee=dep)
-            
-                Commune.objects.get_or_create(codeinsee=codeinsee,
-                name = name,
-                departement=departement,
-                year=2019
-                )
+            #if typecom == "COM":
+            departement = Departement.objects.get(codeinsee=dep)
+        
+            Commune.objects.get_or_create(codeinsee=codeinsee,
+            name = name,
+            departement=departement,
+            year=2017
+            )
        
         """
-        """
+       
 
         with open(options['json_file']) as f:
             data_list = json.load(f)

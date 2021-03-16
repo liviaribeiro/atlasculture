@@ -5,7 +5,7 @@ from django.contrib.gis.db import models
 class Region(models.Model):
     name = models.CharField(max_length=100)
     codeinsee = models.CharField(max_length=2)
-    geom = models.MultiPolygonField(null=True)
+    geom = models.MultiPolygonField(null=True, blank=True)
     #geom_simplified = models.MultiPolygonField(null=True)
     def __str__(self):
         return self.codeinsee
@@ -45,6 +45,10 @@ class ZoneEmploi(models.Model):
 class ActionCoeurVille(models.Model):
     code_acv = models.CharField(max_length=6)
 
+class TypologieEvolution(models.Model):
+    code = models.IntegerField(null=True)
+    typologie = models.CharField(max_length=200)
+
 class Commune(models.Model):
     name = models.CharField(max_length=100)
     codeinsee = models.CharField(max_length=5)
@@ -81,4 +85,35 @@ class Cadrage(models.Model):
     #householdshare = models.FloatField(null=True)
     #activepopulation = models.IntegerField(null=True)
 
+class Entreprises_communes(models.Model):
+    commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True)
+    #Effectifs salariés en équivalent temps plein de l'ensemble des secteurs marchands
+    effectifs_total = models.IntegerField(null=True)
+    #Effectifs salariés en équivalent temps plein des secteurs culturels marchands
+    effectifs_culture = models.IntegerField(null=True)
+    #Nombre d'établissements marchands
+    etablissements_total = models.IntegerField(null=True)
+    #Nombre d'établissements culturels marchands
+    etablissements_culture = models.IntegerField(null=True)
 
+class Entreprises_departements(models.Model):
+    departement = models.ForeignKey(Departement, on_delete=models.CASCADE, null=True)
+    #Effectifs salariés en équivalent temps plein de l'ensemble des secteurs marchands
+    effectifs_total = models.IntegerField(null=True)
+    #Effectifs salariés en équivalent temps plein des secteurs culturels marchands
+    effectifs_culture = models.IntegerField(null=True)
+    #Nombre d'établissements marchands
+    etablissements_total = models.IntegerField(null=True)
+    #Nombre d'établissements culturels marchands
+    etablissements_culture = models.IntegerField(null=True)
+
+class Entreprises_regions(models.Model):
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
+    #Effectifs salariés en équivalent temps plein de l'ensemble des secteurs marchands
+    effectifs_total = models.IntegerField(null=True)
+    #Effectifs salariés en équivalent temps plein des secteurs culturels marchands
+    effectifs_culture = models.IntegerField(null=True)
+    #Nombre d'établissements marchands
+    etablissements_total = models.IntegerField(null=True)
+    #Nombre d'établissements culturels marchands
+    etablissements_culture = models.IntegerField(null=True)

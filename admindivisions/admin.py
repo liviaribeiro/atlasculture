@@ -1,6 +1,7 @@
 from django.contrib.gis import admin
 from admindivisions.models import (Region, Departement, Commune, EpciType, Epci, ZonageRural, 
-                                    ActionCoeurVille, ZoneEmploi, Cadrage)
+                                    ActionCoeurVille, ZoneEmploi, Cadrage, Entreprises_communes, 
+                                    Entreprises_departements, Entreprises_regions, TypologieEvolution)
 # Register your models here.
 
 class RegionAdmin(admin.OSMGeoAdmin):
@@ -30,6 +31,10 @@ admin.site.register(ZonageRural)
 admin.site.register(ActionCoeurVille, ActionCoeurVilleAdmin)
 admin.site.register(ZoneEmploi, ZoneEmploiAdmin)
 admin.site.register(Cadrage, CadrageAdmin)
+admin.site.register(Entreprises_communes)
+admin.site.register(Entreprises_regions)
+admin.site.register(Entreprises_departements)
+admin.site.register(TypologieEvolution)
 
 
 

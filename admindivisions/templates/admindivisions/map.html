@@ -47,7 +47,7 @@ crossorigin=""></script>
 
    
     var zoomThreshold = 6;
-    var zoomComThreshold = 8;
+    var zoomComThreshold = 9;
     var hoveredStateId = null;
 
 
@@ -372,6 +372,19 @@ crossorigin=""></script>
             hoveredStateId = null;
             popup.remove();
         });
+        map.moveLayer('place-village');
+        map.moveLayer('place-city-sm');
+        map.moveLayer('place-city-md-s');
+        map.moveLayer('place-city-md-n');
+        map.moveLayer('place-city-lg-s');
+        map.moveLayer('place-city-lg-n');
+        map.moveLayer('place-town');
+        map.moveLayer('state-label-lg');
+        map.moveLayer('state-label-md');
+        map.moveLayer('state-label-sm');
+        map.moveLayer('country-label-lg');
+        map.moveLayer('country-label-md');
+        map.moveLayer('country-label-sm');
         
         //add cadrage source
         map.addSource('cadrage', {
@@ -414,7 +427,7 @@ crossorigin=""></script>
             if (e.features.length > 0) {
                 popup.setLngLat(e.lngLat)
                     .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
-                        +(e.features[0].properties.DENSITE17).toFixed(2)+'hab/km2 </p>')
+                        +(e.features[0].properties.DENSITE17).toFixed(2)+' habitants/km2 </p>')
                     .addTo(map);
                 }     
         });
@@ -456,18 +469,20 @@ crossorigin=""></script>
                 }
             }  
         );    
-        
-        var layers = map.getStyle().layers;
-        console.log(layers);
-        var firstSymbolId;
-        for (var i = 0; i < layers.length; i++) {
-            if (layers[i].type === 'symbol') {
-                firstSymbolId = layers[i].id;
-                break;
-            }
-        }
-        
 
+        map.on('mousemove', 'Niveau de vie médian', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
+                        +(e.features[0].properties.NIVEAUDEVIE17)+' euros </p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Niveau de vie médian', function () {
+            popup.remove();
+        });
+        
         //add indice relatif à la jeunesse
         map.addLayer(
             {
@@ -550,6 +565,20 @@ crossorigin=""></script>
                 }
             }  
         );      
+        
+        map.on('mousemove', 'Évolution de la population', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
+                        +(e.features[0].properties.TYPOLOGIEEVOL1217)+'</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Évolution de la population', function () {
+            popup.remove();
+        });
+
 
         //add population source
          map.addSource('population', {
@@ -802,113 +831,6 @@ crossorigin=""></script>
             .addTo(map);
         });
 
-        map.addLayer({
-            'id': 'Lieux de lecture publique',
-            'type': 'circle',
-            'source': 'equipements',
-            'filter': ['==', 'domaine', '6'],
-            'paint': {
-                'circle-color': '#51bbd6',
-                'circle-radius': 15,
-            },
-            'layout': {
-                    // make layer not visible by default
-                    'visibility': 'none'
-            },
-        });
-        /*
-        map.addSource('equipements', {
-            'type': 'vector',
-            'url': 'mapbox://liviaribeiro.80y3ut51',
-        });
-
-        
-        map.addLayer({
-            'id': 'Equipements',
-            'type': 'circle',
-            'source': 'equipements',
-            'source-layer': 'EQUIPEMENTS',
-            'filter': ['has', 'point_count'],
-            'paint': {
-                'circle-color': '#51bbd6',
-                'circle-radius': 15,
-            },
-            'layout': {
-                    // make layer not visible by default
-                    'visibility': 'none'
-                }
-        });
-
-        map.addLayer({
-            'id': 'equipements-count',
-            'type': 'symbol',
-            'source': 'equipements',
-            'source-layer': 'EQUIPEMENTS',
-            'filter': ['has', 'point_count'],
-            'layout': {
-                'text-field': '{point_count}',
-                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                'text-size': 12,
-                'visibility': 'none'
-            },
-           
-        });
-
-        map.addLayer({
-            'id': 'unclustered-equipement',
-            'type': 'circle',
-            'source': 'equipements',
-            'source-layer': 'EQUIPEMENTS',
-            'filter': ['!', ['has', 'point_count']],
-            'paint': {
-                'circle-color': '#ff5500',
-                'circle-radius': 5,
-                'circle-stroke-width': 1,
-                'circle-stroke-color': '#fff'
-            },
-            'layout': {
-                    // make layer not visible by default
-                    'visibility': 'none',
-                },
-                
-        });
-        
-        // inspect a cluster on click
-        map.on('click', 'Equipements', function (e) {
-            var center = e.features[0].geometry.coordinates
-            var zoom = map.getZoom();
-            console.log(zoom)
-            if (zoom < 17) {
-                map.flyTo({
-                    center: center, zoom:zoom+2
-                });
-            }
-        });
-
-        // When a click event occurs on a feature in
-        // the unclustered-point layer, open a popup at
-        // the location of the feature, with
-        // description HTML from its properties.
-        map.on('click', 'unclustered-equipement', function (e) {
-            var coordinates = e.features[0].geometry.coordinates.slice();
-            var name = e.features[0].properties.nom;
-            var adresse = e.features[0].properties.adresse;
-            var domaine = e.features[0].properties.domaine;
-            
-            // Ensure that if the map is zoomed out such that
-            // multiple copies of the feature are visible, the
-            // popup appears over the copy being pointed to.
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-            
-            new mapboxgl.Popup()
-                .setLngLat(coordinates)
-                .setHTML('<p>'+name+'</p>'+ 
-                '<p>'+adresse+'</p>'
-            )
-            .addTo(map);
-        });*/
 
         map.addSource('llp', {
             'type': 'vector',
@@ -996,11 +918,297 @@ crossorigin=""></script>
             )
             .addTo(map);
         });
+
+         //add departement source
+         map.addSource('commune_entreprises', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.08u9p4r9'
+        });
+            
+        //add departement layer
+        map.addLayer(
+            {
+                'id': 'Effectifs culture commune',
+                'source': 'commune_entreprises',
+                'source-layer': 'COMMUNE_ENTREPRISE',
+                'minzoom': zoomComThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "EFFECTIFSCULTURE17"],
+                        "hsl(207, 66%, 98%)",
+                        50,
+                        "#c8e0f4",
+                        100,
+                        "hsl(207, 64%, 70%)",
+                        1000,
+                        "hsl(207, 63%, 44%)",
+                        10000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Effectifs culture commune', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.nom+'</p><p>Effectifs culture : '
+                        +(e.features[0].properties.EFFECTIFSCULTURE17)+ '</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Effectifs culture commune', function () {
+            popup.remove();
+        });
+
+        //add departement layer
+        map.addLayer(
+            {
+                'id': 'Etablissements culture commune',
+                'source': 'commune_entreprises',
+                'source-layer': 'COMMUNE_ENTREPRISE',
+                'minzoom': zoomComThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "ETLABISSEMENTSCULTURE17"],
+                        "hsl(207, 66%, 98%)",
+                        50,
+                        "#c8e0f4",
+                        100,
+                        "hsl(207, 64%, 70%)",
+                        1000,
+                        "hsl(207, 63%, 44%)",
+                        10000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Etablissements culture commune', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.nom+'</p><p>Etablissements culture : '
+                        +(e.features[0].properties.ETLABISSEMENTSCULTURE17)+ '</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Etablissements culture commune', function () {
+            popup.remove();
+        });
+
+        //add departement source
+        map.addSource('departement_entreprises', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.659hkczd'
+        });
+            
+        //add departement layer
+        map.addLayer(
+            {
+                'id': 'Effectifs culture département',
+                'source': 'departement_entreprises',
+                'source-layer': 'DEPARTEMENT_ENTREPRISE',
+                'minzoom': zoomThreshold,
+                'maxzoom': zoomComThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "EFFECTIFSCULTURE17"],
+                        "hsl(207, 66%, 98%)",
+                        50,
+                        "#c8e0f4",
+                        100,
+                        "hsl(207, 64%, 70%)",
+                        1000,
+                        "hsl(207, 63%, 44%)",
+                        10000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Effectifs culture département', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_DEP+'</p><p>Effectifs culture : '
+                        +(e.features[0].properties.EFFECTIFSCULTURE17)+ '</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Effectifs culture département', function () {
+            popup.remove();
+        });
+
+        //add departement layer
+        map.addLayer(
+            {
+                'id': 'Etablissements culture département',
+                'source': 'departement_entreprises',
+                'source-layer': 'DEPARTEMENT_ENTREPRISE',
+                'minzoom': zoomThreshold,
+                'maxzoom': zoomComThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "ETLABISSEMENTSCULTURE17"],
+                        "hsl(207, 66%, 98%)",
+                        50,
+                        "#c8e0f4",
+                        100,
+                        "hsl(207, 64%, 70%)",
+                        1000,
+                        "hsl(207, 63%, 44%)",
+                        10000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Etablissements culture département', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_DEP+'</p><p>Etablissements culture : '
+                        +(e.features[0].properties.ETLABISSEMENTSCULTURE17)+ '</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Etablissements culture département', function () {
+            popup.remove();
+        });
+
+        //add région source
+        map.addSource('region_entreprises', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.79o9xcfa'
+        });
+            
+        //add région layer
+        map.addLayer(
+            {
+                'id': 'Effectifs culture région',
+                'source': 'region_entreprises',
+                'source-layer': 'REGION_ENTREPRISE',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "EFFECTIFSCULTURE17"],
+                        "hsl(207, 66%, 98%)",
+                        1000,
+                        "#c8e0f4",
+                        10000,
+                        "hsl(207, 64%, 70%)",
+                        20000,
+                        "hsl(207, 63%, 44%)",
+                        100000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Effectifs culture région', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_REG+'</p><p>Effectifs culture : '
+                        +(e.features[0].properties.EFFECTIFSCULTURE17)+ '</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Effectifs culture région', function () {
+            popup.remove();
+        });
+
+        map.addLayer(
+            {
+                'id': 'Etablissements culture région',
+                'source': 'region_entreprises',
+                'source-layer': 'REGION_ENTREPRISE',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "ETLABISSEMENTSCULTURE17"],
+                        "hsl(207, 66%, 98%)",
+                        1000,
+                        "#c8e0f4",
+                        2000,
+                        "hsl(207, 64%, 70%)",
+                        5000,
+                        "hsl(207, 63%, 44%)",
+                        10000,
+                        "hsl(207, 66%, 23%)"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Etablissements culture région', function (e) {
+            if (e.features.length > 0) {
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_REG+'</p><p>Etablissements culture : '
+                        +(e.features[0].properties.ETLABISSEMENTSCULTURE17)+ '</p>')
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Etablissements culture région', function () {
+            popup.remove();
+        });
+       
        
     });
 
+    
+
     // enumerate ids of the layers
-    var toggleableLayerIds = ["Zone d'emploi", "Zonage Rural", "Population", "Densité Moyenne", "Niveau de vie médian", "Indice relatif à la jeunesse", "Évolution de la population", "Action coeur de ville", "Equipements", "Lieux de lecture publique"];
+    var toggleableLayerIds = ["Zone d'emploi", "Zonage Rural", "Population", "Densité Moyenne", "Niveau de vie médian", "Indice relatif à la jeunesse", "Évolution de la population", "Action coeur de ville", "Equipements", "Lieux de lecture publique", "Effectifs Culture", "Etablissements Culture"];
     
     // set up the corresponding toggle button for each layer
     for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -1015,14 +1223,28 @@ crossorigin=""></script>
         var clickedLayer = this.textContent;
         e.preventDefault();
         e.stopPropagation();
-        
+
+        if (clickedLayer == "Effectifs Culture"){
+            clickedLayer = "Effectifs culture région";
+        }
+        if (clickedLayer == "Etablissements Culture"){
+            clickedLayer = "Etablissements culture région";
+        }
         var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
         
         // toggle layer visibility by changing the layout object's visibility property
-        if (visibility === 'visible') {
+        if (visibility == 'visible') {
             if (clickedLayer == 'Equipements'){
                 map.setLayoutProperty('equipements-count', 'visibility', 'none');
                 map.setLayoutProperty('unclustered-equipement', 'visibility', 'none');
+            }
+            if (clickedLayer == 'Effectifs culture région'){
+                map.setLayoutProperty('Effectifs culture département', 'visibility', 'none');
+                map.setLayoutProperty('Effectifs culture commune', 'visibility', 'none');
+            }
+            if (clickedLayer == 'Etablissements culture région'){
+                map.setLayoutProperty('Etablissements culture département', 'visibility', 'none');
+                map.setLayoutProperty('Etablissements culture commune', 'visibility', 'none');
             }
 
             if (clickedLayer == 'Lieux de lecture publique'){
@@ -1035,19 +1257,22 @@ crossorigin=""></script>
             this.className = 'active';
             map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
             if (clickedLayer == 'Equipements'){
-                /*map.moveLayer('Regions');
-                map.moveLayer('Departements');
-                map.moveLayer('Communes');*/
                 map.setLayoutProperty('equipements-count', 'visibility', 'visible');
                 map.setLayoutProperty('unclustered-equipement', 'visibility', 'visible');
+                map.setLayoutProperty('Communes_line', 'visibility', 'none');
             }
             if (clickedLayer == 'Lieux de lecture publique'){
                 map.setLayoutProperty('llp-count', 'visibility', 'visible');
                 map.setLayoutProperty('unclustered-llp', 'visibility', 'visible');
-                map.moveLayer('Regions_line', clickedLayer);
-                map.moveLayer('Departements_line', clickedLayer);
-                map.moveLayer('Communes_line', clickedLayer);
-                map.moveLayer('place-town', clickedLayer);
+                map.setLayoutProperty('Communes_line', 'visibility', 'none');
+            }
+            if (clickedLayer == 'Effectifs culture région'){
+                map.setLayoutProperty('Effectifs culture département', 'visibility', 'visible');
+                map.setLayoutProperty('Effectifs culture commune', 'visibility', 'visible');
+            }
+            if (clickedLayer == 'Etablissements culture région'){
+                map.setLayoutProperty('Etablissements culture département', 'visibility', 'visible');
+                map.setLayoutProperty('Etablissements culture commune', 'visibility', 'visible');
             }
             else {
                 map.moveLayer(clickedLayer, 'Regions_line');
