@@ -117,3 +117,22 @@ class Entreprises_regions(models.Model):
     etablissements_total = models.IntegerField(null=True)
     #Nombre d'établissements culturels marchands
     etablissements_culture = models.IntegerField(null=True)
+
+class Domaine(models.Model):
+    nom = models.CharField(max_length=200)
+    def __str__(self):
+        return self.nom
+
+class Secteur(models.Model):
+    domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
+    nom = models.CharField(max_length=200)
+    def __str__(self):
+        return self.nom + ' (' + self.domaine.nom + ')'
+
+class DepensesRegion(models.Model):
+    region = models.ForeignKey(Region,on_delete=models.CASCADE, null=True)
+    secteur = models.ForeignKey(Secteur, on_delete=models.CASCADE, null=True)
+    depenses_fonctionnement = models.FloatField(null=True)
+    depenses_investissement = models.FloatField(null=True)
+    depenses_totales = models.FloatField(null=True)
+    annee = models.CharField(max_length=4, null=True)

@@ -45,7 +45,6 @@
     font-weight:200;
   
 }
-    
 
 .title {
     font-family: 'Marianne', Arial, sans-serif;
@@ -116,6 +115,8 @@ a {
     font-weight: 300;
     font-size: 14px;
     color: #383838;
+    line-height:28px;
+    padding-bottom: 3px;
 }
 
 a:link {
@@ -127,8 +128,21 @@ a:link {
 a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     color: #383838;
+}
+
+a.nav-link {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #383838;
+    line-height: 19px;
+    cursor: pointer;
+}
+
+a.nav-link:hover {
+    text-decoration: underline;
 }
 
 .b2 {
@@ -171,7 +185,7 @@ a.b1 {
 
 
 .n {
-    width: 80%; 
+    width: 100%; 
 }
 
 .logof {
@@ -255,22 +269,22 @@ body {
 }
 
 #map { 
-    position: absolute; top: 0; bottom: 0; width: 100%; 
+    position: absolute; top: 59px; bottom: 0; width: 100%; z-index: -1;
 }
 
 #menu {
     background: #fff;
     position: absolute;
     z-index: 1;
-    top: 10px;
+    top: 69px;
     left: 10px;
     border-radius: 3px;
     width: 120px;
     border: 1px solid rgba(0, 0, 0, 0.4);
     font-family: 'Open Sans', sans-serif;
-    }
+}
      
-    #menu a {
+#menu a {
     font-size: 13px;
     color: #404040;
     display: block;
@@ -280,24 +294,23 @@ body {
     text-decoration: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25);
     text-align: center;
-    }
+}
      
-    #menu a:last-child {
+#menu a:last-child {
     border: none;
-    }
+}
      
-    #menu a:hover {
+#menu a:hover {
     background-color: #f8f8f8;
     color: #404040;
-    }
+}
      
-    #menu a.active {
+#menu a.active {
     background-color: #3887be;
     color: #ffffff;
-    }
+}
      
-    #menu a.active:hover {
+#menu a.active:hover {
     background: #3074a4;
-    }
-
+}
     

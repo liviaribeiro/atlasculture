@@ -17,16 +17,35 @@ class Domaine(models.Model):
     def get_by_natural_key(self):
         return self.name
 
+class DomaineAtlas(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+
+class TypologieLieux(models.Model):
+    name = models.CharField(max_length=100)
+    domaine = models.ForeignKey(DomaineAtlas, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self.name
+        
+class DetailLieux(models.Model):
+    name = models.CharField(max_length=100)
+    typologie = models.ForeignKey(TypologieLieux, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self.name
+
 class Function(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
 
-class Equipement_Type(models.Model):
+class EquipementType(models.Model):
     name = models.CharField(max_length=100)
     code_DEPS = models.CharField(max_length=10)
+    domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.name
+
 
 class Label(models.Model):
     name = models.CharField(max_length=100)
@@ -40,27 +59,27 @@ class Equipement(models.Model):
     sous_domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True, related_name='sous_domaine')
     fonction = models.ForeignKey(Function, on_delete=models.CASCADE, null=True)
     fonction_secondaire = models.ForeignKey(Function, on_delete=models.CASCADE, null=True, related_name='secondary_function')
-    equipement_type = models.ForeignKey(Equipement_Type, on_delete=models.CASCADE, null=True)
+    equipement_type = models.ForeignKey(EquipementType, on_delete=models.CASCADE, null=True)
     nom = models.CharField(max_length=300)
     adresse = models.CharField(max_length=300, null=True)
     complement_adresse = models.CharField(max_length=300, null=True)
     codeinsee_arrondt = models.CharField(max_length=300, null=True)
     commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True)
-    communes_secondaire = models.ManyToManyField(Commune, through = 'Equipement_Commune', related_name = 'communes_secondaires')
-    labels = models.ManyToManyField(Label, through = 'Equipement_Label')
+    communes_secondaire = models.ManyToManyField(Commune, through = 'EquipementCommune', related_name = 'communes_secondaires')
+    labels = models.ManyToManyField(Label, through = 'EquipementLabel')
     id_origine = models.CharField(max_length=20, null=True)
     gps = models.PointField(null=True)
     def __str__(self):
         return self.nom
 
-class Equipement_Commune(models.Model):
+class EquipementCommune(models.Model):
     equipement = models.ForeignKey(Equipement, on_delete=models.CASCADE)
     commune = models.ForeignKey(Commune, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.equipement.nom + ", " + self.commune.name
 
-class Equipement_Label(models.Model):
+class EquipementLabel(models.Model):
     equipement = models.ForeignKey(Equipement, on_delete=models.CASCADE)
     label = models.ForeignKey(Label, on_delete=models.CASCADE)
 
@@ -100,7 +119,7 @@ class Architecture(models.Model):
     def __str__(self):
         return self.equipement.nom
 
-class Monument_Historique(models.Model):
+class MonumentHistorique(models.Model):
     equipement = models.OneToOneField(Equipement,on_delete=models.CASCADE,primary_key=True)
     proprietaire = models.CharField(max_length=200, null=True)
 

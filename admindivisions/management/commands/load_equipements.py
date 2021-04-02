@@ -1,8 +1,8 @@
 import pandas as pd 
 import requests
 import math
-from equipements.models import (Equipement_Type, Label, Source, Domaine,
- Equipement, Cinema, Bibliotheque, Librairie, Architecture, Monument_Historique, Unesco)
+from equipements.models import (EquipementType, Label, Source, Domaine,
+ Equipement, Cinema, Bibliotheque, Librairie, Architecture, MonumentHistorique, Unesco)
 from admindivisions.models import Commune
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
@@ -135,7 +135,7 @@ class Command(BaseCommand):
                 sous_domaine = None
 
             try:
-                equipement_type = Equipement_Type.objects.get(name__iexact=equipement_type)
+                equipement_type = EquipementType.objects.get(name__iexact=equipement_type)
             except:
                 equipement_type = None
             
@@ -201,7 +201,7 @@ class Command(BaseCommand):
                 archi, created = Architecture.objects.get_or_create(quipement=equipement,precision_architecture=precision_architecture)
             
             if equipement_type == "Monument historique":
-                mh, created = Monument_Historique.objects.get_or_create(quipement=equipement,owner=owner)
+                mh, created = MonumentHistorique.objects.get_or_create(quipement=equipement,owner=owner)
             
             if equipement_type == "Patrimoine mondial Unesco":
                 unesco, created = Unesco.objects.get_or_create(quipement=equipement,precision_unesco=precision_unesco,

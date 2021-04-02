@@ -9,8 +9,7 @@ from atlasculture.settings import BASE_DIR
 
 class Command(BaseCommand):
 
-    def handle(self, *args, **options):
-        
+    def handle(self, *args, **options):     
         """
         csv_file = os.path.join(BASE_DIR, 'admindivisions/data/zoneemploi.csv')
 
@@ -22,7 +21,6 @@ class Command(BaseCommand):
             name = df['LIBZE2020'][i]
 
             ZoneEmploi.objects.get_or_create(code=code, name=name)
-
         """
         csv_file = os.path.join(BASE_DIR, 'admindivisions/data/zoneemploi_com.csv')
 
