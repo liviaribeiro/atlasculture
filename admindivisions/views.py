@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.serializers import serialize
 from .models import Region, Commune
+from admindivisions.models import ZonageRural
 from equipements.models import Equipement, EquipementType, Domaine
 from django.contrib.gis.geos import GEOSGeometry
 from atlasculture.settings import BASE_DIR
@@ -14,7 +15,8 @@ from django.http import JsonResponse
 def map(request):
     communes = Commune.objects.all() 
     domaines = Domaine.objects.all()
-    context = {'communes': communes, 'domaines': domaines}
+    zonagerural = ZonageRural.objects.all()
+    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural}
     return render(request, 'admindivisions/map.html', context)
 
 

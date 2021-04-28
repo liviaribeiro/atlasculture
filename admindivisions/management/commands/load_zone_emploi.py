@@ -10,17 +10,17 @@ from atlasculture.settings import BASE_DIR
 class Command(BaseCommand):
 
     def handle(self, *args, **options):     
-        """
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/zoneemploi.csv')
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/zoneemploi2010.xlsx')
 
-        df = pd.read_csv(csv_file, dtype = str)
+        df = pd.read_excel(csv_file, dtype = str)
         print(df.head())
 
         for i in df.index:
-            code = df['ZE2020'][i]
-            name = df['LIBZE2020'][i]
+            code = df['ZE2010'][i]
+            name = df['LIBZE2010'][i]
 
-            ZoneEmploi.objects.get_or_create(code=code, name=name)
+            ZoneEmploi.objects.get_or_create(code=code, name=name, annee=2010)
+
         """
         csv_file = os.path.join(BASE_DIR, 'admindivisions/data/zoneemploi_com.csv')
 
@@ -28,9 +28,9 @@ class Command(BaseCommand):
         print(df.head())
 
         for i in df.index:
-            code = df['ZE2020'][i]
+            code = df['ZE2010'][i]
             codeinsee = df['CODGEO'][i]
-            name = df['LIBGEO'][i]
+            name = df['LIBZE2010'][i]
             
             print(codeinsee)
             print(name)
@@ -44,4 +44,4 @@ class Command(BaseCommand):
 
             except:
                 continue
-            
+        """

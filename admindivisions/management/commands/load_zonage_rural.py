@@ -32,7 +32,7 @@ class Command(BaseCommand):
 
         for feature in data['features']: 
             com = Commune.objects.get(codeinsee=feature['properties']['INSEE_COM'], year="2020")
-            feature["properties"].update({"ZONAGE_RURAL":int(com.zonage_rural.gridens)})
+            feature["properties"].update({"ZONAGE_RURAL":int(com.zonage_rural.gridens), "ZONAGE_RURAL_NOM":com.zonage_rural.name})
         
         with open('admindivisions/data/COMMUNE_CARTO_RURAL_SIMPLE.json', 'w') as f:
             json.dump(data, f)

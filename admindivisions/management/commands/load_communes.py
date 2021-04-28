@@ -15,24 +15,24 @@ class Command(BaseCommand):
         com = Commune.objects.filter(year=2019)
         print(len(com))
         """
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/communes2017.xlsx')
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/commune2021.csv')
 
-        df = pd.read_excel(csv_file)
+        df = pd.read_csv(csv_file)
         for i in df.index:
-            codeinsee = df['CODGEO'][i]
+            codeinsee = df['COM'][i]
             print(codeinsee)
-            name = df['LIBGEO'][i]
+            name = df['LIBELLE'][i]
             dep = df['DEP'][i]
-            #typecom = df['typecom'][i]
+            typecom = df['TYPECOM'][i]
 
-            #if typecom == "COM":
-            departement = Departement.objects.get(codeinsee=dep)
-        
-            Commune.objects.get_or_create(codeinsee=codeinsee,
-            name = name,
-            departement=departement,
-            year=2017
-            )
+            if typecom == "COM":
+                departement = Departement.objects.get(codeinsee=dep)
+            
+                Commune.objects.get_or_create(codeinsee=codeinsee,
+                name = name,
+                departement=departement,
+                year=2021
+                )
        
         """
        

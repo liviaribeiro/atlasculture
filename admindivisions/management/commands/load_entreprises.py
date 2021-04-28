@@ -124,13 +124,18 @@ class Command(BaseCommand):
             effectifs_total = entreprise.effectifs_total
             effectifs_culture = entreprise.effectifs_culture
             etablissements_total = entreprise.etablissements_total
+            print(entreprise.etablissements_culture)
+
             etablissements_culture = entreprise.etablissements_culture
             if effectifs_total == 0:
                 pourcentage_effectifs = 0
-            else: pourcentage_effectifs = effectifs_culture/effectifs_total
+            else: 
+                pourcentage_effectifs = effectifs_culture/effectifs_total
             if etablissements_total == 0:
                 pourcentage_etablissements = 0
-            else: pourcentage_etablissements = etablissements_culture/etablissements_total
+            else: 
+                pourcentage_etablissements = etablissements_culture/etablissements_total
+            print(pourcentage_etablissements)
     
             feature["properties"].update({'EFFECTIFSTOAL17': effectifs_total, 'EFFECTIFSCULTURE17': effectifs_culture, 
             "POURCENTAGEEFFECTIFS": pourcentage_effectifs, 'ETABLISSEMENTSTOTAL17': etablissements_total, 

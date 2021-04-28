@@ -41,6 +41,7 @@ class ZonageRural(models.Model):
 class ZoneEmploi(models.Model):
     code = models.CharField(max_length=4)
     name = models.CharField(max_length=100)
+    annee = models.CharField(max_length=4)
 
 class ActionCoeurVille(models.Model):
     code_acv = models.CharField(max_length=6)
@@ -118,6 +119,18 @@ class Entreprises_regions(models.Model):
     #Nombre d'établissements culturels marchands
     etablissements_culture = models.IntegerField(null=True)
 
+class Emploi_ZE(models.Model):
+    zone_emploi = models.ForeignKey(ZoneEmploi, on_delete=models.CASCADE, null=True)
+    nombre_actifs = models.IntegerField(null=True)
+    nombre_profession_culturelle = models.IntegerField(null=True)
+    nombre_secteur_culturel = models.IntegerField(null=True)
+
+class Emploi_Departement(models.Model):
+    departement = models.ForeignKey(Departement, on_delete=models.CASCADE, null=True)
+    nombre_actifs = models.IntegerField(null=True)
+    nombre_profession_culturelle = models.IntegerField(null=True)
+    nombre_secteur_culturel = models.IntegerField(null=True)
+
 class Domaine(models.Model):
     nom = models.CharField(max_length=200)
     def __str__(self):
@@ -136,3 +149,40 @@ class DepensesRegion(models.Model):
     depenses_investissement = models.FloatField(null=True)
     depenses_totales = models.FloatField(null=True)
     annee = models.CharField(max_length=4, null=True)
+
+class DepensesDepartement(models.Model):
+    departement = models.ForeignKey(Departement,on_delete=models.CASCADE, null=True)
+    secteur = models.ForeignKey(Secteur, on_delete=models.CASCADE, null=True)
+    depenses_fonctionnement = models.FloatField(null=True)
+    depenses_investissement = models.FloatField(null=True)
+    depenses_totales = models.FloatField(null=True)
+    annee = models.CharField(max_length=4, null=True)
+
+class DepensesCommunes(models.Model):
+    commune = models.ForeignKey(Commune,on_delete=models.CASCADE, null=True)
+    secteur = models.ForeignKey(Secteur, on_delete=models.CASCADE, null=True)
+    depenses_fonctionnement = models.FloatField(null=True)
+    depenses_investissement = models.FloatField(null=True)
+    depenses_totales = models.FloatField(null=True)
+    annee = models.CharField(max_length=4, null=True)
+
+class TypologieAAV(models.Model):
+    code = models.IntegerField(null=True)
+    description = models.CharField(max_length=300)
+    def __str__(self):
+        return str(self.code)
+
+class AireAttractionVille(models.Model):
+    nom = models.CharField(max_length=200)
+    codeinsee = models.CharField(max_length=3, null=True)
+    tranche_population = models.IntegerField(null=True)
+    def __str__(self):
+        return self.nom
+
+class Commune_AAV(models.Model):
+    commune = models.ForeignKey(Commune, on_delete=models.CASCADE)
+    AAV = models.ForeignKey(AireAttractionVille, on_delete=models.CASCADE)
+    pole = models.BooleanField(null=True)
+    typologie = models.ForeignKey(TypologieAAV, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self.AAV.nom + " " + self.commune.name

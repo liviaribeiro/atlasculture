@@ -1,7 +1,7 @@
 import json
 import pandas as pd 
 from django.core.management.base import BaseCommand
-from admindivisions.models import Commune, Cadrage
+from admindivisions.models import Commune, Cadrage, TypologieEvolution
 from django.contrib.gis.geos import MultiPolygon, Polygon
 from django.contrib.gis.geos import GEOSGeometry
 import os
@@ -131,9 +131,16 @@ class Command(BaseCommand):
                youthindex = -1
 
             #typologie de l'évolution
-            typologie_evol = cad.typologie_evol
-               
-            feature["properties"].update({'DENSITE17': density, 'NIVEAUDEVIE17': livingstandard, 'INDICEJEUNESSE17': youthindex, "TYPOLOGIEEVOL1217":typologie_evol})
+            typologie_code = cad.typologie_evol
+            
+        
+            if typologie_code == -1:
+                typologie_nom = "Données non disponibles"
+            else:
+                typologie = TypologieEvolution.objects.get(code=typologie_code)
+                typologie_nom = typologie.typologie
+                  
+            feature["properties"].update({'DENSITE17': density, 'NIVEAUDEVIE17': livingstandard, 'INDICEJEUNESSE17': youthindex, "TYPOLOGIECODE":typologie_code, "TYPOLOGIE":typologie_nom})
                                                                                       
         with open('admindivisions/data/COMMUNE_CADRAGE_SIMPLIFIED.json', 'w') as f:
             json.dump(data, f)
