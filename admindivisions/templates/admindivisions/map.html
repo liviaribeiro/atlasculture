@@ -58,11 +58,11 @@
     <button href="javascript:void(0)" value="depenses-menu" class="closebtn" onclick="closeNav(this)">×</button>
     <p class="title">Dépenses publiques culturelles</p>
     <div class="item">
-        <button class="btn-tag" value="Dépenses publiques culturelles des régions" onclick="showLayer(this)">Dépenses publiques culturelles des régions</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles des départements" onclick="showLayer(this)">Dépenses publiques culturelles des départements</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles des intercommunalités" onclick="showLayer(this)">Dépenses publiques culturelles des intercommunalités</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles des communes" onclick="showLayer(this)">Dépenses publiques culturelles des communes</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles totales" onclick="showLayer(this)">Dépenses publiques culturelles totales</button>
+        <button class="btn-tag" value="Dépenses publiques culturelles des régions" onclick="showLayer(this)">Dépenses culturelles des régions</button>
+        <button class="btn-tag" value="Dépenses publiques culturelles des départements" onclick="showLayer(this)">Dépenses culturelles des départements</button>
+        <button class="btn-tag" value="Dépenses publiques culturelles des intercommunalités" onclick="showLayer(this)">Dépenses culturelles des intercommunalités</button>
+        <button class="btn-tag" value="Dépenses publiques culturelles des communes" onclick="showLayer(this)">Dépenses culturelles des communes</button>
+        <button class="btn-tag" value="Dépenses publiques culturelles totales" onclick="showLayer(this)">Dépenses culturelles totales</button>
     </div>
 </div>
 
@@ -174,7 +174,7 @@
                 circleColor = '#bd0026';
             }
             if ('{{domaine.name}}' == "Patrimoine artistique et monumental"){
-                circleColor = '#252525';
+                circleColor = '#00796b';
             }
             
         
@@ -185,7 +185,7 @@
                 'paint': {
                     'circle-color': circleColor,
                     'circle-radius': {
-                        stops: [[6, 1.5], [9, 5], [16, 10]]
+                        stops: [[6, 1.5], [9, 7], [16, 10]]
                     }          
                 },            
                 'layout': {
@@ -774,7 +774,7 @@
                         "step",
                         ["get", "POURCENTAGEETABLISSEMENTS"],
                         "#feedde",
-                        0.019,
+                        0.010,
                         "#fdbe85",
                         0.059,
                         "#fd8d3c",

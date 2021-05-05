@@ -30,6 +30,9 @@ class TypologieAAVAdmin(admin.OSMGeoAdmin):
 class DepensesDepartementAdmin(admin.OSMGeoAdmin):
     list_display = ('departement',)
 
+class Entreprise_communesAdmin(admin.OSMGeoAdmin):
+    list_display = ('commune',)
+
 admin.site.register(Region, RegionAdmin)
 admin.site.register(Departement, DepartementAdmin)
 admin.site.register(Commune, CommuneAdmin)
@@ -39,7 +42,7 @@ admin.site.register(ZonageRural)
 admin.site.register(ActionCoeurVille, ActionCoeurVilleAdmin)
 admin.site.register(ZoneEmploi, ZoneEmploiAdmin)
 admin.site.register(Cadrage, CadrageAdmin)
-admin.site.register(Entreprises_communes)
+admin.site.register(Entreprises_communes, Entreprise_communesAdmin)
 admin.site.register(Entreprises_regions)
 admin.site.register(Entreprises_departements)
 admin.site.register(TypologieEvolution)
