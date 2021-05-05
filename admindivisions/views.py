@@ -21,7 +21,7 @@ def map(request):
 
 
 def equipements(request, domaine):
-    path = os.path.join(BASE_DIR, 'static/data/EQUIPEMENTS_ALL.JSON')
+    path = os.path.join(BASE_DIR, 'static/data/EQUIPEMENTS_ALL.json')
 
     with open(path) as f:
         data = json.load(f)
