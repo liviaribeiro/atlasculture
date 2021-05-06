@@ -31,6 +31,8 @@ DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
 
 ALLOWED_HOSTS = ["atlasculture.herokuapp.com", "atlasculture.fr", "127.0.0.1"]
 
+ADMINS = [('Livia','livia.ribeiro@culture.gouv.fr')]
+
 
 # Application definition
 
