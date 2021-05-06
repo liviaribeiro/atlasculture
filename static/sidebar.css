@@ -46,6 +46,14 @@
   
 }
 
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+}
+
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -116,15 +124,16 @@
 }
 
 .submenu {
-    height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
     top: 59px;
     left: 63px;
+    bottom: 0px;
     background-color: #fff;
+    display: block;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-top: 30px;
 }
 
@@ -158,8 +167,10 @@
 }
 
 .submenu .item {
+    position: absolute;
     margin-left: 30px;
     margin-right: 30px;
+    height: fit-content;
 }
 
 .submenu .btn-tag {
