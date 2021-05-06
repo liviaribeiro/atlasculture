@@ -52,12 +52,15 @@
     position: fixed;
     top: 59px;
     font-family: 'Open Sans', sans-serif;
+    z-index: 5;
 }
 
 #sidebar {
     background: #fff;
     width: 63px;
     min-height: 100vh;
+    z-index: 5;
+    position: relative; 
 }
 
 @media (max-width: 768px) {
@@ -72,6 +75,8 @@
 .sidebutton {
     border: none;
     background: none;
+    z-index: 5;
+    position: relative; 
 }
 
 .sidebutton .sidebuttoninfo{
@@ -83,7 +88,7 @@
 }
 
 .sidebutton:hover .sidebuttoninfo{
-    z-index: 5;
+    z-index: 10;
     background: #D5DBEF;
     display: flex;
     flex-direction: row;
@@ -119,6 +124,7 @@
     left: 63px;
     background-color: #fff;
     overflow-x: hidden;
+    overflow-y: scroll;
     padding-top: 30px;
 }
 
