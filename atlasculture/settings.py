@@ -29,10 +29,6 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
 
-if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
-
 ALLOWED_HOSTS = ["atlasculture.herokuapp.com", "atlasculture.fr", "127.0.0.1"]
 
 
@@ -61,6 +57,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    
 ROOT_URLCONF = 'atlasculture.urls'
 
 TEMPLATES = [
@@ -138,5 +138,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
 
-django_heroku.settings(locals())
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+django_heroku.settings(locals())
+
