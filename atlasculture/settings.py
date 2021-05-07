@@ -31,7 +31,7 @@ DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
 
 ALLOWED_HOSTS = ["atlasculture.herokuapp.com", "127.0.0.1"]
 
-ADMINS = [('Livia','livia.ribeiro@culture.gouv.fr')]
+ADMINS = [('Livia','livia.ribeiro@culture.gouv.fr'), ('Livia','liviapribeiro@gmail.com')]
 
 
 # Application definition
@@ -64,6 +64,12 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'liviapribeiro@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_KEY')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 ROOT_URLCONF = 'atlasculture.urls'
 
