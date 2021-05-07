@@ -150,5 +150,7 @@ STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
 
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 django_heroku.settings(locals())
 
