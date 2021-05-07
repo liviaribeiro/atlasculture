@@ -152,5 +152,5 @@ DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 
