@@ -12,18 +12,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/Etablissements culturels par commune.xlsx')
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/communes_nb_etab_march3.xlsx')
 
         df = pd.read_excel(csv_file)
         print(df)
         
         #Communes
         for i in df.index:
-            codeinsee = str(df['DC'][i])
+            codeinsee = str(df['dc'][i])
             if len(codeinsee) == 4:
                 codeinsee = "0"+codeinsee
-            effectifs_total = df["Effectifs salariés en équivalent temps plein de l'ensemble des secteurs marchands"][i]
-            effectifs_culture = df["Effectifs salariés en équivalent temps plein des secteurs culturels marchands"][i]
+            effectifs_total = df["eff_eqtp_tot"][i]
+            effectifs_culture = df["eff_eqtp_1"][i]
             try:
                 commune = Commune.objects.get(codeinsee=codeinsee, year=2017)
             except:
@@ -96,6 +96,7 @@ class Command(BaseCommand):
             entreprise_departement.etablissements_culture=etablissements_culture
             entreprise_departement.save()
         """
+        
         with open('admindivisions/data/COMMUNE-2017.json') as f:
             data = json.load(f)
 

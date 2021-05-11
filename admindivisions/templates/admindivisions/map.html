@@ -716,15 +716,276 @@
         //add departement source
         map.addSource('commune_entreprises', {
                 'type': 'vector',
-                'url': 'mapbox://liviaribeiro.86m23i81'
+                'url': 'mapbox://liviaribeiro.de06dydj'
+        });        
+
+        //add departement source
+        map.addSource('region_entreprises', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.79o9xcfa'
         });
-            
-        //add departement layer
+
+        map.addLayer(
+            {
+                'id': 'Entreprises culturelles du secteur marchand régions',
+                'source': 'region_entreprises',
+                'source-layer': 'REGION_ENTREPRISE',
+                'type': 'fill',
+                'maxzoom': zoomThreshold,
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "POURCENTAGEETABLISSEMENTS"],
+                        "#feedde",
+                        0.010,
+                        "#fdbe85",
+                        0.020,
+                        "#fd8d3c",
+                        0.025,
+                        "#e6550d",
+                        0.05,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Entreprises culturelles du secteur marchand régions', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
+                nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
+                texte = '<p>'+e.features[0].properties.NOM_REG+"</p><p>Part d'entreprises culturelles du secteur marchand : "
+                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'entreprises culturelles du secteur marchand : "+nombre+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Entreprises culturelles du secteur marchand régions', function () {
+            popup.remove();
+        });
+
+        map.addLayer(
+            {
+                'id': 'Salariés actifs des secteurs culturels marchands régions',
+                'source': 'region_entreprises',
+                'source-layer': 'REGION_ENTREPRISE',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "POURCENTAGEEFFECTIFS"],
+                        "#feedde",
+                        0.02,
+                        "#fdbe85",
+                        0.025,
+                        "#fd8d3c",
+                        0.25,
+                        "#e6550d",
+                        0.50,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Salariés actifs des secteurs culturels marchands régions', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
+                nombre = e.features[0].properties.EFFECTIFSCULTURE17
+                texte = '<p>'+e.features[0].properties.NOM_REG+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
+                        +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Salariés actifs des secteurs culturels marchands régions', function () {
+            popup.remove();
+        });
+
+         //add departement source
+         map.addSource('departement_entreprises', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.659hkczd'
+        });
+
+        map.addLayer(
+            {
+                'id': 'Entreprises culturelles du secteur marchand départements',
+                'source': 'departement_entreprises',
+                'source-layer': 'DEPARTEMENT_ENTREPRISE',
+                'type': 'fill',
+                'minzoom': zoomThreshold,
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "POURCENTAGEETABLISSEMENTS"],
+                        "#feedde",
+                        0.02,
+                        "#fdbe85",
+                        0.03,
+                        "#fd8d3c",
+                        0.06,
+                        "#e6550d",
+                        0.09,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Entreprises culturelles du secteur marchand départements', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
+                nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
+                texte = '<p>'+e.features[0].properties.NOM_DEP+"</p><p>Part d'entreprises culturelles du secteur marchand : "
+                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'entreprises culturelles du secteur marchand : "+nombre+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Entreprises culturelles du secteur marchand départements', function () {
+            popup.remove();
+        });
+
+
+        map.addLayer(
+            {
+                'id': 'Salariés actifs des secteurs culturels marchands départements',
+                'source': 'departement_entreprises',
+                'source-layer': 'DEPARTEMENT_ENTREPRISE',
+                'minzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "POURCENTAGEEFFECTIFS"],
+                        "#feedde",
+                        0.02,
+                        "#fdbe85",
+                        0.03,
+                        "#fd8d3c",
+                        0.06,
+                        "#e6550d",
+                        0.09,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Salariés actifs des secteurs culturels marchands départements', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
+                nombre = e.features[0].properties.EFFECTIFSCULTURE17
+                texte = '<p>'+e.features[0].properties.NOM_DEP+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
+                        +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Salariés actifs des secteurs culturels marchands départements', function () {
+            popup.remove();
+        });
+
+        
+        map.addLayer(
+            {
+                'id': 'Entreprises culturelles du secteur marchand',
+                'source': 'commune_entreprises',
+                'source-layer': 'COMMUNE_ENTREPRISE',
+                'type': 'fill',
+                'minzoom': zoomComThreshold,
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "POURCENTAGEETABLISSEMENTS"],
+                        "#ffffff",
+                        0,
+                        "#feedde",
+                        0.010,
+                        "#fdbe85",
+                        0.059,
+                        "#fd8d3c",
+                        0.10,
+                        "#e6550d",
+                        0.19,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Entreprises culturelles du secteur marchand', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
+                nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
+                texte = '<p>'+e.features[0].properties.nom+"</p><p>Part d'entreprises culturelles du secteur marchand : "
+                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'entreprises culturelles du secteur marchand : "+nombre+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Entreprises culturelles du secteur marchand', function () {
+            popup.remove();
+        });
+
         map.addLayer(
             {
                 'id': 'Salariés actifs des secteurs culturels marchands',
                 'source': 'commune_entreprises',
                 'source-layer': 'COMMUNE_ENTREPRISE',
+                'minzoom': zoomComThreshold,
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
@@ -765,55 +1026,6 @@
         });
         
         map.on('mouseleave', 'Salariés actifs des secteurs culturels marchands', function () {
-            popup.remove();
-        });
-        
-        //add departement layer
-        map.addLayer(
-            {
-                'id': 'Entreprises culturelles du secteur marchand',
-                'source': 'commune_entreprises',
-                'source-layer': 'COMMUNE_ENTREPRISE',
-                'type': 'fill',
-                'paint': {
-                    'fill-color': [
-                        "step",
-                        ["get", "POURCENTAGEETABLISSEMENTS"],
-                        "#feedde",
-                        0.010,
-                        "#fdbe85",
-                        0.059,
-                        "#fd8d3c",
-                        0.10,
-                        "#e6550d",
-                        0.19,
-                        "#a63603"
-                        ],
-                    'fill-opacity': 0.75,
-                },
-                'layout': {
-                    // make layer not visible by default
-                    'visibility': 'none'
-                }
-            }  
-        );
-
-        map.on('mousemove', 'Entreprises culturelles du secteur marchand', function (e) {
-            if (e.features.length > 0) {
-                pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
-                nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
-                texte = '<p>'+e.features[0].properties.nom+"</p><p>Part d'entreprises culturelles du secteur marchand : "
-                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'entreprises culturelles du secteur marchand : "+nombre+' </p>'
-                if (nombre == -1) {
-                    texte = "Données non disponibles"
-                }
-                popup.setLngLat(e.lngLat)
-                    .setHTML(texte)
-                    .addTo(map);
-                }     
-        });
-        
-        map.on('mouseleave', 'Entreprises culturelles du secteur marchand', function () {
             popup.remove();
         });
 
@@ -1026,14 +1238,20 @@
             popup.remove();
         });
 
-
-
     });
 
 
     function showLayer(layer) {
         var visibility = map.getLayoutProperty(layer.value, 'visibility');
         if (visibility == 'none') {
+            if (layer.value == "Entreprises culturelles du secteur marchand"){
+                map.setLayoutProperty("Entreprises culturelles du secteur marchand départements", 'visibility', 'visible');
+                map.setLayoutProperty("Entreprises culturelles du secteur marchand régions", 'visibility', 'visible');
+            }
+            if (layer.name = 'Salariés actifs des secteurs culturels marchands'){
+                map.setLayoutProperty("Salariés actifs des secteurs culturels marchands départements", 'visibility', 'visible');
+                map.setLayoutProperty("Salariés actifs des secteurs culturels marchands régions", 'visibility', 'visible');
+            }
             layer.className += ' active';
             map.setLayoutProperty(layer.value, 'visibility', 'visible');
             map.moveLayer(layer.value);
@@ -1042,6 +1260,14 @@
             map.moveLayer("communeLine");
         }
         if (visibility == 'visible') {
+            if (layer.value == "Entreprises culturelles du secteur marchand"){
+                map.setLayoutProperty("Entreprises culturelles du secteur marchand départements", 'visibility', 'none');
+                map.setLayoutProperty("Entreprises culturelles du secteur marchand régions", 'visibility', 'none');
+            }
+            if (layer.name = 'Salariés actifs des secteurs culturels marchands'){
+                map.setLayoutProperty("Salariés actifs des secteurs culturels marchands départements", 'visibility', 'none');
+                map.setLayoutProperty("Salariés actifs des secteurs culturels marchands régions", 'visibility', 'none');
+            }
             layer.className = layer.className.replace(/\bactive\b/g, "");
             map.setLayoutProperty(layer.value, 'visibility', 'none');
         }
