@@ -59,7 +59,6 @@
         <button class="btn-tag" value="Dépenses publiques culturelles des départements" onclick="showLayer(this)">Dépenses culturelles des départements</button>
         <button class="btn-tag" value="Dépenses publiques culturelles des intercommunalités" onclick="showLayer(this)">Dépenses culturelles des intercommunalités</button>
         <button class="btn-tag" value="Dépenses publiques culturelles des communes" onclick="showLayer(this)">Dépenses culturelles des communes</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles totales" onclick="showLayer(this)">Dépenses culturelles totales</button>
     </div>
 </div>
 
@@ -141,7 +140,7 @@
     });
 
     var zoomThreshold = 6;
-    var zoomComThreshold = 9;
+    var zoomComThreshold = 8;
     var hoveredStateId = null;
 
     map.on('load', function () {
@@ -786,13 +785,13 @@
                         "step",
                         ["get", "POURCENTAGEEFFECTIFS"],
                         "#feedde",
-                        0.02,
+                        0.01,
                         "#fdbe85",
-                        0.025,
+                        0.018,
                         "#fd8d3c",
-                        0.25,
+                        0.02,
                         "#e6550d",
-                        0.50,
+                        0.03,
                         "#a63603"
                         ],
                     'fill-opacity': 0.75,
@@ -836,6 +835,7 @@
                 'source-layer': 'DEPARTEMENT_ENTREPRISE',
                 'type': 'fill',
                 'minzoom': zoomThreshold,
+                'maxzoom': zoomComThreshold,
                 'paint': {
                     'fill-color': [
                         "step",
@@ -885,19 +885,20 @@
                 'source': 'departement_entreprises',
                 'source-layer': 'DEPARTEMENT_ENTREPRISE',
                 'minzoom': zoomThreshold,
+                'maxzoom': zoomComThreshold,
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEEFFECTIFS"],
                         "#feedde",
-                        0.02,
+                        0.0099,
                         "#fdbe85",
-                        0.03,
+                        0.0179,
                         "#fd8d3c",
-                        0.06,
+                        0.0249,
                         "#e6550d",
-                        0.09,
+                        0.0499,
                         "#a63603"
                         ],
                     'fill-opacity': 0.75,
@@ -991,14 +992,16 @@
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEEFFECTIFS"],
+                        "#ffffff",
+                        0,
                         "#feedde",
-                        0.02,
+                        0.001,
                         "#fdbe85",
-                        0.06,
+                        0.0049,
                         "#fd8d3c",
-                        0.11,
+                        0.01799,
                         "#e6550d",
-                        0.20,
+                        0.1,
                         "#a63603"
                         ],
                     'fill-opacity': 0.75,
@@ -1041,6 +1044,8 @@
                 'id': 'Actifs exerçant une profession culturelle',
                 'source': 'emploi_departement',
                 'source-layer': 'EMPLOI_DEPARTEMENT',
+                'minzoom': zoomThreshold,
+                'maxzoom': zoomComThreshold-1,
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
@@ -1089,6 +1094,8 @@
                 'id': 'Actifs dans les secteurs culturels',
                 'source': 'emploi_departement',
                 'source-layer': 'EMPLOI_DEPARTEMENT',
+                'maxzoom': zoomComThreshold-1,
+                'minzoom': zoomThreshold,
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
@@ -1131,6 +1138,217 @@
         map.on('mouseleave', 'Actifs dans les secteurs culturels', function () {
             popup.remove();
         });
+
+        
+        //add emploi source
+        map.addSource('emploi_region', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.8tssesir'
+        });
+
+        map.addLayer(
+            {
+                'id': 'Actifs exerçant une profession culturelle région',
+                'source': 'emploi_region',
+                'source-layer': 'EMPLOI_REGION',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "part_profession_culturelle"],
+                        "#feedde",
+                        0.011,
+                        "#fdbe85",
+                        0.017,
+                        "#fd8d3c",
+                        0.020,
+                        "#e6550d",
+                        0.036,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Actifs exerçant une profession culturelle région', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.part_profession_culturelle*100
+                nombre = e.features[0].properties.nombre_profession_culturelle
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Part d'actifs exerçant une profession culturelle : "
+                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs exerçant une profession culturelle : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Actifs dans les secteurs culturels région', function () {
+            popup.remove();
+        });
+
+        map.addLayer(
+            {
+                'id': 'Actifs dans les secteurs culturels région',
+                'source': 'emploi_region',
+                'source-layer': 'EMPLOI_REGION',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "part_secteur_culturel"],
+                        "#feedde",
+                        0.011,
+                        "#fdbe85",
+                        0.017,
+                        "#fd8d3c",
+                        0.020,
+                        "#e6550d",
+                        0.036,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Actifs dans les secteurs culturels région', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.part_secteur_culturel*100
+                nombre = e.features[0].properties.nombre_secteur_culturel
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Part d'actifs dans les secteurs culturels : "
+                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Actifs dans les secteurs culturels région', function () {
+            popup.remove();
+        });
+
+
+         //add emploi source
+         map.addSource('emploi_ze', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.9xpxb1vj'
+        });
+
+        map.addLayer(
+            {
+                'id': 'Actifs exerçant une profession culturelle ZE',
+                'source': 'emploi_ze',
+                'source-layer': 'EMPLOI_ZE',
+                'minzoom': zoomComThreshold-1,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "part_profession_culturelle"],
+                        "#feedde",
+                        0.011,
+                        "#fdbe85",
+                        0.017,
+                        "#fd8d3c",
+                        0.020,
+                        "#e6550d",
+                        0.036,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Actifs exerçant une profession culturelle ZE', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.part_profession_culturelle*100
+                nombre = e.features[0].properties.nombre_profession_culturelle
+                texte = '<p style="font-weight: bold;">'+"Zone d'emploi "+e.features[0].properties.libelle+"</p><p>Part d'actifs exerçant une profession culturelle : "
+                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs exerçant une profession culturelle : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Actifs dans les secteurs culturels ZE', function () {
+            popup.remove();
+        });
+
+        map.addLayer(
+            {
+                'id': 'Actifs dans les secteurs culturels ZE',
+                'source': 'emploi_ze',
+                'source-layer': 'EMPLOI_ZE',
+                'minzoom': zoomComThreshold-1,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "part_secteur_culturel"],
+                        "#feedde",
+                        0.011,
+                        "#fdbe85",
+                        0.017,
+                        "#fd8d3c",
+                        0.020,
+                        "#e6550d",
+                        0.036,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Actifs dans les secteurs culturels ZE', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.part_secteur_culturel*100
+                nombre = e.features[0].properties.nombre_secteur_culturel
+                texte = '<p style="font-weight: bold;">'+"Zone d'emploi "+e.features[0].properties.libelle+"</p><p>Part d'actifs dans les secteurs culturels : "
+                        +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Actifs dans les secteurs culturels ZE', function () {
+            popup.remove();
+        });
+
 
         map.addSource('depenses_region', {
                 'type': 'vector',
@@ -1238,6 +1456,61 @@
             popup.remove();
         });
 
+        map.addSource('depenses_commune', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.c6znzlne'
+        });
+
+        map.addLayer(
+            {
+                'id': 'Dépenses publiques culturelles des communes',
+                'source': 'depenses_commune',
+                'source-layer': 'COMMUNE_DEPENSES',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "DEPENSESHABITANTS"],
+                        "#ffffff",
+                        0,
+                        "#feedde",
+                        5,
+                        "#fdbe85",
+                        11,
+                        "#fd8d3c",
+                        21,
+                        "#e6550d",
+                        70,
+                        "#a63603"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('mousemove', 'Dépenses publiques culturelles des communes', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.DEPENSESHABITANTS
+                nombre = e.features[0].properties.DEPENSESTOTALES
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p><p>Dépenses publiques culturelles des départements en euros par habitants : "
+                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des communes : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
+                if (nombre == -1) {
+                    texte = "Données non disponibles pour les communes de moins de 3 000 habitants"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+        
+        map.on('mouseleave', 'Dépenses publiques culturelles des communes', function () {
+            popup.remove();
+        });
+
     });
 
 
@@ -1248,28 +1521,53 @@
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand départements", 'visibility', 'visible');
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand régions", 'visibility', 'visible');
             }
-            if (layer.name = 'Salariés actifs des secteurs culturels marchands'){
+            if (layer.value == 'Salariés actifs des secteurs culturels marchands'){
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands départements", 'visibility', 'visible');
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands régions", 'visibility', 'visible');
+            }
+            if (layer.value == 'Actifs exerçant une profession culturelle'){
+                map.setLayoutProperty("Actifs exerçant une profession culturelle ZE", 'visibility', 'visible');
+                map.setLayoutProperty("Actifs exerçant une profession culturelle région", 'visibility', 'visible');
+            }
+            if (layer.value == 'Actifs dans les secteurs culturels'){
+                map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'visible');
+                map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'visible');
             }
             layer.className += ' active';
             map.setLayoutProperty(layer.value, 'visibility', 'visible');
             map.moveLayer(layer.value);
-            map.moveLayer("regionLine");
-            map.moveLayer("departementLine");
-            map.moveLayer("communeLine");
+            map.setLayoutProperty("regionLayer", 'visibility', 'none');
+            map.setLayoutProperty("regionLine", 'visibility', 'none');
+            map.setLayoutProperty("departementLayer", 'visibility', 'none');
+            map.setLayoutProperty("departementLine", 'visibility', 'none');
+            map.setLayoutProperty("communeLayer", 'visibility', 'none');
+            map.setLayoutProperty("communeLine", 'visibility', 'none');
         }
         if (visibility == 'visible') {
             if (layer.value == "Entreprises culturelles du secteur marchand"){
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand départements", 'visibility', 'none');
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand régions", 'visibility', 'none');
             }
-            if (layer.name = 'Salariés actifs des secteurs culturels marchands'){
+            if (layer.value == 'Salariés actifs des secteurs culturels marchands'){
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands départements", 'visibility', 'none');
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands régions", 'visibility', 'none');
             }
+            if (layer.value == 'Actifs exerçant une profession culturelle'){
+                map.setLayoutProperty("Actifs exerçant une profession culturelle ZE", 'visibility', 'none');
+                map.setLayoutProperty("Actifs exerçant une profession culturelle région", 'visibility', 'none');
+            }
+            if (layer.value == 'Actifs dans les secteurs culturels'){
+                map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'none');
+                map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'none');
+            }
             layer.className = layer.className.replace(/\bactive\b/g, "");
             map.setLayoutProperty(layer.value, 'visibility', 'none');
+            map.setLayoutProperty("regionLayer", 'visibility', 'visible');
+            map.setLayoutProperty("regionLine", 'visibility', 'visible');
+            map.setLayoutProperty("departementLayer", 'visibility', 'visible');
+            map.setLayoutProperty("departementLine", 'visibility', 'visible');
+            map.setLayoutProperty("communeLayer", 'visibility', 'visible');
+            map.setLayoutProperty("communeLine", 'visibility', 'visible');
         }
     }
 

@@ -26,6 +26,7 @@ class EpciType(models.Model):
         
 class Epci(models.Model):
     name = models.CharField(max_length=100)
+    annee = models.CharField(max_length=4)
     codesiren = models.CharField(max_length=9)
     geom = models.MultiPolygonField(null=True)
     epci_type = models.ForeignKey(EpciType, on_delete=models.CASCADE, null=True)
@@ -131,6 +132,12 @@ class Emploi_Departement(models.Model):
     nombre_profession_culturelle = models.IntegerField(null=True)
     nombre_secteur_culturel = models.IntegerField(null=True)
 
+class Emploi_Region(models.Model):
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
+    nombre_actifs = models.IntegerField(null=True)
+    nombre_profession_culturelle = models.IntegerField(null=True)
+    nombre_secteur_culturel = models.IntegerField(null=True)
+
 class Domaine(models.Model):
     nom = models.CharField(max_length=200)
     def __str__(self):
@@ -152,6 +159,14 @@ class DepensesRegion(models.Model):
 
 class DepensesDepartement(models.Model):
     departement = models.ForeignKey(Departement,on_delete=models.CASCADE, null=True)
+    secteur = models.ForeignKey(Secteur, on_delete=models.CASCADE, null=True)
+    depenses_fonctionnement = models.FloatField(null=True)
+    depenses_investissement = models.FloatField(null=True)
+    depenses_totales = models.FloatField(null=True)
+    annee = models.CharField(max_length=4, null=True)
+
+class DepensesEPCI(models.Model):
+    epci = models.ForeignKey(Epci,on_delete=models.CASCADE, null=True)
     secteur = models.ForeignKey(Secteur, on_delete=models.CASCADE, null=True)
     depenses_fonctionnement = models.FloatField(null=True)
     depenses_investissement = models.FloatField(null=True)

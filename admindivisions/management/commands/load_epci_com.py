@@ -16,13 +16,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         #load EPCI into communes
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/epcicom2020.csv')
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/epcicom2019.xlsx')
       
-        df = pd.read_csv(csv_file)
+        df = pd.read_excel(csv_file)
 
         for i in df.index:
-            epci = Epci.objects.get(codesiren=df['siren'][i])  
-            com = Commune.objects.get(codeinsee=df['insee'][i])
+            print(df['EPCI'][i])
+            epci = Epci.objects.get(codesiren=df['EPCI'][i], annee="2019")  
+            com = Commune.objects.get(codeinsee=df['CODGEO'][i], year="2019")
             com.epci = epci
             com.save()
         

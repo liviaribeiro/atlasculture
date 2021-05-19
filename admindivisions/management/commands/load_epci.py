@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         #load EPCI types
-        
+        """
         epci_types = [
             {"acronym": "CA", "name": "Communauté d'agglomération"},
             {"acronym": "CC", "name": "Communauté de communes"},
@@ -26,61 +26,24 @@ class Command(BaseCommand):
             entry, return_code = EpciType.objects.get_or_create(
                 acronym=et["acronym"], name=et["name"]
             )
+        """
         
 
         #load EPCI
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/epci2020.csv')
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/epci2019.xlsx')
 
-        df = pd.read_csv(csv_file)
+        df = pd.read_excel(csv_file)
 
         for i in df.index:
+            print(df['EPCI'][i])
+
             epci_type = EpciType.objects.get(acronym=df['NATURE_EPCI'][i])  
             codesiren = df['EPCI'][i]
             name = df['LIBEPCI'][i]
+
             Epci.objects.get_or_create(codesiren=codesiren,
             name = name,
+            annee = "2019",
             epci_type=epci_type
             )
-        """
-        
-        #load zonage
-        
-        with open(options['json_file']) as f:
-            data_list = json.load(f)
-        
-        for data in data_list['features']:
-           
-            type_geom = data['geometry']['type']
-            codesiren=data['properties']['CODE_EPCI']
-            epci = Epci.objects.get(codesiren=codesiren)
-            print(epci)
-            
-            if type_geom == 'Polygon':
-                
-                poly = data['geometry']['coordinates']
-                if len(poly) > 1 :
-                    ext_coords = poly[0]
-                    int_coords = []
-                    for i in range(1,len(poly)):
-                        int_coords.append(poly[i])
-                    epci.geom = MultiPolygon([Polygon(ext_coords, int_coords[0])])
-                else :
-                    epci.geom = MultiPolygon([Polygon(poly[0])])
-
-            else :
-                multipoly = []
-                for poly in data['geometry']['coordinates']: 
-                    if len(poly) > 1 :
-                        ext_coords = poly[0]
-                        int_coords = []
-                        for i in range(1,len(poly)):
-                            int_coords.append(poly[i])
-                        
-                        multipoly.append(Polygon(ext_coords, int_coords[0]))
-                    else:
-                        multipoly.append(Polygon(poly[0]))
-                    
-                epci.geom = MultiPolygon(multipoly)
-
-            epci.save()
-        """
+    

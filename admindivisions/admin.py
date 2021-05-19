@@ -3,7 +3,7 @@ from admindivisions.models import (Region, Departement, Commune, EpciType, Epci,
                                     ActionCoeurVille, ZoneEmploi, Cadrage, Entreprises_communes, 
                                     Entreprises_departements, Entreprises_regions, TypologieEvolution,
                                     Domaine, Secteur, DepensesRegion, TypologieAAV, AireAttractionVille, Commune_AAV, 
-                                    Emploi_ZE, Emploi_Departement, DepensesDepartement)
+                                    Emploi_ZE, Emploi_Departement, Emploi_Region, DepensesDepartement, DepensesEPCI, DepensesCommunes)
 # Register your models here.
 
 class RegionAdmin(admin.OSMGeoAdmin):
@@ -49,12 +49,15 @@ admin.site.register(TypologieEvolution)
 admin.site.register(Domaine)
 admin.site.register(Secteur)
 admin.site.register(DepensesRegion)
+admin.site.register(DepensesCommunes)
 admin.site.register(DepensesDepartement, DepensesDepartementAdmin)
+admin.site.register(DepensesEPCI)
 admin.site.register(TypologieAAV, TypologieAAVAdmin)
 admin.site.register(AireAttractionVille)
 admin.site.register(Commune_AAV)
 admin.site.register(Emploi_ZE)
 admin.site.register(Emploi_Departement)
+admin.site.register(Emploi_Region)
 
 
 
