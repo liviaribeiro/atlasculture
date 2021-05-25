@@ -115,33 +115,35 @@ class Command(BaseCommand):
             depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
         
         """
-        """
+        
         source_file = os.path.join(BASE_DIR, 'admindivisions/data/Base_Depenses_EPCI_2019.xlsx')
 
         df = pd.read_excel(source_file, dtype={'Id_EPCI':'string'})
 
         for i in df.index:
-            codeinsee = df['Id_EPCI'][i]
+            codeinsee = df['Epci'][i]
             print(codeinsee)
+            population = df['Population_EPCI'][i]
             nom_secteur = df['Secteur'][i]
             depenses_fonctionnement = df['Depenses_Fonctionnement'][i]
             depenses_investissement = df['Depenses_Investissement'][i]
             depenses_totales = depenses_fonctionnement + depenses_investissement
             secteur = Secteur.objects.get(nom=nom_secteur)
-            epci = Epci.objects.get(codesiren=codeinsee, annee="2020")
+            epci = Epci.objects.get(codesiren=codeinsee, annee="2019")
             annee = "2019"
             
             DepensesEPCI.objects.get_or_create(epci=epci, secteur=secteur, depenses_fonctionnement=depenses_fonctionnement,
-            depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
+            depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee, population=population)
+        
         """
-        """
-        source_file = os.path.join(BASE_DIR, 'admindivisions/data/Base_Depenses_Communes_2019.xlsx')
+        source_file = os.path.join(BASE_DIR, 'admindivisions/data/Depenses_communes_2019.xlsx')
 
         df = pd.read_excel(source_file, dtype={'INSEE_COM':'string'})
 
         for i in df.index:
             codeinsee = df['INSEE_COM'][i]
             print(codeinsee)
+            population = df['Population_municipale'][i]
             nom_secteur = df['Secteur'][i]
             depenses_fonctionnement = df['Depenses_Fonctionnement'][i]
             depenses_investissement = df['Depenses_Investissement'][i]
@@ -151,23 +153,22 @@ class Command(BaseCommand):
             annee = "2019"
             
             DepensesCommunes.objects.get_or_create(commune=commune, secteur=secteur, depenses_fonctionnement=depenses_fonctionnement,
-            depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
+            depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee, population=population)
         """
-        
+        """
         with open('admindivisions/data/COMMUNES_2019.json') as f:
             data = json.load(f)
 
             for feature in data['features']: 
                 print(feature['properties']['INSEE_COM'])
                 commune = Commune.objects.get(codeinsee=feature['properties']['INSEE_COM'], year="2019")
-                com_cad = Commune.objects.get(codeinsee=feature['properties']['INSEE_COM'], year="2020")
-                cad = Cadrage.objects.get(commune=com_cad)
-                population = cad.population
+
                 depenses = DepensesCommunes.objects.filter(commune=commune, annee="2019")
 
-                if len(depenses) == 0 or population==0:
-                    feature["properties"].update({'DEPENSESTOTALES': -1, 'POPULATION': population, "DEPENSESHABITANTS": -1})
+                if len(depenses) == 0:
+                    feature["properties"].update({'DEPENSESTOTALES': -1, 'POPULATION': -1, "DEPENSESHABITANTS": -1})
                 else:
+                    population = depenses[0].population
                     depenses_totales = 0
                     for dep in depenses:                
                         depenses_totales += dep.depenses_totales
@@ -176,7 +177,7 @@ class Command(BaseCommand):
                                                                                              
             with open('admindivisions/data/COMMUNE_DEPENSES.json', 'w') as f:
                 json.dump(data, f)
-            
+ """
 
         """
         path = os.path.join(BASE_DIR, 'admindivisions/data/COMMUNE_CARTO_2019_SIMPLIFIED.json')

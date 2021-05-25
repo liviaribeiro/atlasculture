@@ -171,6 +171,7 @@ class DepensesEPCI(models.Model):
     depenses_fonctionnement = models.FloatField(null=True)
     depenses_investissement = models.FloatField(null=True)
     depenses_totales = models.FloatField(null=True)
+    population = models.FloatField(null=True)
     annee = models.CharField(max_length=4, null=True)
 
 class DepensesCommunes(models.Model):
@@ -179,6 +180,7 @@ class DepensesCommunes(models.Model):
     depenses_fonctionnement = models.FloatField(null=True)
     depenses_investissement = models.FloatField(null=True)
     depenses_totales = models.FloatField(null=True)
+    population = models.FloatField(null=True)
     annee = models.CharField(max_length=4, null=True)
 
 class TypologieAAV(models.Model):
