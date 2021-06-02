@@ -16,7 +16,7 @@
             </button></li>
 
             <li><button value="depenses-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Dépénses publiques culturelles" src="{% static 'depenses.png' %}" style="width: 35px; margin-top:30px"/></span>
-                <span class="sidebuttoninfo"><img alt="Dépénses publiques culturelles" src="{% static 'depenses.png' %}" style="width: 35px;" /><span class ='sidebuttontxt'>Dépénses publiques culturelles</span></span>
+                <span class="sidebuttoninfo"><img alt="Dépenses publiques culturelles" src="{% static 'depenses.png' %}" style="width: 35px;" /><span class ='sidebuttontxt'>Dépenses publiques culturelles</span></span>
             </button></li>
 
             <li><button value="entreprises-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Entreprises et emploi culturels" src="{% static 'entreprises.png' %}" style="width: 35px; margin-top:30px"/></span>
@@ -97,7 +97,7 @@
         <button class="btn-tag" value="Action coeur de ville" onclick="showLayer(this)">Action coeur de ville</button>
         <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this)">Quartiers prioritaires de la politique de la ville</button>
         <p class="subtitle">Zonage d'études</p>
-        <button class="btn-tag" value="Zonage rural" onclick="showLayer(this)">Zonage rural</button>
+        <button class="btn-tag" value="Zonage rural" onclick="showLayer(this)">Grille communale de densité</button>
         <button class="btn-tag" value="Aires d'attraction des villes" onclick="showLayer(this)">Aires d'attraction des villes</button>
 
     </div>
@@ -143,7 +143,6 @@
         document.getElementById(itemMenu).style.width = "419px";
         var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
         for (var i = 0; i < menus.length; i++){
-            console.log(menus[i]);
             if (menus[i] != itemMenu) {
                 closeNav(menus[i]);
             }
@@ -151,7 +150,6 @@
     }
     
     function closeNav(itemMenu) {
-        console.log(itemMenu);
         document.getElementById(itemMenu).style.width = "0";
     }
 
@@ -166,10 +164,6 @@
 
     map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
 
-    map.addControl(new MapboxLanguage({
-        defaultLanguage: 'fr'
-    }));
-
     var popup = new mapboxgl.Popup({
             closeButton: false
     });
@@ -180,7 +174,18 @@
 
     map.on('load', function () {
 
-        
+        map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('state-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('road-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('waterway-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('natural-line-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('natural-point-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('water-line-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('water-point-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_fr']);
+        map.setLayoutProperty('airport-label', 'text-field', ['get', 'name_fr']);
 
         console.log(map.getStyle().layers)
 
@@ -381,7 +386,7 @@
                 'type': 'circle',
                 'source': 'pdr',
                 'paint': {
-                    'circle-color': "#FFFF00",
+                    'circle-color': "#000000",
                     'circle-radius': {
                         stops: [[6, 1.5], [9, 7], [16, 10]]
                     }          
@@ -1469,7 +1474,7 @@
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses publiques culturelles des régions en euros par habitants : "
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses publiques culturelles des régions en euros par habitant : "
                         +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des régions : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles"
@@ -1522,7 +1527,7 @@
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses publiques culturelles des départements en euros par habitants : "
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses publiques culturelles des départements en euros par habitant : "
                         +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des départements : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles"
@@ -1577,7 +1582,7 @@
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p><p>Dépenses publiques culturelles des départements en euros par habitants : "
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p><p>Dépenses publiques culturelles des départements en euros par habitant : "
                         +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des communes : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles pour les communes de moins de 3 000 habitants"
@@ -1622,7 +1627,11 @@
             map.setLayoutProperty("departementLine", 'visibility', 'none');
             map.setLayoutProperty("communeLayer", 'visibility', 'none');
             map.setLayoutProperty("communeLine", 'visibility', 'none');
-
+            map.moveLayer("settlement-subdivision-label");
+            map.moveLayer("settlement-label");
+            map.moveLayer("state-label");
+            map.moveLayer("country-label");
+            
 
         }
         if (visibility == 'visible') {
