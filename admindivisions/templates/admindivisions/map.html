@@ -48,6 +48,7 @@
     <p class="title">Politiques culturelles territoriales</p>
     <div class="item">
         <button class="btn-tag" value="Contrats territoire lecture" onclick="showLayer(this)">Contrats territoire lecture</button>
+        <button class="btn-tag" value="Plan de relance" onclick="showLayer(this)">Plan de relance</button>
     </div>
 </div>
 
@@ -97,22 +98,56 @@
         <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this)">Quartiers prioritaires de la politique de la ville</button>
         <p class="subtitle">Zonage d'études</p>
         <button class="btn-tag" value="Zonage rural" onclick="showLayer(this)">Zonage rural</button>
-        <button class="btn-tag" value="Zonage rural" onclick="showLayer(this)">Aires d'attraction des villes</button>
+        <button class="btn-tag" value="Aires d'attraction des villes" onclick="showLayer(this)">Aires d'attraction des villes</button>
 
     </div>
 </div>
 
+<div class="legend shadow-sm p-3 mb-5 bg-white rounded" style="visibility:hidden" id="legend">
+</div>
+
+
 <script>
-    function openNav(itemMenu) {
-      document.getElementById(itemMenu).style.width = "419px";
-      var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
-      for (var i = 0; i < menus.length; i++){
-          console.log(menus[i]);
-          if (menus[i] != itemMenu) {
-                closeNav(menus[i]);
-          }
+
+    function addLegend(indicator, layers, colors) {
+        var title = document.createElement('div');
+        title.className = "title-legend mb-3";
+        title.innerHTML = indicator;
+        legend.appendChild(title)
+
+        for (i = 0; i < layers.length; i++) {
+            var layer = layers[i];
+            var color = colors[i];
+            var item = document.createElement('div');
+            var key = document.createElement('span');
+            key.className = 'legend-key';
+            key.style.backgroundColor = color;
+
+            var value = document.createElement('span');
+            value.innerHTML = layer;
+            value.className = 'legend-value';
+            item.appendChild(key);
+            item.appendChild(value);
+            legend.appendChild(item);
         }
-      
+
+        var link = document.createElement('a');
+        link.className = "link-legend";
+        link.innerHTML = "En savoir plus";
+        link.title = "En savoir plus";
+        link.href = "#";
+        legend.appendChild(link);
+    }
+
+    function openNav(itemMenu) {
+        document.getElementById(itemMenu).style.width = "419px";
+        var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
+        for (var i = 0; i < menus.length; i++){
+            console.log(menus[i]);
+            if (menus[i] != itemMenu) {
+                closeNav(menus[i]);
+            }
+        }
     }
     
     function closeNav(itemMenu) {
@@ -144,6 +179,8 @@
     var hoveredStateId = null;
 
     map.on('load', function () {
+
+        
 
         console.log(map.getStyle().layers)
 
@@ -331,6 +368,44 @@
         addZoneLayer(regionLayer, regionURL, regionSourceLayer, regionMaxZoom, regionMinZoom);
         addZoneLayer(departementLayer, departementURL, departementSourceLayer, departementMaxZoom, departementMinZoom);
         addZoneLayer(communeLayer, communeURL, communeSourceLayer, communeMaxZoom, communeMinZoom);
+
+
+        map.addSource('pdr', {
+                'type': 'geojson',
+                'data': "{% url 'pdr' %}",
+        });
+
+       
+        map.addLayer({
+                'id': 'Plan de relance',
+                'type': 'circle',
+                'source': 'pdr',
+                'paint': {
+                    'circle-color': "#FFFF00",
+                    'circle-radius': {
+                        stops: [[6, 1.5], [9, 7], [16, 10]]
+                    }          
+                },            
+                'layout': {
+                        'visibility': 'none',
+                    },      
+        });
+
+        map.on('click', 'Plan de relance', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var name = e.features[0].properties.Lieu;
+                var adresse = e.features[0].properties.Adresse;
+                
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }               
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML('<p><b>'+name+'</b></p>'+ 
+                    '<p>'+adresse+'</p>'
+                )
+                .addTo(map);
+            });
 
         map.addSource('population', {
             'type': 'vector',
@@ -632,6 +707,12 @@
             .addTo(map);
         });
 
+        var layers = ['Très dense', 'Densité intermediaire', 'Très peu dense', 'Peu dense'];
+        var colors = ['#d01c8b', '#f1b6da', '#b8e186', '#4dac26'];
+        var indicator = "Zonage Rural";
+
+        addLegend(indicator, layers, colors);
+
         map.addSource('zonage rural', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.ahgyau5x'
@@ -676,7 +757,7 @@
         map.on('mouseleave', 'Zonage rural', function () {
             popup.remove();
         });
-        
+
         map.addSource('qp', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.82f38xhh'
@@ -1513,7 +1594,6 @@
 
     });
 
-
     function showLayer(layer) {
         var visibility = map.getLayoutProperty(layer.value, 'visibility');
         if (visibility == 'none') {
@@ -1542,6 +1622,8 @@
             map.setLayoutProperty("departementLine", 'visibility', 'none');
             map.setLayoutProperty("communeLayer", 'visibility', 'none');
             map.setLayoutProperty("communeLine", 'visibility', 'none');
+
+
         }
         if (visibility == 'visible') {
             if (layer.value == "Entreprises culturelles du secteur marchand"){
@@ -1568,7 +1650,9 @@
             map.setLayoutProperty("departementLine", 'visibility', 'visible');
             map.setLayoutProperty("communeLayer", 'visibility', 'visible');
             map.setLayoutProperty("communeLine", 'visibility', 'visible');
+
         }
+
     }
 
 </script>

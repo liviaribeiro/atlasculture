@@ -55,6 +55,46 @@
     z-index: 5;
 }
 
+.title-legend {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.link-legend {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: #5770BE;
+    line-height:28px;
+}
+
+.legend {
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+    top: 71px;
+    font-family: 'Open Sans', sans-serif;
+    z-index: 5;
+    width: 227px;
+    height:fit-content;
+    z-index: 5;
+}
+
+.legend-key {
+    display: inline-block;
+    width: 32px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.legend-value {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    padding-bottom: 3px;
+}
+
 #sidebar {
     background: #fff;
     width: 63px;

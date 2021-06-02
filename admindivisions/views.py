@@ -36,3 +36,14 @@ def equipements(request, domaine):
         response = JsonResponse(data, safe=False)
 
     return response
+
+
+def pdr(request):
+    path = os.path.join(BASE_DIR, 'static/data/PDR.json')
+
+    with open(path) as f:
+        data = json.load(f)
+    
+        response = JsonResponse(data, safe=False)
+
+    return response

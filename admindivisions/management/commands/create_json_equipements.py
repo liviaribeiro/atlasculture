@@ -2,7 +2,7 @@ from django.core import serializers
 from equipements.models import Equipement
 import json
 from django.core.management.base import BaseCommand
-
+import pandas as pd 
 
 class Command(BaseCommand):
 
@@ -14,3 +14,4 @@ class Command(BaseCommand):
                 fields=('nom','domaine','equipement_type','adresse','source_name','commune_name',),
                 use_natural_foreign_keys=True,
                 stream=out)
+        
