@@ -48,7 +48,6 @@
     <p class="title">Politiques culturelles territoriales</p>
     <div class="item">
         <button class="btn-tag" value="Contrats territoire lecture" onclick="showLayer(this)">Contrats territoire lecture</button>
-        <button class="btn-tag" value="Plan de relance" onclick="showLayer(this)">Plan de relance</button>
     </div>
 </div>
 
@@ -56,10 +55,13 @@
     <button href="javascript:void(0)" value="depenses-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
     <p class="title">Dépenses culturelles publiques</p>
     <div class="item">
+        <p class="subtitle">Dépenses des collectivités territoriales</p>
         <button class="btn-tag" value="Dépenses publiques culturelles des régions" onclick="showLayer(this)">Dépenses culturelles des régions</button>
         <button class="btn-tag" value="Dépenses publiques culturelles des départements" onclick="showLayer(this)">Dépenses culturelles des départements</button>
         <button class="btn-tag" value="Dépenses publiques culturelles des intercommunalités" onclick="showLayer(this)">Dépenses culturelles des intercommunalités</button>
         <button class="btn-tag" value="Dépenses publiques culturelles des communes" onclick="showLayer(this)">Dépenses culturelles des communes</button>
+        <p class="subtitle">Dépenses de l'État</p>
+        <button class="btn-tag" value="Plan de relance" onclick="showLayer(this)">Plan de relance</button>
     </div>
 </div>
 
@@ -375,56 +377,6 @@
         addZoneLayer(departementLayer, departementURL, departementSourceLayer, departementMaxZoom, departementMinZoom);
         addZoneLayer(communeLayer, communeURL, communeSourceLayer, communeMaxZoom, communeMinZoom);
 
-
-        map.addSource('pdr', {
-                'type': 'geojson',
-                'data': "{% url 'pdr' %}",
-        });
-
-       
-        map.addLayer({
-                'id': 'Plan de relance',
-                'type': 'symbol',
-                'source': 'pdr',
-                'layout': {
-                        'icon-image': [
-                        "case",
-                        [
-                            "match",
-                            ["get", "ACV"],
-                            ["000000"],
-                            false,
-                            true
-                        ],
-                        "custom-marker",
-                        ""
-                        ],           
-                        'icon-size': 0.5,
-                        'visibility': 'none',
-                        'icon-allow-overlap': true
-                    },      
-        });
-
-        map.on('click', 'Plan de relance', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice();
-                var name = e.features[0].properties.Lieu;
-                var adresse = e.features[0].properties.Adresse;
-                var montant = e.features[0].properties.Montant;
-                var operation = e.features[0].properties.Operation;
-                
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }               
-                new mapboxgl.Popup()
-                    .setLngLat(coordinates)
-                    .setHTML('<p><b>'+name+'</b></p>'+ 
-                    '<p>'+adresse+'</p>'+
-                    '<p>Opération : '+operation+'</p>'+
-                    '<p>Montant : '+formatNumber(montant)+'</p>'
-                )
-                .addTo(map);
-            });
-
         map.addSource('population', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.1n6485zf'
@@ -451,7 +403,7 @@
                 }
         });
 
-        map.on('mousemove', 'Population', function (e) {
+        map.on('click', 'Population', function (e) {
             if (e.features.length > 0) {
                 population = e.features[0].properties.POPULATION
                 if (population == -1) {
@@ -467,10 +419,6 @@
                 }     
         });
         
-        map.on('mouseleave', 'Population', function () {
-            popup.remove();
-        });
-
         map.addSource('cadrage', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.2v0fu4ny'
@@ -514,7 +462,7 @@
             }
         );  
 
-        map.on('mousemove', 'Indice de jeunesse', function (e) {
+        map.on('click', 'Indice de jeunesse', function (e) {
             if (e.features.length > 0) {
                 indice = e.features[0].properties.INDICEJEUNESSE17
                 if (indice == -1) {
@@ -528,10 +476,6 @@
                         +indice+ '</p>')
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Indice de jeunesse', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -565,7 +509,7 @@
             }  
         );    
 
-        map.on('mousemove', 'Densité de la population', function (e) {
+        map.on('click', 'Densité de la population', function (e) {
             if (e.features.length > 0) {
                 densite = e.features[0].properties.DENSITE17
                 if (densite == -1) {
@@ -579,10 +523,6 @@
                         +densite+' </p>')
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Densité de la population', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -621,17 +561,13 @@
             }  
         );      
         
-        map.on('mousemove', 'Évolution de la population', function (e) {
+        map.on('click', 'Évolution de la population', function (e) {
             if (e.features.length > 0) {
                 popup.setLngLat(e.lngLat)
                     .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
                         +(e.features[0].properties.TYPOLOGIE)+'</p>')
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Évolution de la population', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -666,7 +602,7 @@
             }  
         );    
 
-        map.on('mousemove', 'Niveau de vie médian', function (e) {
+        map.on('click', 'Niveau de vie médian', function (e) {
             if (e.features.length > 0) {
                 niveaudevie = e.features[0].properties.NIVEAUDEVIE17
                 if (niveaudevie == -1) {
@@ -680,10 +616,6 @@
                         +niveaudevie+' </p>')
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Niveau de vie médian', function () {
-            popup.remove();
         });
 
         map.loadImage(
@@ -769,17 +701,13 @@
             }  
         );
 
-        map.on('mousemove', 'Zonage rural', function (e) {
+        map.on('click', 'Zonage rural', function (e) {
             if (e.features.length > 0) {
                 popup.setLngLat(e.lngLat)
                     .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
                         +e.features[0].properties.ZONAGE_RURAL_NOM+' </p>')
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Zonage rural', function () {
-            popup.remove();
         });
 
         map.addSource('qp', {
@@ -805,16 +733,12 @@
             }  
         );
 
-        map.on('mousemove', 'Quartiers prioritaires de la politique de la ville', function (e) {
+        map.on('click', 'Quartiers prioritaires de la politique de la ville', function (e) {
             if (e.features.length > 0) {
                 popup.setLngLat(e.lngLat)
                     .setHTML('<p>'+e.features[0].properties.NOM_QP)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Quartiers prioritaires de la politique de la ville', function () {
-            popup.remove();
         });
 
         //add departement source
@@ -859,7 +783,7 @@
             }  
         );
 
-        map.on('mousemove', 'Entreprises culturelles du secteur marchand régions', function (e) {
+        map.on('click', 'Entreprises culturelles du secteur marchand régions', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
                 nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
@@ -872,10 +796,6 @@
                     .setHTML(texte)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Entreprises culturelles du secteur marchand régions', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -908,7 +828,7 @@
             }  
         );
 
-        map.on('mousemove', 'Salariés actifs des secteurs culturels marchands régions', function (e) {
+        map.on('click', 'Salariés actifs des secteurs culturels marchands régions', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
                 nombre = e.features[0].properties.EFFECTIFSCULTURE17
@@ -922,12 +842,8 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Salariés actifs des secteurs culturels marchands régions', function () {
-            popup.remove();
-        });
 
-         //add departement source
+        //add departement source
          map.addSource('departement_entreprises', {
                 'type': 'vector',
                 'url': 'mapbox://liviaribeiro.659hkczd'
@@ -964,7 +880,7 @@
             }  
         );
 
-        map.on('mousemove', 'Entreprises culturelles du secteur marchand départements', function (e) {
+        map.on('click', 'Entreprises culturelles du secteur marchand départements', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
                 nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
@@ -978,11 +894,6 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Entreprises culturelles du secteur marchand départements', function () {
-            popup.remove();
-        });
-
 
         map.addLayer(
             {
@@ -1015,7 +926,7 @@
             }  
         );
 
-        map.on('mousemove', 'Salariés actifs des secteurs culturels marchands départements', function (e) {
+        map.on('click', 'Salariés actifs des secteurs culturels marchands départements', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
                 nombre = e.features[0].properties.EFFECTIFSCULTURE17
@@ -1029,11 +940,6 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Salariés actifs des secteurs culturels marchands départements', function () {
-            popup.remove();
-        });
-
         
         map.addLayer(
             {
@@ -1067,7 +973,7 @@
             }  
         );
 
-        map.on('mousemove', 'Entreprises culturelles du secteur marchand', function (e) {
+        map.on('click', 'Entreprises culturelles du secteur marchand', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
                 nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
@@ -1080,10 +986,6 @@
                     .setHTML(texte)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Entreprises culturelles du secteur marchand', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -1118,7 +1020,7 @@
             }  
         );
 
-        map.on('mousemove', 'Salariés actifs des secteurs culturels marchands', function (e) {
+        map.on('click', 'Salariés actifs des secteurs culturels marchands', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
                 nombre = e.features[0].properties.EFFECTIFSCULTURE17
@@ -1132,11 +1034,6 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Salariés actifs des secteurs culturels marchands', function () {
-            popup.remove();
-        });
-
         
         //add emploi source
         map.addSource('emploi_departement', {
@@ -1175,7 +1072,7 @@
             }  
         );
 
-        map.on('mousemove', 'Actifs exerçant une profession culturelle', function (e) {
+        map.on('click', 'Actifs exerçant une profession culturelle', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.part_profession_culturelle*100
                 nombre = e.features[0].properties.nombre_profession_culturelle
@@ -1188,10 +1085,6 @@
                     .setHTML(texte)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Actifs dans les secteurs culturels', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -1225,7 +1118,7 @@
             }  
         );
 
-        map.on('mousemove', 'Actifs dans les secteurs culturels', function (e) {
+        map.on('click', 'Actifs dans les secteurs culturels', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.part_secteur_culturel*100
                 nombre = e.features[0].properties.nombre_secteur_culturel
@@ -1239,11 +1132,6 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Actifs dans les secteurs culturels', function () {
-            popup.remove();
-        });
-
         
         //add emploi source
         map.addSource('emploi_region', {
@@ -1281,7 +1169,7 @@
             }  
         );
 
-        map.on('mousemove', 'Actifs exerçant une profession culturelle région', function (e) {
+        map.on('click', 'Actifs exerçant une profession culturelle région', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.part_profession_culturelle*100
                 nombre = e.features[0].properties.nombre_profession_culturelle
@@ -1294,10 +1182,6 @@
                     .setHTML(texte)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Actifs dans les secteurs culturels région', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -1330,7 +1214,7 @@
             }  
         );
 
-        map.on('mousemove', 'Actifs dans les secteurs culturels région', function (e) {
+        map.on('click', 'Actifs dans les secteurs culturels région', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.part_secteur_culturel*100
                 nombre = e.features[0].properties.nombre_secteur_culturel
@@ -1344,11 +1228,6 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Actifs dans les secteurs culturels région', function () {
-            popup.remove();
-        });
-
 
          //add emploi source
          map.addSource('emploi_ze', {
@@ -1386,7 +1265,7 @@
             }  
         );
 
-        map.on('mousemove', 'Actifs exerçant une profession culturelle ZE', function (e) {
+        map.on('click', 'Actifs exerçant une profession culturelle ZE', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.part_profession_culturelle*100
                 nombre = e.features[0].properties.nombre_profession_culturelle
@@ -1399,10 +1278,6 @@
                     .setHTML(texte)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Actifs dans les secteurs culturels ZE', function () {
-            popup.remove();
         });
 
         map.addLayer(
@@ -1435,7 +1310,7 @@
             }  
         );
 
-        map.on('mousemove', 'Actifs dans les secteurs culturels ZE', function (e) {
+        map.on('click', 'Actifs dans les secteurs culturels ZE', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.part_secteur_culturel*100
                 nombre = e.features[0].properties.nombre_secteur_culturel
@@ -1449,11 +1324,6 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Actifs dans les secteurs culturels ZE', function () {
-            popup.remove();
-        });
-
 
         map.addSource('depenses_region', {
                 'type': 'vector',
@@ -1489,7 +1359,7 @@
             }  
         );
 
-        map.on('mousemove', 'Dépenses publiques culturelles des régions', function (e) {
+        map.on('click', 'Dépenses publiques culturelles des régions', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
@@ -1502,10 +1372,6 @@
                     .setHTML(texte)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Dépenses publiques culturelles des régions', function () {
-            popup.remove();
         });
 
         map.addSource('depenses_departement', {
@@ -1542,7 +1408,7 @@
             }  
         );
 
-        map.on('mousemove', 'Dépenses publiques culturelles des départements', function (e) {
+        map.on('click', 'Dépenses publiques culturelles des départements', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
@@ -1555,10 +1421,6 @@
                     .setHTML(texte)
                     .addTo(map);
                 }     
-        });
-        
-        map.on('mouseleave', 'Dépenses publiques culturelles des départements', function () {
-            popup.remove();
         });
 
         map.addSource('depenses_commune', {
@@ -1597,7 +1459,7 @@
             }  
         );
 
-        map.on('mousemove', 'Dépenses publiques culturelles des communes', function (e) {
+        map.on('click', 'Dépenses publiques culturelles des communes', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
@@ -1611,10 +1473,55 @@
                     .addTo(map);
                 }     
         });
-        
-        map.on('mouseleave', 'Dépenses publiques culturelles des communes', function () {
-            popup.remove();
+
+        map.addSource('pdr', {
+                'type': 'geojson',
+                'data': "{% url 'pdr' %}",
         });
+
+       
+        map.addLayer({
+                'id': 'Plan de relance',
+                'type': 'symbol',
+                'source': 'pdr',
+                'layout': {
+                        'icon-image': [
+                        "case",
+                        [
+                            "match",
+                            ["get", "ACV"],
+                            ["000000"],
+                            false,
+                            true
+                        ],
+                        "custom-marker",
+                        ""
+                        ],           
+                        'icon-size': 0.5,
+                        'visibility': 'none',
+                        'icon-allow-overlap': true, 
+                    }
+        });
+
+        map.on('click', 'Plan de relance', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var name = e.features[0].properties.Lieu;
+                var adresse = e.features[0].properties.Adresse;
+                var montant = e.features[0].properties.Montant;
+                var operation = e.features[0].properties.Operation;
+                
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }               
+                
+                popup.setLngLat(coordinates)
+                    .setHTML('<p><b>'+name+'</b></p>'+ 
+                    '<p>'+adresse+'</p>'+
+                    '<p>Opération : '+operation+'</p>'+
+                    '<p>Montant : '+formatNumber(montant)+'</p>'
+                )
+                .addTo(map);
+            });
 
     });
 
