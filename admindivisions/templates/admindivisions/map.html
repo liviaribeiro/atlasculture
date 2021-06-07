@@ -174,6 +174,7 @@
 
     map.on('load', function () {
 
+
         map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']);
         map.setLayoutProperty('state-label', 'text-field', ['get', 'name_fr']);
         map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_fr']);
@@ -383,16 +384,24 @@
        
         map.addLayer({
                 'id': 'Plan de relance',
-                'type': 'circle',
+                'type': 'symbol',
                 'source': 'pdr',
-                'paint': {
-                    'circle-color': "#000000",
-                    'circle-radius': {
-                        stops: [[6, 5], [9, 7], [16, 10]]
-                    }          
-                },            
                 'layout': {
+                        'icon-image': [
+                        "case",
+                        [
+                            "match",
+                            ["get", "ACV"],
+                            ["000000"],
+                            false,
+                            true
+                        ],
+                        "custom-marker",
+                        ""
+                        ],           
+                        'icon-size': 0.5,
                         'visibility': 'none',
+                        'icon-allow-overlap': true
                     },      
         });
 
@@ -400,6 +409,8 @@
                 var coordinates = e.features[0].geometry.coordinates.slice();
                 var name = e.features[0].properties.Lieu;
                 var adresse = e.features[0].properties.Adresse;
+                var montant = e.features[0].properties.Montant;
+                var operation = e.features[0].properties.Operation;
                 
                 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -407,7 +418,9 @@
                 new mapboxgl.Popup()
                     .setLngLat(coordinates)
                     .setHTML('<p><b>'+name+'</b></p>'+ 
-                    '<p>'+adresse+'</p>'
+                    '<p>'+adresse+'</p>'+
+                    '<p>Opération : '+operation+'</p>'+
+                    '<p>Montant : '+formatNumber(montant)+'</p>'
                 )
                 .addTo(map);
             });
@@ -462,6 +475,12 @@
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.2v0fu4ny'
         });
+
+        var layers = ['0-50', '50-80', '80-100', '100-150', '>150'];
+        var colors = ['#eff3ff"', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var indicator = "Indice de jeunesse";
+
+        addLegend(indicator, layers, colors);
 
         map.addLayer(
             {
@@ -1632,6 +1651,8 @@
             map.moveLayer("state-label");
             map.moveLayer("country-label");
             
+            var legend = document.getElementById("legend");
+            //legend.style.visibility = "visible";
 
         }
         if (visibility == 'visible') {
