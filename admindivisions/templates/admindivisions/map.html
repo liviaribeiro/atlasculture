@@ -186,7 +186,6 @@
 
     map.on('load', function () {
 
-
         map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']);
         map.setLayoutProperty('state-label', 'text-field', ['get', 'name_fr']);
         map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_fr']);
@@ -200,8 +199,6 @@
         map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_fr']);
         map.setLayoutProperty('airport-label', 'text-field', ['get', 'name_fr']);
 
-        console.log(map.getStyle().layers)
-
         map.setPaintProperty("water", 'fill-color', "#a8e0f5");
         map.setPaintProperty("national-park", 'fill-color', "#b4e49b");
 
@@ -212,7 +209,7 @@
                 'data': "{% url 'equipements' equipement_type.pk %}",
             });
 
-            if ('{{domaine.name}}' == "Archives"){
+            if ('{{domaine.name}}' == "Service d'archives"){
                 circleColor = '#006837';
             }
             if ('{{domaine.name}}' == "Arts du spectacle"){
@@ -270,6 +267,13 @@
                 )
                 .addTo(map);
             });
+
+            map.on("mouseenter", '{{ equipement_type.pk }}', () => {
+                map.getCanvas().style.cursor = "pointer";
+            });
+            map.on("mouseleave", '{{ equipement_type.pk }}', () => {
+                map.getCanvas().style.cursor = "";
+                });
             {% endfor %}
         {% endfor %}
         
@@ -332,7 +336,6 @@
                 var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
                 var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
                 var center = new mapboxgl.LngLatBounds(southWest, northEast).getCenter();
-                console.log(fit)
                 map.flyTo({
                     center: center, zoom:maxZoom+1
                 });
@@ -434,7 +437,7 @@
             'url': 'mapbox://liviaribeiro.2v0fu4ny'
         });
 
-        var layers = ['0-50', '50-80', '80-100', '100-150', '>150'];
+        var layers = ['0 à 50', '50 à 80', '80 à 100', '100 à 150', 'plus de 150'];
         var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
         var indicator = "Indice de jeunesse";
 
@@ -488,7 +491,7 @@
                 }     
         });
 
-        var layers = ['0-50', '50-100', '100-1 000', '1 000-1 0000', '>10 000'];
+        var layers = ['0 à 50 habitants/km²', '50 à 100 habitants/km²', '100 à 1 000 habitants/km²', '1 000 à 1 0000 habitants/km²', 'plus de 10 000 habitants/km²'];
         var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
         var indicator = "Densité de la population";
 
@@ -592,7 +595,7 @@
                 }     
         });
 
-        var layers = ['0-20 000', '20 000-24 000', '24 000-28 000', '28 000-34 0000', '>34 000'];
+        var layers = ['0 à 20 000 €', '20 000 à 24 000 €', '24 000 à 28 000 €', '28 000 à 34 0000 €', 'plus de 34 000 €'];
         var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
         var indicator = "Niveau de vie médian";
 
@@ -691,6 +694,14 @@
             .addTo(map);
         });
 
+        map.on("mouseenter", "Action coeur de ville", () => {
+                map.getCanvas().style.cursor = "pointer";
+            });
+
+        map.on("mouseleave", "Action coeur de ville", () => {
+                map.getCanvas().style.cursor = "";
+                });
+
         var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
         var colors = ['#d01c8b', '#f1b6da', '#b8e186', '#4dac26'];
         var indicator = "Zonage rural";
@@ -744,7 +755,7 @@
         });
         
         var layers = ['quartier prioritaire de la politique de la ville'];
-        var colors = ['#3182bd', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var colors = ['#3182bd'];
         var indicator = "Quartiers prioritaires de la politique de la ville";
 
         addLegend(indicator, layers, colors);
@@ -787,6 +798,12 @@
                 'url': 'mapbox://liviaribeiro.79o9xcfa'
         });
 
+        var layers = ['0', '0 à 2,5%', '2,5 à 5%', '5 à 7,5%', 'plus de 7,5%'];
+        var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
+        var indicator = "Entreprises culturelles du secteur marchand";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Entreprises culturelles du secteur marchand régions',
@@ -798,15 +815,15 @@
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEETABLISSEMENTS"],
-                        "#feedde",
-                        0.010,
-                        "#fdbe85",
-                        0.020,
-                        "#fd8d3c",
+                        "#fef0d9",
+                        0.001,
+                        "#fdcc8a",
                         0.025,
-                        "#e6550d",
+                        "#fc8d59",
                         0.05,
-                        "#a63603"
+                        "#e34a33",
+                        0.075,
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -832,6 +849,12 @@
                 }     
         });
 
+        var layers = ['0', '0 à 2,5%', '2,5 à 5%', '5 à 7,5%', 'plus de 7,5%'];
+        var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
+        var indicator = "Salariés actifs des secteurs culturels marchands";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Salariés actifs des secteurs culturels marchands régions',
@@ -843,15 +866,15 @@
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEEFFECTIFS"],
-                        "#feedde",
-                        0.01,
-                        "#fdbe85",
-                        0.018,
-                        "#fd8d3c",
-                        0.02,
-                        "#e6550d",
-                        0.03,
-                        "#a63603"
+                        "#fef0d9",
+                        0.001,
+                        "#fdcc8a",
+                        0.025,
+                        "#fc8d59",
+                        0.05,
+                        "#e34a33",
+                        0.075,
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -895,15 +918,15 @@
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEETABLISSEMENTS"],
-                        "#feedde",
-                        0.02,
-                        "#fdbe85",
-                        0.03,
-                        "#fd8d3c",
-                        0.06,
-                        "#e6550d",
-                        0.09,
-                        "#a63603"
+                        "#fef0d9",
+                        0.001,
+                        "#fdcc8a",
+                        0.025,
+                        "#fc8d59",
+                        0.05,
+                        "#e34a33",
+                        0.075,
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -941,15 +964,15 @@
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEEFFECTIFS"],
-                        "#feedde",
-                        0.0099,
-                        "#fdbe85",
-                        0.0179,
-                        "#fd8d3c",
-                        0.0249,
-                        "#e6550d",
-                        0.0499,
-                        "#a63603"
+                        "#fef0d9",
+                        0.001,
+                        "#fdcc8a",
+                        0.025,
+                        "#fc8d59",
+                        0.05,
+                        "#e34a33",
+                        0.075,
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -986,17 +1009,15 @@
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEETABLISSEMENTS"],
-                        "#ffffff",
-                        0,
-                        "#feedde",
-                        0.010,
-                        "#fdbe85",
-                        0.059,
-                        "#fd8d3c",
-                        0.10,
-                        "#e6550d",
-                        0.19,
-                        "#a63603"
+                        "#fef0d9",
+                        0.001,
+                        "#fdcc8a",
+                        0.025,
+                        "#fc8d59",
+                        0.05,
+                        "#e34a33",
+                        0.075,
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1033,17 +1054,15 @@
                     'fill-color': [
                         "step",
                         ["get", "POURCENTAGEEFFECTIFS"],
-                        "#ffffff",
-                        0,
-                        "#feedde",
+                        "#fef0d9",
                         0.001,
-                        "#fdbe85",
-                        0.0049,
-                        "#fd8d3c",
-                        0.01799,
-                        "#e6550d",
-                        0.1,
-                        "#a63603"
+                        "#fdcc8a",
+                        0.025,
+                        "#fc8d59",
+                        0.05,
+                        "#e34a33",
+                        0.075,
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1075,6 +1094,12 @@
                 'url': 'mapbox://liviaribeiro.4nizq0zw'
         });
 
+        var layers = ['0 à 1%', '1 à 1,7%', '1,7% à 2%', '2% à 3,6%', 'plus de 3,6%'];
+        var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
+        var indicator = "Actifs exerçant une profession culturelle";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Actifs exerçant une profession culturelle',
@@ -1087,15 +1112,15 @@
                     'fill-color': [
                         "step",
                         ["get", "part_profession_culturelle"],
-                        "#feedde",
+                        "#fef0d9",
                         0.011,
-                        "#fdbe85",
+                        "#fdcc8a",
                         0.017,
-                        "#fd8d3c",
+                        "#fc8d59",
                         0.020,
-                        "#e6550d",
+                        "#e34a33",
                         0.036,
-                        "#a63603"
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1133,15 +1158,15 @@
                     'fill-color': [
                         "step",
                         ["get", "part_secteur_culturel"],
-                        "#feedde",
+                        "#fef0d9",
                         0.011,
-                        "#fdbe85",
+                        "#fdcc8a",
                         0.017,
-                        "#fd8d3c",
+                        "#fc8d59",
                         0.020,
-                        "#e6550d",
+                        "#e34a33",
                         0.036,
-                        "#a63603"
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1184,15 +1209,15 @@
                     'fill-color': [
                         "step",
                         ["get", "part_profession_culturelle"],
-                        "#feedde",
+                        "#fef0d9",
                         0.011,
-                        "#fdbe85",
+                        "#fdcc8a",
                         0.017,
-                        "#fd8d3c",
+                        "#fc8d59",
                         0.020,
-                        "#e6550d",
+                        "#e34a33",
                         0.036,
-                        "#a63603"
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1218,6 +1243,12 @@
                 }     
         });
 
+        var layers = ['0 à 1%', '1 à 1,7%', '1,7% à 2%', '2% à 3,6%', 'plus de 3,6%'];
+        var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
+        var indicator = "Actifs dans les secteurs culturels";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Actifs dans les secteurs culturels région',
@@ -1229,15 +1260,15 @@
                     'fill-color': [
                         "step",
                         ["get", "part_secteur_culturel"],
-                        "#feedde",
+                        "#fef0d9",
                         0.011,
-                        "#fdbe85",
+                        "#fdcc8a",
                         0.017,
-                        "#fd8d3c",
+                        "#fc8d59",
                         0.020,
-                        "#e6550d",
+                        "#e34a33",
                         0.036,
-                        "#a63603"
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1280,15 +1311,15 @@
                     'fill-color': [
                         "step",
                         ["get", "part_profession_culturelle"],
-                        "#feedde",
+                        "#fef0d9",
                         0.011,
-                        "#fdbe85",
+                        "#fdcc8a",
                         0.017,
-                        "#fd8d3c",
+                        "#fc8d59",
                         0.020,
-                        "#e6550d",
+                        "#e34a33",
                         0.036,
-                        "#a63603"
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1325,15 +1356,15 @@
                     'fill-color': [
                         "step",
                         ["get", "part_secteur_culturel"],
-                        "#feedde",
+                        "#fef0d9",
                         0.011,
-                        "#fdbe85",
+                        "#fdcc8a",
                         0.017,
-                        "#fd8d3c",
+                        "#fc8d59",
                         0.020,
-                        "#e6550d",
+                        "#e34a33",
                         0.036,
-                        "#a63603"
+                        "#b30000"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1364,6 +1395,12 @@
                 'url': 'mapbox://liviaribeiro.16wk8z7f'
         });
 
+        var layers = ['0 à 5 €/habitant', '5 à 11 €/habitant', '11 à 21 €/habitant', '21 à 70 €/habitant', 'plus de 70 €/habitant'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var indicator = "Dépenses publiques culturelles des régions";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Dépenses publiques culturelles des régions',
@@ -1374,15 +1411,15 @@
                     'fill-color': [
                         "step",
                         ["get", "DEPENSESHABITANTS"],
-                        "#feedde",
+                        "#edf8fb",
                         5,
-                        "#fdbe85",
+                        "#b2e2e2",
                         11,
-                        "#fd8d3c",
+                        "#66c2a4",
                         21,
-                        "#e6550d",
+                        "#2ca25f",
                         70,
-                        "#a63603"
+                        "#006d2c"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1413,6 +1450,12 @@
                 'url': 'mapbox://liviaribeiro.7plleqb0'
         });
 
+        var layers = ['0 à 5 €/habitant', '5 à 11 €/habitant', '11 à 21 €/habitant', '21 à 70 €/habitant', 'plus de 70 €/habitant'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var indicator = "Dépenses publiques culturelles des départements";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Dépenses publiques culturelles des départements',
@@ -1423,15 +1466,15 @@
                     'fill-color': [
                         "step",
                         ["get", "DEPENSESHABITANTS"],
-                        "#feedde",
+                        "#edf8fb",
                         5,
-                        "#fdbe85",
+                        "#b2e2e2",
                         11,
-                        "#fd8d3c",
+                        "#66c2a4",
                         21,
-                        "#e6550d",
+                        "#2ca25f",
                         70,
-                        "#a63603"
+                        "#006d2c"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1462,6 +1505,12 @@
                 'url': 'mapbox://liviaribeiro.bt8usf8p'
         });
 
+        var layers = ['0 à 5 €/habitant', '5 à 11 €/habitant', '11 à 21 €/habitant', '21 à 70 €/habitant', 'plus de 70 €/habitant'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var indicator = "Dépenses publiques culturelles des communes";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Dépenses publiques culturelles des communes',
@@ -1474,15 +1523,15 @@
                         ["get", "DEPENSESHABITANTS"],
                         "#ffffff",
                         0,
-                        "#feedde",
+                        "#edf8fb",
                         5,
-                        "#fdbe85",
+                        "#b2e2e2",
                         11,
-                        "#fd8d3c",
+                        "#66c2a4",
                         21,
-                        "#e6550d",
+                        "#2ca25f",
                         70,
-                        "#a63603"
+                        "#006d2c"
                         ],
                     'fill-opacity': 0.75,
                 },
@@ -1559,6 +1608,13 @@
                 .addTo(map);
             });
 
+            map.on("mouseenter", 'Plan de relance', () => {
+                map.getCanvas().style.cursor = "pointer";
+            });
+            map.on("mouseleave", 'Plan de relance', () => {
+                map.getCanvas().style.cursor = "";
+                });
+
     });
 
     function showLayer(layer) {
@@ -1595,8 +1651,9 @@
             map.moveLayer("country-label");
             
             var legend = document.getElementById("legend-"+layer.value);
-            console.log(legend);
             legend.style.display = "block";
+            console.log(map.getStyle().layers)
+
 
         }
         if (visibility == 'visible') {
@@ -1618,15 +1675,8 @@
             }
             layer.className = layer.className.replace(/\bactive\b/g, "");
             map.setLayoutProperty(layer.value, 'visibility', 'none');
-            map.setLayoutProperty("regionLayer", 'visibility', 'visible');
-            map.setLayoutProperty("regionLine", 'visibility', 'visible');
-            map.setLayoutProperty("departementLayer", 'visibility', 'visible');
-            map.setLayoutProperty("departementLine", 'visibility', 'visible');
-            map.setLayoutProperty("communeLayer", 'visibility', 'visible');
-            map.setLayoutProperty("communeLine", 'visibility', 'visible');
 
             var legend = document.getElementById("legend-"+layer.value);
-            console.log(legend);
             legend.style.display = "none";
         }
 

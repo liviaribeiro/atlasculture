@@ -45,6 +45,10 @@ class EquipementType(models.Model):
     domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ('name',)
+    
 
 
 class Label(models.Model):
