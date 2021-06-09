@@ -69,11 +69,22 @@
     line-height:28px;
 }
 
-.legend {
-    position: absolute;
+.legend-box {
+    position: fixed;
     right: 0;
     margin-right: 30px;
     top: 71px;
+    z-index: 5;
+    width: 227px;
+    height: 100vh;
+    display: block;
+    overflow-y:auto;
+}
+
+.legend {
+    position: relative;
+    right: 0;
+    margin-right: 30px;
     font-family: 'Open Sans', sans-serif;
     z-index: 5;
     width: 227px;

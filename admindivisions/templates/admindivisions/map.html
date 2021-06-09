@@ -105,19 +105,26 @@
     </div>
 </div>
 
-<div class="legend shadow-sm p-3 mb-5 bg-white rounded" style="visibility:hidden" id="legend">
+<div id="legend-box" class="legend-box">
+
 </div>
+<!--<div class="legend shadow-sm p-3 mb-5 bg-white rounded" style="visibility:hidden" id="legend">
+</div>-->
 
 
 <script>
 
     function addLegend(indicator, layers, colors) {
+        legendBox = document.getElementById('legend-box');
+        var legend = document.createElement('div');
+        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
         title.className = "title-legend mb-3";
         title.innerHTML = indicator;
         legend.appendChild(title)
 
-        for (i = 0; i < layers.length; i++) {
+        for (i = 0;  i < layers.length; i++) {
             var layer = layers[i];
             var color = colors[i];
             var item = document.createElement('div');
@@ -131,14 +138,16 @@
             item.appendChild(key);
             item.appendChild(value);
             legend.appendChild(item);
+            legendBox.appendChild(legend);
         }
-
+        
         var link = document.createElement('a');
         link.className = "link-legend";
         link.innerHTML = "En savoir plus";
         link.title = "En savoir plus";
         link.href = "#";
         legend.appendChild(link);
+        legend.style.display = 'none'; 
     }
 
     function openNav(itemMenu) {
@@ -167,7 +176,8 @@
     map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
 
     var popup = new mapboxgl.Popup({
-            closeButton: false
+            closeButton: false,
+            closeOnMove: true
     });
 
     var zoomThreshold = 6;
@@ -478,6 +488,12 @@
                 }     
         });
 
+        var layers = ['0-50', '50-100', '100-1 000', '1 000-1 0000', '>10 000'];
+        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var indicator = "Densité de la population";
+
+        addLegend(indicator, layers, colors);
+
         map.addLayer(
             {
                 'id': 'Densité de la population',
@@ -525,6 +541,12 @@
                 }     
         });
 
+        var layers = ['Croissance totale', 'Croissance liée à un solde naturel positif', 'Croissance liée à un solde migratoire apparent positif', 'Décroissance liée à un solde naturel négatif', 'Décroissance liée à un solde migratoire apparent négatif', 'Décroissance totale'];
+        var colors = ['#2166ac', '#67a9cf', '#d1e5f0', '#fddbc7', '#ef8a62', '#b2182b'];
+        var indicator = "Évolution de la population";
+
+        addLegend(indicator, layers, colors);
+        
         map.addLayer(
             {
                 'id': 'Évolution de la population',
@@ -569,6 +591,12 @@
                     .addTo(map);
                 }     
         });
+
+        var layers = ['0-20 000', '20 000-24 000', '24 000-28 000', '28 000-34 0000', '>34 000'];
+        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var indicator = "Niveau de vie médian";
+
+        addLegend(indicator, layers, colors);
 
         map.addLayer(
             {
@@ -665,7 +693,7 @@
 
         var layers = ['Très dense', 'Densité intermediaire', 'Très peu dense', 'Peu dense'];
         var colors = ['#d01c8b', '#f1b6da', '#b8e186', '#4dac26'];
-        var indicator = "Zonage Rural";
+        var indicator = "Zonage rural";
 
         addLegend(indicator, layers, colors);
 
@@ -715,6 +743,12 @@
             'url': 'mapbox://liviaribeiro.82f38xhh'
         });
         
+        var layers = ['quartier prioritaire de la politique de la ville'];
+        var colors = ['#3182bd', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var indicator = "Quartiers prioritaires de la politique de la ville";
+
+        addLegend(indicator, layers, colors);
+
         //add zonage quartiers prioritaires
         map.addLayer(
             {
@@ -1508,6 +1542,7 @@
                 var name = e.features[0].properties.Lieu;
                 var adresse = e.features[0].properties.Adresse;
                 var montant = e.features[0].properties.Montant;
+                var enveloppe = e.features[0].properties.Enveloppe;
                 var operation = e.features[0].properties.Operation;
                 
                 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
@@ -1518,7 +1553,8 @@
                     .setHTML('<p><b>'+name+'</b></p>'+ 
                     '<p>'+adresse+'</p>'+
                     '<p>Opération : '+operation+'</p>'+
-                    '<p>Montant : '+formatNumber(montant)+'</p>'
+                    '<p>Enveloppe du plan de relance : '+enveloppe+
+                    '<p>Montant : '+formatNumber(montant)+' €</p>'
                 )
                 .addTo(map);
             });
@@ -1558,8 +1594,9 @@
             map.moveLayer("state-label");
             map.moveLayer("country-label");
             
-            var legend = document.getElementById("legend");
-            //legend.style.visibility = "visible";
+            var legend = document.getElementById("legend-"+layer.value);
+            console.log(legend);
+            legend.style.display = "block";
 
         }
         if (visibility == 'visible') {
@@ -1588,6 +1625,9 @@
             map.setLayoutProperty("communeLayer", 'visibility', 'visible');
             map.setLayoutProperty("communeLine", 'visibility', 'visible');
 
+            var legend = document.getElementById("legend-"+layer.value);
+            console.log(legend);
+            legend.style.display = "none";
         }
 
     }
