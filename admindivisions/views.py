@@ -47,3 +47,13 @@ def pdr(request):
         response = JsonResponse(data, safe=False)
 
     return response
+
+def festivals(request):
+    path = os.path.join(BASE_DIR, 'static/data/COMMUNE_FESTIVALS.json')
+
+    with open(path) as f:
+        data = json.load(f)
+    
+        response = JsonResponse(data, safe=False)
+
+    return response

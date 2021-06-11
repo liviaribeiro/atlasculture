@@ -34,6 +34,7 @@
     <button href="javascript:void(0)" value="equipement-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
     <p class="title">Offre et lieux culturels</p>
     <div class="item">
+        <button class="btn-tag" value="Festivals" onclick="showLayer(this)">Festivals</button>
         {% for domaine in domaines%}
             <p class="subtitle">{{ domaine.name }}</p>
             {% for equipement_type in domaine.equipementtype_set.all %}
@@ -389,6 +390,51 @@
         addZoneLayer(regionLayer, regionURL, regionSourceLayer, regionMaxZoom, regionMinZoom);
         addZoneLayer(departementLayer, departementURL, departementSourceLayer, departementMaxZoom, departementMinZoom);
         addZoneLayer(communeLayer, communeURL, communeSourceLayer, communeMaxZoom, communeMinZoom);
+
+
+        map.addSource('festivals', {
+            'type': 'geojson',
+            'data': "{% url 'festivals' %}"
+        });
+
+        map.addLayer(
+            {
+            'id': 'Festivals',
+            'type': 'circle',
+            'source': 'festivals',
+            'paint': {
+             'circle-radius': ['*', 40, ['/',['sqrt', ["get", "NOMBREFESTIVALS"]],['sqrt', 57]]],
+             'circle-color': "#6baed6",
+             'circle-opacity': 0.75,
+             },
+             'layout': {
+                    // make layer not visible by default
+              'visibility': 'none'
+              }
+       });
+
+       map.on('click', 'Festivals', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var nombre = e.features[0].properties.NOMBREFESTIVALS;
+                var commune = e.features[0].properties.NOM_COM;
+                
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }               
+                
+                popup.setLngLat(coordinates)
+                    .setHTML('<p><b>'+commune+'</b></p>'+ 
+                    '<p>'+nombre+' festival(s)</p>'
+                )
+                .addTo(map);
+            });
+
+            map.on("mouseenter", 'Plan de relance', () => {
+                map.getCanvas().style.cursor = "pointer";
+            });
+            map.on("mouseleave", 'Plan de relance', () => {
+                map.getCanvas().style.cursor = "";
+                });
 
         map.addSource('population', {
             'type': 'vector',
