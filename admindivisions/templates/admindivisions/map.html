@@ -34,6 +34,7 @@
     <button href="javascript:void(0)" value="equipement-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
     <p class="title">Offre et lieux culturels</p>
     <div class="item">
+        <p class="subtitle">Festivals</p>
         <button class="btn-tag" value="Festivals" onclick="showLayer(this)">Festivals</button>
         {% for domaine in domaines%}
             <p class="subtitle">{{ domaine.name }}</p>
