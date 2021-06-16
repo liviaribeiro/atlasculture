@@ -149,6 +149,20 @@ class Secteur(models.Model):
     def __str__(self):
         return self.nom + ' (' + self.domaine.nom + ')'
 
+class DepensesMinistereRegion(models.Model):
+    region = models.ForeignKey(Region,on_delete=models.CASCADE, null=True)
+    depenses_fonctionnement = models.FloatField(null=True)
+    depenses_investissement = models.FloatField(null=True)
+    depenses_totales = models.FloatField(null=True)
+    annee = models.CharField(max_length=4, null=True)
+
+class DepensesMinistereDepartement(models.Model):
+    departement = models.ForeignKey(Departement,on_delete=models.CASCADE, null=True)
+    depenses_fonctionnement = models.FloatField(null=True)
+    depenses_investissement = models.FloatField(null=True)
+    depenses_totales = models.FloatField(null=True)
+    annee = models.CharField(max_length=4, null=True)
+
 class DepensesRegion(models.Model):
     region = models.ForeignKey(Region,on_delete=models.CASCADE, null=True)
     secteur = models.ForeignKey(Secteur, on_delete=models.CASCADE, null=True)

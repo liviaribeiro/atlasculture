@@ -101,7 +101,7 @@
         <button class="btn-tag" value="Action coeur de ville" onclick="showLayer(this)">Action coeur de ville</button>
         <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this)">Quartiers prioritaires de la politique de la ville</button>
         <p class="subtitle">Zonage d'études</p>
-        <button class="btn-tag" value="Zonage rural" onclick="showLayer(this)">Grille communale de densité</button>
+        <button class="btn-tag" value="Grille communale de densité" onclick="showLayer(this)">Grille communale de densité</button>
         <button class="btn-tag" value="Aires d'attraction des villes" onclick="showLayer(this)">Aires d'attraction des villes</button>
 
     </div>
@@ -751,7 +751,7 @@
 
         var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
         var colors = ['#d01c8b', '#f1b6da', '#b8e186', '#4dac26'];
-        var indicator = "Zonage rural";
+        var indicator = "Grille communale de densité";
 
         addLegend(indicator, layers, colors);
 
@@ -763,7 +763,7 @@
         //add zonage rural layer
         map.addLayer(
             {
-                'id': 'Zonage rural',
+                'id': 'Grille communale de densité',
                 'source': 'zonage rural',
                 'source-layer': 'COMMUNE_CARTO_RURAL_SIMPLE',
                 'type': 'fill',
@@ -787,7 +787,7 @@
             }  
         );
 
-        map.on('click', 'Zonage rural', function (e) {
+        map.on('click', 'Grille communale de densité', function (e) {
             if (e.features.length > 0) {
                 popup.setLngLat(e.lngLat)
                     .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
@@ -1442,7 +1442,7 @@
                 'url': 'mapbox://liviaribeiro.16wk8z7f'
         });
 
-        var layers = ['0 à 5 €/habitant', '5 à 11 €/habitant', '11 à 21 €/habitant', '21 à 70 €/habitant', 'plus de 70 €/habitant'];
+        var layers = ['0 à 9 €/habitant', '9 à 10 €/habitant', '10 à 11 €/habitant', '11 à 13 €/habitant', 'plus de 13 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
         var indicator = "Dépenses publiques culturelles des régions";
 
@@ -1458,14 +1458,16 @@
                     'fill-color': [
                         "step",
                         ["get", "DEPENSESHABITANTS"],
+                        "#d9d9d9",
+                        0,
                         "#edf8fb",
-                        5,
+                        9,
                         "#b2e2e2",
-                        11,
+                        10,
                         "#66c2a4",
-                        21,
+                        11,
                         "#2ca25f",
-                        70,
+                        13,
                         "#006d2c"
                         ],
                     'fill-opacity': 0.75,
@@ -1497,7 +1499,7 @@
                 'url': 'mapbox://liviaribeiro.7plleqb0'
         });
 
-        var layers = ['0 à 5 €/habitant', '5 à 11 €/habitant', '11 à 21 €/habitant', '21 à 70 €/habitant', 'plus de 70 €/habitant'];
+        var layers = ['0 à 10 €/habitant', '10 à 13 €/habitant', '13 à 17 €/habitant', '17 à 22 €/habitant', 'plus de 22 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
         var indicator = "Dépenses publiques culturelles des départements";
 
@@ -1513,14 +1515,16 @@
                     'fill-color': [
                         "step",
                         ["get", "DEPENSESHABITANTS"],
+                        "#d9d9d9",
+                        0,	
                         "#edf8fb",
-                        5,
+                        10,
                         "#b2e2e2",
-                        11,
+                        13,
                         "#66c2a4",
-                        21,
+                        17,
                         "#2ca25f",
-                        70,
+                        22,
                         "#006d2c"
                         ],
                     'fill-opacity': 0.75,
@@ -1547,12 +1551,70 @@
                 }     
         });
 
+        map.addSource('depenses_epci', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.74bpft4j'
+        });
+
+        var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var indicator = "Dépenses publiques culturelles des intercommunalités";
+
+        addLegend(indicator, layers, colors);
+
+        map.addLayer(
+            {
+                'id': 'Dépenses publiques culturelles des intercommunalités',
+                'source': 'depenses_epci',
+                'source-layer': 'EPCI_DEPENSES',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "DEPENSESHABITANTS"],
+                        "#d9d9d9",
+                        0,	
+                        "#edf8fb",
+                        35,
+                        "#b2e2e2",
+                        60,
+                        "#66c2a4",
+                        90,
+                        "#2ca25f",
+                        130,
+                        "#006d2c"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('click', 'Dépenses publiques culturelles des intercommunalités', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.DEPENSESHABITANTS
+                nombre = e.features[0].properties.DEPENSESTOTALES
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p><p>Dépenses publiques culturelles des intercommunalités en euros par habitant : "
+                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des intercommunalités : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
+                if (nombre == -1) {
+                    texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p>Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+
+
         map.addSource('depenses_commune', {
                 'type': 'vector',
                 'url': 'mapbox://liviaribeiro.bt8usf8p'
         });
 
-        var layers = ['0 à 5 €/habitant', '5 à 11 €/habitant', '11 à 21 €/habitant', '21 à 70 €/habitant', 'plus de 70 €/habitant'];
+        var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
         var indicator = "Dépenses publiques culturelles des communes";
 
@@ -1568,16 +1630,16 @@
                     'fill-color': [
                         "step",
                         ["get", "DEPENSESHABITANTS"],
-                        "#ffffff",
+                        "#d9d9d9",
                         0,
                         "#edf8fb",
-                        5,
+                        35,
                         "#b2e2e2",
-                        11,
+                        60,
                         "#66c2a4",
-                        21,
+                        90,
                         "#2ca25f",
-                        70,
+                        130,
                         "#006d2c"
                         ],
                     'fill-opacity': 0.75,
@@ -1596,7 +1658,7 @@
                 texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p><p>Dépenses publiques culturelles des départements en euros par habitant : "
                         +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des communes : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
                 if (nombre == -1) {
-                    texte = "Données non disponibles pour les communes de moins de 3 000 habitants"
+                    texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p>Données non disponibles pour les communes de moins de 3 000 habitants"
                 }
                 popup.setLngLat(e.lngLat)
                     .setHTML(texte)

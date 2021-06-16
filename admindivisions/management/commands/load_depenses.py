@@ -2,7 +2,8 @@ import json
 import os
 import pandas as pd 
 from django.core.management.base import BaseCommand
-from admindivisions.models import Commune, Departement, Region, DepensesRegion, Secteur, Cadrage, DepensesDepartement, Epci, DepensesEPCI, DepensesCommunes
+from admindivisions.models import (Commune, Departement, Region, DepensesRegion, Secteur, Cadrage, DepensesDepartement, Epci, DepensesEPCI, DepensesCommunes,
+                                    DepensesMinistereRegion, DepensesMinistereDepartement)
 from atlasculture.settings import BASE_DIR
 
 class Command(BaseCommand):
@@ -115,7 +116,7 @@ class Command(BaseCommand):
             depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
         
         """
-        
+        """
         source_file = os.path.join(BASE_DIR, 'admindivisions/data/Base_Depenses_EPCI_2019.xlsx')
 
         df = pd.read_excel(source_file, dtype={'Id_EPCI':'string'})
@@ -123,17 +124,44 @@ class Command(BaseCommand):
         for i in df.index:
             codeinsee = df['Epci'][i]
             print(codeinsee)
+            epci = Epci.objects.get(codesiren=codeinsee, annee="2019")
             population = df['Population_EPCI'][i]
+
             nom_secteur = df['Secteur'][i]
             depenses_fonctionnement = df['Depenses_Fonctionnement'][i]
             depenses_investissement = df['Depenses_Investissement'][i]
             depenses_totales = depenses_fonctionnement + depenses_investissement
             secteur = Secteur.objects.get(nom=nom_secteur)
-            epci = Epci.objects.get(codesiren=codeinsee, annee="2019")
             annee = "2019"
             
             DepensesEPCI.objects.get_or_create(epci=epci, secteur=secteur, depenses_fonctionnement=depenses_fonctionnement,
             depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee, population=population)
+        """
+        
+        with open('admindivisions/data/EPCI_2019.json') as f:
+            data = json.load(f)
+
+            for feature in data['features']: 
+                print(feature['properties']['CODE_EPCI'])
+                epci = Epci.objects.get(codesiren=feature['properties']['CODE_EPCI'], annee="2019")
+
+                depenses = DepensesEPCI.objects.filter(epci=epci, annee="2019")
+
+                if len(depenses) == 0:
+                    feature["properties"].update({'DEPENSESTOTALES': -1, 'POPULATION': -1, "DEPENSESHABITANTS": -1})
+                else:
+                    population = depenses[0].population
+                    depenses_totales = 0
+                    for dep in depenses:                
+                        depenses_totales += dep.depenses_totales
+                    if population == 0:
+                        depenseshabitants = 0
+                    else:
+                        depenseshabitants=depenses_totales*1000/population
+                    feature["properties"].update({'DEPENSESTOTALES': depenses_totales, 'POPULATION': population, "DEPENSESHABITANTS": depenseshabitants})
+                                                                                             
+            with open('admindivisions/data/EPCI_DEPENSES.json', 'w') as f:
+                json.dump(data, f)
         
         """
         source_file = os.path.join(BASE_DIR, 'admindivisions/data/Depenses_communes_2019.xlsx')
@@ -191,3 +219,64 @@ class Command(BaseCommand):
         with open('admindivisions/data/COMMUNES_2019.json', 'w') as f:
             json.dump(data, f)
         """
+        """
+        source_file = os.path.join(BASE_DIR, 'admindivisions/data/Depenses_ministere_region_2019.xlsx')
+
+        df = pd.read_excel(source_file, dtype={'Code INSEE':'string'})
+
+        for i in df.index:
+            codeinsee = df['Code INSEE'][i]
+            depenses_fonctionnement = df['Fonctionnement'][i]
+            depenses_investissement = df['Investissement'][i]
+            depenses_totales = depenses_fonctionnement + depenses_investissement
+            region = Region.objects.get(codeinsee=codeinsee)
+            annee = "2019"
+            
+            DepensesMinistereRegion.objects.get_or_create(region=region, depenses_fonctionnement=depenses_fonctionnement,
+            depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
+
+        """
+        """
+        source_file = os.path.join(BASE_DIR, 'admindivisions/data/Depenses_ministere_departement_2019.xlsx')
+
+        df = pd.read_excel(source_file, dtype={'Code INSEE':'string'})
+
+        for i in df.index:
+            codeinsee = df['Code INSEE'][i]
+            print(codeinsee)
+            depenses_fonctionnement = df['Fonctionnement'][i]
+            depenses_investissement = df['Investissement'][i]
+            depenses_totales = depenses_fonctionnement + depenses_investissement
+            departement = Departement.objects.get(codeinsee=codeinsee)
+            annee = "2019"
+            
+            DepensesMinistereDepartement.objects.get_or_create(departement=departement, depenses_fonctionnement=depenses_fonctionnement,
+            depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
+        """
+    """
+        with open('admindivisions/data/REGION_SIMPLIFIED.json') as f:
+            data = json.load(f)
+
+            for feature in data['features']: 
+                print(feature['properties']['INSEE_REG'])
+                reg = Region.objects.get(codeinsee=feature['properties']['INSEE_REG'])
+                population = feature['properties']['Population_EPCI']
+                deps = Departement.objects.filter(region=reg)
+                coms = Commune.objects.filter(departement__in=deps, year="2020")
+                cads = Cadrage.objects.filter(commune__in=coms)
+                populations = [0 if cad.population is None else cad.population for cad in cads]
+                population = sum(populations)
+                depenses = DepensesMinistereRegion.objects.filter(region=reg, annee="2019")
+
+                if len(depenses) == 0:
+                    feature["properties"].update({'DEPENSESTOTALES': -1, 'POPULATION': population, "DEPENSESHABITANTS": -1})
+                else:
+                    depenses_totales = depenses.depenses_totales
+                    depenses_investissement = depenses.depenses_investissement
+                    depenses_fonctio
+                    depenseshabitants=depenses_totales*1000/population
+                    feature["properties"].update({'DEPENSESTOTALES': depenses_totales, 'POPULATION': population, "DEPENSESHABITANTS": depenseshabitants})
+                                                                                             
+            with open('admindivisions/data/REGION_DEPENSES.json', 'w') as f:
+                json.dump(data, f)
+            """
