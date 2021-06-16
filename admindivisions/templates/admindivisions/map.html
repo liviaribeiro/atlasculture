@@ -64,6 +64,7 @@
         <button class="btn-tag" value="Dépenses publiques culturelles des communes" onclick="showLayer(this)">Dépenses culturelles des communes</button>
         <p class="subtitle">Dépenses de l'État</p>
         <button class="btn-tag" value="Plan de relance" onclick="showLayer(this)">Plan de relance</button>
+        <button class="btn-tag" value="Dépenses du Ministère de la Culture" onclick="showLayer(this)">Dépenses du Ministère de la Culture</button>
     </div>
 </div>
 
@@ -1666,6 +1667,116 @@
                 }     
         });
 
+        map.addSource('depenses_ministere_region', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.3idctvsj'
+        });
+
+        var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var indicator = "Dépenses du Ministère de la Culture";
+
+        addLegend(indicator, layers, colors);
+
+        map.addLayer(
+            {
+                'id': 'Dépenses du Ministère de la Culture',
+                'source': 'depenses_ministere_region',
+                'source-layer': 'MINISTERE_REGION_DEPENSES',
+                'maxzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "DEPENSESHABITANTS"],
+                        "#d9d9d9",
+                        0,
+                        "#edf8fb",
+                        35,
+                        "#b2e2e2",
+                        60,
+                        "#66c2a4",
+                        90,
+                        "#2ca25f",
+                        130,
+                        "#006d2c"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('click', 'Dépenses du Ministère de la Culture', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.DEPENSESHABITANTS
+                nombre = e.features[0].properties.DEPENSESTOTALES
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses du Ministère de la Culture en euros par habitant : "
+                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses du Ministère de la Culture : "+formatNumber(nombre.toFixed(0))+" euros</p>"
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+
+        map.addSource('depenses_ministere_departement', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.de256tad'
+        });
+
+        map.addLayer(
+            {
+                'id': 'Dépenses du Ministère de la Culture Département',
+                'source': 'depenses_ministere_departement',
+                'source-layer': 'MINISTERE_DEPARTEMENT_DEPENSES',
+                'minzoom': zoomThreshold,
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "DEPENSESHABITANTS"],
+                        "#d9d9d9",
+                        0,
+                        "#edf8fb",
+                        35,
+                        "#b2e2e2",
+                        60,
+                        "#66c2a4",
+                        90,
+                        "#2ca25f",
+                        130,
+                        "#006d2c"
+                        ],
+                    'fill-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );
+
+        map.on('click', 'Dépenses du Ministère de la Culture Département', function (e) {
+            if (e.features.length > 0) {
+                pourcentage = e.features[0].properties.DEPENSESHABITANTS
+                nombre = e.features[0].properties.DEPENSESTOTALES
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses du Ministère de la Culture en euros par habitant : "
+                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses du Ministère de la Culture : "+formatNumber(nombre.toFixed(0))+" euros</p>"
+                if (nombre == -1) {
+                    texte = "Données non disponibles"
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML(texte)
+                    .addTo(map);
+                }     
+        });
+
         map.addSource('pdr', {
                 'type': 'geojson',
                 'data': "{% url 'pdr' %}",
@@ -1745,6 +1856,10 @@
                 map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'visible');
                 map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'visible');
             }
+            if (layer.value == 'Dépenses du Ministère de la Culture'){
+                map.setLayoutProperty("Dépenses du Ministère de la Culture Département", 'visibility', 'visible');
+            }
+            
             layer.className += ' active';
             map.setLayoutProperty(layer.value, 'visibility', 'visible');
             map.moveLayer(layer.value);
@@ -1782,6 +1897,10 @@
                 map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'none');
                 map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'none');
             }
+            if (layer.value == 'Dépenses du Ministère de la Culture'){
+                map.setLayoutProperty("Dépenses du Ministère de la Culture Département", 'visibility', 'none');
+            }
+
             layer.className = layer.className.replace(/\bactive\b/g, "");
             map.setLayoutProperty(layer.value, 'visibility', 'none');
 

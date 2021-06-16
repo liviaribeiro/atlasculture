@@ -137,7 +137,7 @@ class Command(BaseCommand):
             DepensesEPCI.objects.get_or_create(epci=epci, secteur=secteur, depenses_fonctionnement=depenses_fonctionnement,
             depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee, population=population)
         """
-        
+        """
         with open('admindivisions/data/EPCI_2019.json') as f:
             data = json.load(f)
 
@@ -162,7 +162,7 @@ class Command(BaseCommand):
                                                                                              
             with open('admindivisions/data/EPCI_DEPENSES.json', 'w') as f:
                 json.dump(data, f)
-        
+        """
         """
         source_file = os.path.join(BASE_DIR, 'admindivisions/data/Depenses_communes_2019.xlsx')
 
@@ -253,14 +253,13 @@ class Command(BaseCommand):
             DepensesMinistereDepartement.objects.get_or_create(departement=departement, depenses_fonctionnement=depenses_fonctionnement,
             depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
         """
-    """
+        """
         with open('admindivisions/data/REGION_SIMPLIFIED.json') as f:
             data = json.load(f)
 
             for feature in data['features']: 
                 print(feature['properties']['INSEE_REG'])
                 reg = Region.objects.get(codeinsee=feature['properties']['INSEE_REG'])
-                population = feature['properties']['Population_EPCI']
                 deps = Departement.objects.filter(region=reg)
                 coms = Commune.objects.filter(departement__in=deps, year="2020")
                 cads = Cadrage.objects.filter(commune__in=coms)
@@ -271,12 +270,38 @@ class Command(BaseCommand):
                 if len(depenses) == 0:
                     feature["properties"].update({'DEPENSESTOTALES': -1, 'POPULATION': population, "DEPENSESHABITANTS": -1})
                 else:
+                    depenses = depenses[0]
                     depenses_totales = depenses.depenses_totales
                     depenses_investissement = depenses.depenses_investissement
-                    depenses_fonctio
-                    depenseshabitants=depenses_totales*1000/population
+                    depenses_fonctionnement = depenses.depenses_fonctionnement
+                    depenseshabitants=depenses_totales/population
                     feature["properties"].update({'DEPENSESTOTALES': depenses_totales, 'POPULATION': population, "DEPENSESHABITANTS": depenseshabitants})
                                                                                              
-            with open('admindivisions/data/REGION_DEPENSES.json', 'w') as f:
+            with open('admindivisions/data/MINISTERE_REGION_DEPENSES.json', 'w') as f:
                 json.dump(data, f)
-            """
+        """
+        with open('admindivisions/data/DEPARTEMENT_SIMPLIFIED.json') as f:
+            data = json.load(f)
+
+            for feature in data['features']: 
+                print(feature['properties']['INSEE_DEP'])
+                dep = Departement.objects.get(codeinsee=feature['properties']['INSEE_DEP'])
+                coms = Commune.objects.filter(departement=dep, year="2020")
+                cads = Cadrage.objects.filter(commune__in=coms)
+                populations = [0 if cad.population is None else cad.population for cad in cads]
+                population = sum(populations)
+                depenses = DepensesMinistereDepartement.objects.filter(departement=dep, annee="2019")
+
+                if len(depenses) == 0 or population==0:
+                    feature["properties"].update({'DEPENSESTOTALES': -1, 'POPULATION': population, "DEPENSESHABITANTS": -1})
+                else:
+                    depenses_totales = 0
+                    depenses = depenses[0]
+                    depenses_totales = depenses.depenses_totales
+                    depenses_investissement = depenses.depenses_investissement
+                    depenses_fonctionnement = depenses.depenses_fonctionnement
+                    depenseshabitants=depenses_totales/population
+                    feature["properties"].update({'DEPENSESTOTALES': depenses_totales, 'POPULATION': population, "DEPENSESHABITANTS": depenseshabitants})
+                                                                                             
+            with open('admindivisions/data/MINISTERE_DEPARTEMENT_DEPENSES.json', 'w') as f:
+                json.dump(data, f)
