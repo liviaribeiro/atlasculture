@@ -1821,8 +1821,8 @@
         });
 
         map.addSource('pdr', {
-                'type': 'geojson',
-                'data': "{% url 'pdr' %}",
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.2kyv2902'
         });
 
        
@@ -1830,6 +1830,7 @@
                 'id': "Plan de relance",
                 'type': 'symbol',
                 'source': 'pdr',
+                'source-layer': 'PDR',
                 'layout': {
                         'icon-image': [
                         "case",
