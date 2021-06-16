@@ -11,7 +11,7 @@ from atlasculture.settings import BASE_DIR
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-
+        """
         data_file = os.path.join(BASE_DIR, 'admindivisions/data/aav_communes_paris.xlsx')
         df = pd.read_excel(data_file, dtype=str)
 
@@ -49,3 +49,17 @@ class Command(BaseCommand):
             typologie=TypologieAAV.objects.get(code=codetypologie)
             print(commune_codeinsee)
             Commune_AAV.objects.get_or_create(AAV=aav, commune=commune, pole=pole, typologie=typologie)
+        """
+
+        with open('admindivisions/data/AAV20_compcom_geo2021.json') as f:
+            data = json.load(f)
+
+            for feature in data['features']: 
+                print(feature['properties']['CODGEO'])
+                commune = Commune.objects.get(codeinsee=feature['properties']['CODGEO'], year='2021')
+                aav_com = Commune_AAV.objects.get(commune=commune)
+                typologie_aav = TypologieAAV.objects.get(commune_aav=aav_com)
+                feature["properties"].update({'Typologie_AAV':typologie_aav.code , 'Description_AAV':typologie_aav.description})
+                                                                                             
+            with open('admindivisions/data/AAV.json', 'w') as f:
+                json.dump(data, f)

@@ -57,3 +57,14 @@ def festivals(request):
         response = JsonResponse(data, safe=False)
 
     return response
+
+
+def aav(request):
+    path = os.path.join(BASE_DIR, 'static/data/AAV2020.json')
+
+    with open(path) as f:
+        data = json.load(f)
+    
+        response = JsonResponse(data, safe=False)
+
+    return response
