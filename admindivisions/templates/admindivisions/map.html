@@ -1596,7 +1596,7 @@
                 texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p><p>Dépenses publiques culturelles des intercommunalités en euros par habitant : "
                         +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des intercommunalités : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
                 if (nombre == -1) {
-                    texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p>Données non disponibles"
+                    texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p>Données non disponibles pour les intercommunalités de moins de 3 500 habitants"
                 }
                 popup.setLngLat(e.lngLat)
                     .setHTML(texte)
@@ -1654,7 +1654,7 @@
                 texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p><p>Dépenses publiques culturelles des départements en euros par habitant : "
                         +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des communes : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
                 if (nombre == -1) {
-                    texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p>Données non disponibles pour les communes de moins de 3 000 habitants"
+                    texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p>Données non disponibles pour les communes de moins de 3 500 habitants"
                 }
                 popup.setLngLat(e.lngLat)
                     .setHTML(texte)
@@ -1778,7 +1778,7 @@
         });
 
         var layers = ['Aire de moins de 50 000 habitants', 'Aire de 50 000 à moins de 200 000 habitants', 'Aire de 200 000 à moins de 700 000 habitants', 'Aire de 700 000 habitants ou plus'];
-        var colors = ['#e66101', '#fdb863', '#b2abd2', '#5e3c99'];
+        var colors = ['#fdb863', '#e66101', '#b2abd2', '#5e3c99'];
         var indicator = "Aires d'attraction des villes";
 
         addLegend(indicator, layers, colors);
@@ -1796,9 +1796,9 @@
                         ["0"],
                         "#ffffff",
                         ["1"],
-                        "#e66101",
-                        ["2"],
                         "#fdb863",
+                        ["2"],
+                        "#e66101",
                         ["3"],
                         "#b2abd2",
                         "#5e3c99",
