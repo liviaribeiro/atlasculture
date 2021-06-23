@@ -64,7 +64,7 @@
         <button class="btn-tag" value="Dépenses publiques culturelles des communes" onclick="showLayer(this)">Dépenses culturelles des communes</button>
         <p class="subtitle">Dépenses de l'État</p>
         <button class="btn-tag" value="Plan de relance" onclick="showLayer(this)">Plan de relance</button>
-        <button class="btn-tag" value="Dépenses du Ministère de la Culture" onclick="showLayer(this)">Dépenses du Ministère de la Culture</button>
+        <button class="btn-tag" value="Dépenses du ministère de la Culture" onclick="showLayer(this)">Dépenses du ministère de la Culture</button>
     </div>
 </div>
 
@@ -199,81 +199,6 @@
 
         map.setPaintProperty("water", 'fill-color', "#a8e0f5");
         map.setPaintProperty("national-park", 'fill-color', "#b4e49b");
-
-        {% for domaine in domaines %}
-            {% for equipement_type in domaine.equipementtype_set.all %}
-            map.addSource('equipements'+'{{ equipement_type.pk }}', {
-                'type': 'geojson',
-                'data': "{% url 'equipements' equipement_type.pk %}",
-            });
-
-            if ('{{domaine.name}}' == "Service d'archives"){
-                circleColor = '#006837';
-            }
-            if ('{{domaine.name}}' == "Arts du spectacle"){
-                circleColor = '#253494';
-            }
-            if ('{{domaine.name}}' == "Arts visuels"){
-                circleColor = '#810f7c';
-            }
-            if ('{{domaine.name}}' == "Cinéma"){
-                circleColor = '#ae017e';
-            }
-            if ('{{domaine.name}}' == "Éducation, Formation"){
-                circleColor = '#cc4c02';
-            }
-            if ('{{domaine.name}}' == "Lieux de lecture publique"){
-                circleColor = '#bd0026';
-            }
-            if ('{{domaine.name}}' == "Livre et presse"){
-                circleColor = '#bd0026';
-            }
-            if ('{{domaine.name}}' == "Patrimoine artistique et monumental"){
-                circleColor = '#00796b';
-            }
-            
-        
-            map.addLayer({
-                'id': '{{ equipement_type.pk}}',
-                'type': 'circle',
-                'source': 'equipements'+'{{ equipement_type.pk }}',
-                'paint': {
-                    'circle-color': circleColor,
-                    'circle-radius': {
-                        stops: [[6, 1.5], [9, 7], [16, 10]]
-                    }          
-                },            
-                'layout': {
-                        'visibility': 'none',
-                    },      
-            });
-        
-            map.on('click', '{{ equipement_type.pk }}', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice();
-                var name = e.features[0].properties.nom;
-                var adresse = e.features[0].properties.adresse;
-                var typology = '{{ equipement_type.name }}';
-                
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }               
-                new mapboxgl.Popup()
-                    .setLngLat(coordinates)
-                    .setHTML('<p><i>'+typology+'</i></p>'+
-                    '<p><b>'+name+'</b></p>'+ 
-                    '<p>'+adresse+'</p>'
-                )
-                .addTo(map);
-            });
-
-            map.on("mouseenter", '{{ equipement_type.pk }}', () => {
-                map.getCanvas().style.cursor = "pointer";
-            });
-            map.on("mouseleave", '{{ equipement_type.pk }}', () => {
-                map.getCanvas().style.cursor = "";
-                });
-            {% endfor %}
-        {% endfor %}
         
         function addZoneLayer(zoneLayer, zoneLayerURL, zoneSourceLayer, maxZoom, minZoom) {
             
@@ -323,7 +248,7 @@
                     'visibility': 'visible'
                 },
                 'paint': {
-                    'line-color': '#d9d9d9',
+                    'line-color': '#ffffff',
                     'line-width': lineWidth
                 }
             });
@@ -387,51 +312,6 @@
         addZoneLayer(regionLayer, regionURL, regionSourceLayer, regionMaxZoom, regionMinZoom);
         addZoneLayer(departementLayer, departementURL, departementSourceLayer, departementMaxZoom, departementMinZoom);
         addZoneLayer(communeLayer, communeURL, communeSourceLayer, communeMaxZoom, communeMinZoom);
-
-
-        map.addSource('festivals', {
-            'type': 'geojson',
-            'data': "{% url 'festivals' %}"
-        });
-
-        map.addLayer(
-            {
-            'id': 'Festivals',
-            'type': 'circle',
-            'source': 'festivals',
-            'paint': {
-             'circle-radius': ['*', 30, ['/',['sqrt', ["get", "NOMBREFESTIVALS"]],['sqrt', 290]]],
-             'circle-color': "#de2d26",
-             'circle-opacity': 0.75,
-             },
-             'layout': {
-                    // make layer not visible by default
-              'visibility': 'none'
-              }
-       });
-
-       map.on('click', 'Festivals', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice();
-                var nombre = e.features[0].properties.NOMBREFESTIVALS;
-                var commune = e.features[0].properties.NOM_COM;
-                
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }               
-                
-                popup.setLngLat(coordinates)
-                    .setHTML('<p><b>'+commune+'</b></p>'+ 
-                    '<p>'+nombre+' festival(s)</p>'
-                )
-                .addTo(map);
-            });
-
-            map.on("mouseenter", 'Plan de relance', () => {
-                map.getCanvas().style.cursor = "pointer";
-            });
-            map.on("mouseleave", 'Plan de relance', () => {
-                map.getCanvas().style.cursor = "";
-                });
 
         map.addSource('population', {
             'type': 'vector',
@@ -1438,7 +1318,7 @@
                 'url': 'mapbox://liviaribeiro.16wk8z7f'
         });
 
-        var layers = ['0 à 9 €/habitant', '9 à 10 €/habitant', '10 à 11 €/habitant', '11 à 13 €/habitant', 'plus de 13 €/habitant'];
+        var layers = ['0 à 9 €/habitant', '9 à 11 €/habitant', '11 à 14 €/habitant', '14 à 23 €/habitant', 'plus de 23 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
         var indicator = "Dépenses publiques culturelles des régions";
 
@@ -1459,11 +1339,11 @@
                         "#edf8fb",
                         9,
                         "#b2e2e2",
-                        10,
-                        "#66c2a4",
                         11,
+                        "#66c2a4",
+                        14,
                         "#2ca25f",
-                        13,
+                        23,
                         "#006d2c"
                         ],
                     'fill-opacity': 0.75,
@@ -1479,8 +1359,8 @@
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses publiques culturelles des régions en euros par habitant : "
-                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des régions : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses publiques culturelles : "
+                        +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles"
                 }
@@ -1536,8 +1416,8 @@
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses publiques culturelles des départements en euros par habitant : "
-                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des départements : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses publiques culturelles : "
+                        +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles"
                 }
@@ -1552,7 +1432,7 @@
                 'url': 'mapbox://liviaribeiro.74bpft4j'
         });
 
-        var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant'];
+        var layers = ['0 à 5 €/habitant', '5 à 15 €/habitant', '15 à 30 €/habitant', '30 à 55 €/habitant', 'plus de 55 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
         var indicator = "Dépenses publiques culturelles des intercommunalités";
 
@@ -1571,13 +1451,13 @@
                         "#d9d9d9",
                         0,	
                         "#edf8fb",
-                        35,
+                        5,
                         "#b2e2e2",
-                        60,
+                        15,
                         "#66c2a4",
-                        90,
+                        30,
                         "#2ca25f",
-                        130,
+                        55,
                         "#006d2c"
                         ],
                     'fill-opacity': 0.75,
@@ -1593,8 +1473,8 @@
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p><p>Dépenses publiques culturelles des intercommunalités en euros par habitant : "
-                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des intercommunalités : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p><p>Dépenses publiques culturelles : "
+                        +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
                 if (nombre == -1) {
                     texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p>Données non disponibles pour les intercommunalités de moins de 3 500 habitants"
                 }
@@ -1610,7 +1490,7 @@
                 'url': 'mapbox://liviaribeiro.bt8usf8p'
         });
 
-        var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant'];
+        var layers = ['0 à 25 €/habitant', '25 à 55 €/habitant', '55 à 90 €/habitant', '90 à 140 €/habitant', 'plus de 140 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
         var indicator = "Dépenses publiques culturelles des communes";
 
@@ -1629,13 +1509,13 @@
                         "#d9d9d9",
                         0,
                         "#edf8fb",
-                        35,
+                        25,
                         "#b2e2e2",
-                        60,
+                        55,
                         "#66c2a4",
                         90,
                         "#2ca25f",
-                        130,
+                        140,
                         "#006d2c"
                         ],
                     'fill-opacity': 0.75,
@@ -1651,8 +1531,8 @@
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p><p>Dépenses publiques culturelles des départements en euros par habitant : "
-                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses publiques culturelles des communes : "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p>"
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p><p>Dépenses publiques culturelles : "
+                        +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
                 if (nombre == -1) {
                     texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_COM+"</p>Données non disponibles pour les communes de moins de 3 500 habitants"
                 }
@@ -1669,13 +1549,13 @@
 
         var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
-        var indicator = "Dépenses du Ministère de la Culture";
+        var indicator = "Dépenses du ministère de la Culture";
 
         addLegend(indicator, layers, colors);
 
         map.addLayer(
             {
-                'id': 'Dépenses du Ministère de la Culture',
+                'id': 'Dépenses du ministère de la Culture',
                 'source': 'depenses_ministere_region',
                 'source-layer': 'MINISTERE_REGION_DEPENSES',
                 'maxzoom': zoomThreshold,
@@ -1705,12 +1585,12 @@
             }  
         );
 
-        map.on('click', 'Dépenses du Ministère de la Culture', function (e) {
+        map.on('click', 'Dépenses du ministère de la Culture', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses du Ministère de la Culture en euros par habitant : "
-                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses du Ministère de la Culture : "+formatNumber(nombre.toFixed(0))+" euros</p>"
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses du ministère de la Culture : "
+                        +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles"
                 }
@@ -1727,7 +1607,7 @@
 
         map.addLayer(
             {
-                'id': 'Dépenses du Ministère de la Culture Département',
+                'id': 'Dépenses du ministère de la Culture Département',
                 'source': 'depenses_ministere_departement',
                 'source-layer': 'MINISTERE_DEPARTEMENT_DEPENSES',
                 'minzoom': zoomThreshold,
@@ -1757,12 +1637,12 @@
             }  
         );
 
-        map.on('click', 'Dépenses du Ministère de la Culture Département', function (e) {
+        map.on('click', 'Dépenses du ministère de la Culture Département', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
-                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses du Ministère de la Culture en euros par habitant : "
-                        +pourcentage.toFixed(0)+ " euros/habitant</p><p>Dépenses du Ministère de la Culture : "+formatNumber(nombre.toFixed(0))+" euros</p>"
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses du ministère de la Culture : "
+                        +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles"
                 }
@@ -1880,6 +1760,125 @@
             map.getCanvas().style.cursor = "";
         });
 
+        map.addSource('festivals', {
+            'type': 'geojson',
+            'data': "{% url 'festivals' %}"
+        });
+
+        map.addLayer(
+            {
+            'id': 'Festivals',
+            'type': 'circle',
+            'source': 'festivals',
+            'paint': {
+             'circle-radius': ['*', 30, ['/',['sqrt', ["get", "NOMBREFESTIVALS"]],['sqrt', 290]]],
+             'circle-color': "#de2d26",
+             'circle-opacity': 0.75,
+             },
+             'layout': {
+                    // make layer not visible by default
+              'visibility': 'none'
+              }
+       });
+
+       map.on('click', 'Festivals', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var nombre = e.features[0].properties.NOMBREFESTIVALS;
+                var commune = e.features[0].properties.NOM_COM;
+                
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }               
+                
+                popup.setLngLat(coordinates)
+                    .setHTML('<p><b>'+commune+'</b></p>'+ 
+                    '<p>'+nombre+' festival(s)</p>'
+                )
+                .addTo(map);
+            });
+
+            map.on("mouseenter", 'Festivals', () => {
+                map.getCanvas().style.cursor = "pointer";
+            });
+            map.on("mouseleave", 'Festivals', () => {
+                map.getCanvas().style.cursor = "";
+                });
+
+        {% for domaine in domaines %}
+            {% for equipement_type in domaine.equipementtype_set.all %}
+            map.addSource('equipements'+'{{ equipement_type.pk }}', {
+                'type': 'geojson',
+                'data': "{% url 'equipements' equipement_type.pk %}",
+            });
+
+            if ('{{domaine.name}}' == "Service d'archives"){
+                circleColor = '#006837';
+            }
+            if ('{{domaine.name}}' == "Arts du spectacle"){
+                circleColor = '#253494';
+            }
+            if ('{{domaine.name}}' == "Arts visuels"){
+                circleColor = '#810f7c';
+            }
+            if ('{{domaine.name}}' == "Cinéma"){
+                circleColor = '#ae017e';
+            }
+            if ('{{domaine.name}}' == "Éducation, Formation"){
+                circleColor = '#cc4c02';
+            }
+            if ('{{domaine.name}}' == "Lieux de lecture publique"){
+                circleColor = '#bd0026';
+            }
+            if ('{{domaine.name}}' == "Livre et presse"){
+                circleColor = '#bd0026';
+            }
+            if ('{{domaine.name}}' == "Patrimoine artistique et monumental"){
+                circleColor = '#00796b';
+            }
+            
+        
+            map.addLayer({
+                'id': '{{ equipement_type.pk}}',
+                'type': 'circle',
+                'source': 'equipements'+'{{ equipement_type.pk }}',
+                'paint': {
+                    'circle-color': circleColor,
+                    'circle-radius': {
+                        stops: [[6, 1.5], [9, 7], [16, 10]]
+                    }          
+                },            
+                'layout': {
+                        'visibility': 'none',
+                    },      
+            });
+        
+            map.on('click', '{{ equipement_type.pk }}', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var name = e.features[0].properties.nom;
+                var adresse = e.features[0].properties.adresse;
+                var typology = '{{ equipement_type.name }}';
+                
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }               
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML('<p><i>'+typology+'</i></p>'+
+                    '<p><b>'+name+'</b></p>'+ 
+                    '<p>'+adresse+'</p>'
+                )
+                .addTo(map);
+            });
+
+            map.on("mouseenter", '{{ equipement_type.pk }}', () => {
+                map.getCanvas().style.cursor = "pointer";
+            });
+            map.on("mouseleave", '{{ equipement_type.pk }}', () => {
+                map.getCanvas().style.cursor = "";
+                });
+            {% endfor %}
+        {% endfor %}
+
     });
 
     function showLayer(layer) {
@@ -1901,19 +1900,22 @@
                 map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'visible');
                 map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'visible');
             }
-            if (layer.value == 'Dépenses du Ministère de la Culture'){
-                map.setLayoutProperty("Dépenses du Ministère de la Culture Département", 'visibility', 'visible');
+            if (layer.value == 'Dépenses du ministère de la Culture'){
+                map.setLayoutProperty("Dépenses du ministère de la Culture Département", 'visibility', 'visible');
             }
             
             layer.className += ' active';
             map.setLayoutProperty(layer.value, 'visibility', 'visible');
-            map.moveLayer(layer.value);
+            //map.moveLayer(layer.value);
             map.setLayoutProperty("regionLayer", 'visibility', 'none');
-            map.setLayoutProperty("regionLine", 'visibility', 'none');
+            map.moveLayer("regionLine");
+            //map.setLayoutProperty("regionLine", 'visibility', 'none');
             map.setLayoutProperty("departementLayer", 'visibility', 'none');
-            map.setLayoutProperty("departementLine", 'visibility', 'none');
+            map.moveLayer("departementLine");
+            //map.setLayoutProperty("departementLine", 'visibility', 'none');
             map.setLayoutProperty("communeLayer", 'visibility', 'none');
-            map.setLayoutProperty("communeLine", 'visibility', 'none');
+            //map.moveLayer("communeLine");
+            //map.setLayoutProperty("communeLine", 'visibility', 'none');
             map.moveLayer("settlement-subdivision-label");
             map.moveLayer("settlement-label");
             map.moveLayer("state-label");
@@ -1942,8 +1944,8 @@
                 map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'none');
                 map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'none');
             }
-            if (layer.value == 'Dépenses du Ministère de la Culture'){
-                map.setLayoutProperty("Dépenses du Ministère de la Culture Département", 'visibility', 'none');
+            if (layer.value == 'Dépenses du ministère de la Culture'){
+                map.setLayoutProperty("Dépenses du ministère de la Culture Département", 'visibility', 'none');
             }
 
             layer.className = layer.className.replace(/\bactive\b/g, "");
