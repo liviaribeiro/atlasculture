@@ -103,14 +103,27 @@
     </div>
 </div>
 
-<div id="legend-box" class="legend-box">
-
-</div>
-<!--<div class="legend shadow-sm p-3 mb-5 bg-white rounded" style="visibility:hidden" id="legend">
-</div>-->
-
+<div id="legend-box" class="legend-box"></div>
+<div id="geocoder" class="geocoder"></div>
 
 <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [4.079306, 48.293024],
+        minZoom: 3,
+        zoom: 5
+    });
+    
+    // Add the control to the map.
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false
+    });
+ 
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     function addLegend(indicator, layers, colors) {
         legendBox = document.getElementById('legend-box');
@@ -161,15 +174,6 @@
     function closeNav(itemMenu) {
         document.getElementById(itemMenu).style.width = "0";
     }
-
-    mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/light-v10',
-        center: [4.079306, 48.293024],
-        minZoom: 3,
-        zoom: 5
-    });
 
     map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
 
@@ -1959,7 +1963,7 @@
 
 </script>
 
-<script src="{% static 'contexte.js' %}"></script>-->
+<script src="{% static 'contexte.js' %}"></script>
 
 <!--<script src="{% static 'map.js' %}"></script>-->
 

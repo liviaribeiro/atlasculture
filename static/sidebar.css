@@ -73,12 +73,24 @@
     position: fixed;
     right: 0;
     margin-right: 30px;
-    top: 71px;
-    z-index: 5;
+    top: 109px;
+    z-index: 1;
     width: 227px;
     height: 100vh;
     display: block;
     overflow-y:auto;
+}
+.geocoder {
+    position: absolute;
+    z-index: 5;
+    right: 0;
+    margin-right: 30px;
+    top: 69px;
+    width: 227px;
+}
+
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
 }
 
 .legend {
