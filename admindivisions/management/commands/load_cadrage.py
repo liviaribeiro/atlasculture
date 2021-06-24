@@ -56,7 +56,8 @@ class Command(BaseCommand):
             cad.typologie_evol = typologie_evol
             cad.save()
 
-        
+        """
+        """
         csv_file = os.path.join(BASE_DIR, 'admindivisions/data/Cadrage2017.xlsx')
 
         df = pd.read_excel(csv_file)
@@ -69,7 +70,11 @@ class Command(BaseCommand):
             #births = df['NAIS1217'][i]
             #deaths = df['DECE1217'][i] 
             #livingstandard = df['MED17'][i]
-            surface = df['SUPERF'][i]
+            #surface = df['SUPERF'][i]
+            tauxpauvrete = df['TP6017'][i]
+
+            if math.isnan(tauxpauvrete):
+                tauxpauvrete = None
 
             #evolution = df['EVOLANMOYENNE1217'][i]
             #soldeapparent = df['SOLDEAP1217'][i]
@@ -92,13 +97,12 @@ class Command(BaseCommand):
             #cadrage.evolution = evolution
             #cadrage.soldeapparent = soldeapparent
             #cadrage.soldenaturel = soldenaturel
-            cad.surface = surface
+            cad.tauxpauvrete = tauxpauvrete
 
             cad.save()
-
         """
-
-        with open('admindivisions/data/COMMUNE_SIMPLIFIED.json') as f:
+        
+        with open('admindivisions/data/COMMUNE_CADRAGE_SIMPLIFIED.json') as f:
             data = json.load(f)
 
         for feature in data['features']: 
@@ -110,11 +114,11 @@ class Command(BaseCommand):
             except:
                 print("pas de données de cadrage")
         
-            #population
-            population = cad.population
-            if population is None:
-                population = -1
-
+            tauxpauvrete = cad.tauxpauvrete
+            if tauxpauvrete is None:
+                tauxpauvrete = -1
+            
+            """
             #densité
             density = cad.density
             if density is None:
@@ -139,10 +143,10 @@ class Command(BaseCommand):
             else:
                 typologie = TypologieEvolution.objects.get(code=typologie_code)
                 typologie_nom = typologie.typologie
-                  
-            feature["properties"].update({'DENSITE17': density, 'NIVEAUDEVIE17': livingstandard, 'INDICEJEUNESSE17': youthindex, "TYPOLOGIECODE":typologie_code, "TYPOLOGIE":typologie_nom})
+            """
+        
+            feature["properties"].update({'TAUXPAUVRETE17': tauxpauvrete})
                                                                                       
         with open('admindivisions/data/COMMUNE_CADRAGE_SIMPLIFIED.json', 'w') as f:
             json.dump(data, f)
-        
         

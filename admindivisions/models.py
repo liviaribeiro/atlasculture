@@ -83,7 +83,7 @@ class Cadrage(models.Model):
     soldeapparent = models.FloatField(null=True)
     evolution = models.FloatField(null=True)
     typologie_evol = models.IntegerField(null=True)
-    #povertyrate = models.FloatField(null=True)
+    tauxpauvrete = models.FloatField(null=True)
     #householdshare = models.FloatField(null=True)
     #activepopulation = models.IntegerField(null=True)
 

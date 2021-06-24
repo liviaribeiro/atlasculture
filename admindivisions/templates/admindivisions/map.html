@@ -93,6 +93,7 @@
         <p class="subtitle" style="display: none;">Structure de la population par âge</p>
         <p class="subtitle">Niveaux de vie et redistribution</p>
         <button class="btn-tag" value="Niveau de vie médian" onclick="showLayer(this)">Niveau de vie médian</button>
+        <button class="btn-tag" value="Taux de pauvreté" onclick="showLayer(this)">Taux de pauvreté</button>
         <p class="subtitle">Politiques publiques</p>
         <button class="btn-tag" value="Action coeur de ville" onclick="showLayer(this)">Action coeur de ville</button>
         <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this)">Quartiers prioritaires de la politique de la ville</button>
@@ -361,7 +362,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         
         map.addSource('cadrage', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.2v0fu4ny'
+            'url': 'mapbox://liviaribeiro.0coathhb'
         });
 
         var layers = ['0 à 50', '50 à 80', '80 à 100', '100 à 150', 'plus de 150'];
@@ -374,7 +375,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             {
                 'id': 'Indice de jeunesse',
                 'source': 'cadrage',
-                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED-9qvj2o',
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
@@ -428,7 +429,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             {
                 'id': 'Densité de la population',
                 'source': 'cadrage',
-                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED-9qvj2o',
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
@@ -471,6 +472,60 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 }     
         });
 
+        var layers = ['0 à 9%', '9 à 14%', '14 à 20%', '20 à 29%', 'plus de 29%'];
+        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var indicator = "Taux de pauvreté";
+
+        addLegend(indicator, layers, colors);
+
+        map.addLayer(
+            {
+                'id': 'Taux de pauvreté',
+                'source': 'cadrage',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED-9qvj2o',
+                'type': 'fill',
+                'paint': {
+                    'fill-color': [
+                        "step",
+                        ["get", "TAUXPAUVRETE17"],
+                        "#d9d9d9",
+                        0,
+                        "#eff3ff",
+                        9,
+                        "#bdd7e7",
+                        14,
+                        "#6baed6",
+                        20,
+                        "#3182bd",
+                        29,
+                        "#08519c"
+                        ],
+                    'fill-opacity': 0.75,
+                    
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+            }  
+        );    
+
+        map.on('click', 'Taux de pauvreté', function (e) {
+            if (e.features.length > 0) {
+                tauxpauvrete = e.features[0].properties.TAUXPAUVRETE17
+                if (tauxpauvrete == -1) {
+                    tauxpauvrete = "Données non disponibles"
+                }
+                else {
+                    tauxpauvrete = formatNumber(tauxpauvrete) + '%'
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
+                        +tauxpauvrete+' </p>')
+                    .addTo(map);
+                }     
+        });
+
         var layers = ['Croissance totale', 'Croissance liée à un solde naturel positif', 'Croissance liée à un solde migratoire apparent positif', 'Décroissance liée à un solde naturel négatif', 'Décroissance liée à un solde migratoire apparent négatif', 'Décroissance totale'];
         var colors = ['#2166ac', '#67a9cf', '#d1e5f0', '#fddbc7', '#ef8a62', '#b2182b'];
         var indicator = "Évolution de la population";
@@ -481,7 +536,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             {
                 'id': 'Évolution de la population',
                 'source': 'cadrage',
-                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED-9qvj2o',
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
@@ -532,7 +587,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             {
                 'id': 'Niveau de vie médian',
                 'source': 'cadrage',
-                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED',
+                'source-layer': 'COMMUNE_CADRAGE_SIMPLIFIED-9qvj2o',
                 'type': 'fill',
                 'paint': {
                     'fill-color': [
@@ -637,7 +692,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
         map.addSource('zonage rural', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.ahgyau5x'
+            'url': 'mapbox://liviaribeiro.3u0ajjj4'
         });
         
         //add zonage rural layer
@@ -645,7 +700,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             {
                 'id': 'Grille communale de densité',
                 'source': 'zonage rural',
-                'source-layer': 'COMMUNE_CARTO_RURAL_SIMPLE',
+                'source-layer': 'COMMUNE_CARTO_RURAL_SIMPLE-9f3llm',
                 'type': 'fill',
                 'paint': {
                     'fill-color':[
@@ -1765,8 +1820,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         });
 
         map.addSource('festivals', {
-            'type': 'geojson',
-            'data': "{% url 'festivals' %}"
+            'type': 'vector',
+            'url': "mapbox://liviaribeiro.d49j0q6z"
         });
 
         map.addLayer(
@@ -1774,6 +1829,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             'id': 'Festivals',
             'type': 'circle',
             'source': 'festivals',
+            'source-layer': 'COMMUNE_FESTIVALS-91tdqh',
             'paint': {
              'circle-radius': ['*', 30, ['/',['sqrt', ["get", "NOMBREFESTIVALS"]],['sqrt', 290]]],
              'circle-color': "#de2d26",
