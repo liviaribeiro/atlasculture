@@ -162,6 +162,133 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         legend.style.display = 'none'; 
     }
 
+    function addLegendCircle(indicator, layers, radius, color) {
+        legendBox = document.getElementById('legend-box');
+        var legend = document.createElement('div');
+        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.setAttribute('id', "legend-"+indicator);
+        var title = document.createElement('div');
+        title.className = "title-legend mb-3";
+        title.innerHTML = indicator;
+        legend.appendChild(title)
+
+
+        for (i = 0;  i < layers.length; i++) {
+            var layer = layers[i];
+            var color = color;
+            var diam = radius[i]*2;
+            var item = document.createElement('div');
+            item.className = "row"
+            var col1 = document.createElement('div');
+            col1.className = "col d-flex justify-content-center"
+            var key = document.createElement('div');
+            key.className = 'legend-circle';
+            key.style.backgroundColor = color;
+
+            key.style.height = diam+"px";
+            key.style.width = diam+"px";
+
+            var col2 = document.createElement('div');
+            col2.className = "col d-flex align-items-center";
+            var value = document.createElement('div');
+            value.innerHTML = layer;
+            value.className = 'legend-value';
+            item.appendChild(col1);
+            col1.appendChild(key);
+            item.appendChild(col2);
+            col2.appendChild(value);
+            legend.appendChild(item);
+            legendBox.appendChild(legend);
+        }
+        
+        var link = document.createElement('a');
+        link.className = "link-legend";
+        link.innerHTML = "En savoir plus";
+        link.title = "En savoir plus";
+        link.href = "#";
+        legend.appendChild(link);
+        legend.style.display = 'none'; 
+    }
+
+    function addLegendEquipement(indicator, legendID, color) {
+        legendBox = document.getElementById('legend-box');
+        var legend = document.createElement('div');
+        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.setAttribute('id', legendID);
+       
+        var color = color;
+        var item = document.createElement('div');
+        item.className = "row inline"
+        var col1 = document.createElement('div');
+        col1.className = "col-2 d-flex align-items-center"
+        var key = document.createElement('div');
+        key.className = 'legend-circle';
+        key.style.backgroundColor = color;
+
+        key.style.height = "12px";
+        key.style.width = "12px";
+
+        var col2 = document.createElement('div');
+        col2.className = "col-10 d-flex align-items-center";
+        var value = document.createElement('div');
+        value.innerHTML = indicator;
+        value.className = 'title-legend';
+        item.appendChild(col1);
+        col1.appendChild(key);
+        item.appendChild(col2);
+        col2.appendChild(value);
+        legend.appendChild(item);
+        legendBox.appendChild(legend);
+        
+        
+        var link = document.createElement('a');
+        link.className = "link-legend";
+        link.innerHTML = "En savoir plus";
+        link.title = "En savoir plus";
+        link.href = "#";
+        legend.appendChild(link);
+        legend.style.display = 'none'; 
+    }
+
+    function addLegendSymbol(indicator, marker) {
+
+        legendBox = document.getElementById('legend-box');
+        var legend = document.createElement('div');
+        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.setAttribute('id', "legend-"+indicator);
+       
+        var color = color;
+        var item = document.createElement('div');
+        item.className = "row inline"
+        var col1 = document.createElement('div');
+        col1.className = "col-2 d-flex justify-content-center align-items-center"
+        var key = document.createElement('img');
+        item.appendChild(col1);
+        col1.appendChild(key);
+        key.src = marker;
+        key.style.height = "20px";
+
+        var col2 = document.createElement('div');
+        col2.className = "col-10 d-flex align-items-center";
+        var value = document.createElement('div');
+        value.innerHTML = indicator;
+        value.className = 'title-legend';
+
+        item.appendChild(col2);
+        col2.appendChild(value);
+        legend.appendChild(item);
+        legendBox.appendChild(legend);
+        
+        
+        var link = document.createElement('a');
+        link.className = "link-legend";
+        link.innerHTML = "En savoir plus";
+        link.title = "En savoir plus";
+        link.href = "#";
+        legend.appendChild(link);
+        legend.style.display = 'none'; 
+    }
+
     function openNav(itemMenu) {
         document.getElementById(itemMenu).style.width = "419px";
         var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
@@ -298,67 +425,10 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 });
         }
 
-        var regionLayer = "region";
-        var regionURL = 'mapbox://liviaribeiro.3qf6fysf';
-        var regionSourceLayer = 'REGION_SIMPLIFIED';
-        var regionMaxZoom = zoomThreshold;
-        var regionMinZoom = 4;
-        var departementLayer = "departement";
-        var departementURL = 'mapbox://liviaribeiro.76ba45w7';
-        var departementSourceLayer = 'DEPARTEMENT_SIMPLIFIED';
-        var departementMaxZoom = zoomComThreshold;
-        var departementMinZoom = zoomThreshold;
-        var communeLayer = "commune";
-        var communeURL = 'mapbox://liviaribeiro.1d5mkyd4';
-        var communeSourceLayer = 'COMMUNE_SIMPLIFIED';
-        var communeMaxZoom = 12;
-        var communeMinZoom = zoomComThreshold;
-
-        addZoneLayer(regionLayer, regionURL, regionSourceLayer, regionMaxZoom, regionMinZoom);
-        addZoneLayer(departementLayer, departementURL, departementSourceLayer, departementMaxZoom, departementMinZoom);
-        addZoneLayer(communeLayer, communeURL, communeSourceLayer, communeMaxZoom, communeMinZoom);
-
-        map.addSource('population', {
-            'type': 'vector',
-            'url': 'mapbox://liviaribeiro.1n6485zf'
-        });
-
         function formatNumber(num) {
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
             }
 
-        map.addLayer(
-            {
-            'id': 'Population',
-            'type': 'circle',
-            'source': 'population',
-            'source-layer': 'COMMUNE_CARTO_POINTS_CADRAGE-6p2apo',
-            'paint': {
-                'circle-radius': ['*', 40, ['/',['sqrt', ["get", "POPULATION"]],['sqrt', 2187526]]],
-                'circle-color': "#6baed6",
-                'circle-opacity': 0.75,
-                },
-                'layout': {
-                    // make layer not visible by default
-                    'visibility': 'none'
-                }
-        });
-
-        map.on('click', 'Population', function (e) {
-            if (e.features.length > 0) {
-                population = e.features[0].properties.POPULATION
-                if (population == -1) {
-                    population = "Données non disponibles"
-                }
-                else {
-                    population = formatNumber(population)
-                }
-                popup.setLngLat(e.lngLat)
-                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>Population : '
-                        +population+ '</p>')
-                    .addTo(map);
-                }     
-        });
         
         map.addSource('cadrage', {
             'type': 'vector',
@@ -637,52 +707,6 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             if (error) throw error;
             map.addImage('custom-marker', image);})
 
-        map.addSource('acv', {
-            'type': 'vector',
-            'url': 'mapbox://liviaribeiro.2f6ii8rh',
-            'cluster': true,
-            'clusterMaxZoom': 14, // Max zoom to cluster points on
-            'clusterRadius': 50 
-        });
-        
-        map.addLayer({
-            'id': 'Action coeur de ville',
-            'type': 'symbol',
-            'source': 'acv',
-            'source-layer': 'COMMUNE_CARTO_ACV-834rrb',
-            'layout': {
-            'icon-image': [
-                "case",
-                [
-                    "match",
-                    ["get", "ACV"],
-                    ["000000"],
-                    false,
-                    true
-                ],
-                "custom-marker",
-                ""
-                ],
-            'icon-size': 0.5,
-            'visibility': 'none',
-            'icon-allow-overlap': true
-            },
-        });
-
-        map.on('click', "Action coeur de ville", function (e) {
-            new mapboxgl.Popup()
-            .setLngLat(e.lngLat)
-            .setHTML(e.features[0].properties.NOM_COM)
-            .addTo(map);
-        });
-
-        map.on("mouseenter", "Action coeur de ville", () => {
-                map.getCanvas().style.cursor = "pointer";
-            });
-
-        map.on("mouseleave", "Action coeur de ville", () => {
-                map.getCanvas().style.cursor = "";
-                });
 
         var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
         var colors = ['#d01c8b', '#f1b6da', '#b8e186', '#4dac26'];
@@ -1759,6 +1783,119 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 }     
         });
 
+        var regionLayer = "region";
+        var regionURL = 'mapbox://liviaribeiro.3qf6fysf';
+        var regionSourceLayer = 'REGION_SIMPLIFIED';
+        var regionMaxZoom = zoomThreshold;
+        var regionMinZoom = 4;
+        var departementLayer = "departement";
+        var departementURL = 'mapbox://liviaribeiro.76ba45w7';
+        var departementSourceLayer = 'DEPARTEMENT_SIMPLIFIED';
+        var departementMaxZoom = zoomComThreshold;
+        var departementMinZoom = zoomThreshold;
+        var communeLayer = "commune";
+        var communeURL = 'mapbox://liviaribeiro.1d5mkyd4';
+        var communeSourceLayer = 'COMMUNE_SIMPLIFIED';
+        var communeMaxZoom = 12;
+        var communeMinZoom = zoomComThreshold;
+
+        addZoneLayer(regionLayer, regionURL, regionSourceLayer, regionMaxZoom, regionMinZoom);
+        addZoneLayer(departementLayer, departementURL, departementSourceLayer, departementMaxZoom, departementMinZoom);
+        addZoneLayer(communeLayer, communeURL, communeSourceLayer, communeMaxZoom, communeMinZoom);
+
+        map.addSource('population', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.1n6485zf'
+        });
+
+        map.addLayer(
+            {
+            'id': 'Population',
+            'type': 'circle',
+            'source': 'population',
+            'source-layer': 'COMMUNE_CARTO_POINTS_CADRAGE-6p2apo',
+            'paint': {
+                'circle-radius': ['*', 40, ['/',['sqrt', ["get", "POPULATION"]],['sqrt', 2187526]]],
+                'circle-color': "#6baed6",
+                'circle-opacity': 0.75,
+                },
+                'layout': {
+                    // make layer not visible by default
+                    'visibility': 'none'
+                }
+        });
+
+        map.on('click', 'Population', function (e) {
+            if (e.features.length > 0) {
+                population = e.features[0].properties.POPULATION
+                if (population == -1) {
+                    population = "Données non disponibles"
+                }
+                else {
+                    population = formatNumber(population)
+                }
+                popup.setLngLat(e.lngLat)
+                    .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>Population : '
+                        +population+ '</p>')
+                    .addTo(map);
+                }     
+        });
+
+        var layers = ['545 000 habitants', '2 180 000 habitants'];
+        var radius = [10, 40]
+        var color = 'rgba(107, 174, 214, 0.75)';
+        var indicator = "Population";
+
+        addLegendCircle(indicator, layers, radius, color);
+
+        map.addSource('acv', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.2f6ii8rh',
+        });
+        
+        map.addLayer({
+            'id': 'Action coeur de ville',
+            'type': 'symbol',
+            'source': 'acv',
+            'source-layer': 'COMMUNE_CARTO_ACV-834rrb',
+            'layout': {
+            'icon-image': [
+                "case",
+                [
+                    "match",
+                    ["get", "ACV"],
+                    ["000000"],
+                    false,
+                    true
+                ],
+                "custom-marker",
+                ""
+                ],
+            'icon-size': 0.5,
+            'visibility': 'none',
+            'icon-allow-overlap': true
+            },
+        });
+
+        marker = 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png';
+
+        addLegendSymbol("Action coeur de ville", marker);
+
+        map.on('click', "Action coeur de ville", function (e) {
+            new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.NOM_COM)
+            .addTo(map);
+        });
+
+        map.on("mouseenter", "Action coeur de ville", () => {
+                map.getCanvas().style.cursor = "pointer";
+            });
+
+        map.on("mouseleave", "Action coeur de ville", () => {
+                map.getCanvas().style.cursor = "";
+                });
+
         map.addSource('pdr', {
                 'type': 'vector',
                 'url': 'mapbox://liviaribeiro.2kyv2902'
@@ -1788,6 +1925,9 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                         'icon-allow-overlap': true, 
                     }
         });
+
+        addLegendSymbol("Plan de relance", marker);
+
 
         map.on('click', 'Plan de relance', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();
@@ -1904,13 +2044,15 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 'paint': {
                     'circle-color': circleColor,
                     'circle-radius': {
-                        stops: [[6, 1.5], [9, 7], [16, 10]]
+                        stops: [[6, 1.5], [9, 7], [16, 8]]
                     }          
                 },            
                 'layout': {
                         'visibility': 'none',
                     },      
             });
+
+            addLegendEquipement('{{ equipement_type.name }}', 'legend-'+'{{ equipement_type.pk }}', circleColor);
         
             map.on('click', '{{ equipement_type.pk }}', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();
@@ -1966,15 +2108,11 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             
             layer.className += ' active';
             map.setLayoutProperty(layer.value, 'visibility', 'visible');
-            //map.moveLayer(layer.value);
             map.setLayoutProperty("regionLayer", 'visibility', 'none');
-            map.moveLayer("regionLine");
             //map.setLayoutProperty("regionLine", 'visibility', 'none');
             map.setLayoutProperty("departementLayer", 'visibility', 'none');
-            map.moveLayer("departementLine");
             //map.setLayoutProperty("departementLine", 'visibility', 'none');
             map.setLayoutProperty("communeLayer", 'visibility', 'none');
-            //map.moveLayer("communeLine");
             //map.setLayoutProperty("communeLine", 'visibility', 'none');
             map.moveLayer("settlement-subdivision-label");
             map.moveLayer("settlement-label");

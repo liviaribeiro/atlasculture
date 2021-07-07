@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -97,6 +98,8 @@ class Entreprises_communes(models.Model):
     etablissements_total = models.IntegerField(null=True)
     #Nombre d'établissements culturels marchands
     etablissements_culture = models.IntegerField(null=True)
+    annee = models.CharField(max_length=4, null=True, default="2017")
+    date_ajout = models.DateTimeField(default=timezone.now)
 
 class Entreprises_departements(models.Model):
     departement = models.ForeignKey(Departement, on_delete=models.CASCADE, null=True)
