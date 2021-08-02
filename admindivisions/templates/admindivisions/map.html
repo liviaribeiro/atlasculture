@@ -126,6 +126,25 @@
  
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
+    function addInfo(indicator) {
+        legendBox = document.getElementById('legend-box');
+        var info = document.createElement('div');
+        info.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        info.setAttribute('id', "info-"+indicator);
+        var title = document.createElement('div');
+        title.className = "title-legend mb-3";
+        title.innerHTML = "Définition";
+        info.appendChild(title);
+        info.style.display = 'none'; 
+        legendBox.appendChild(info);
+    }
+
+    function showInfo(indicator) {
+        console.log("info-"+indicator);
+        info = document.getElementById("info-"+indicator);
+        info.style.display = "block";
+    }
+
     function addLegend(indicator, layers, colors) {
         legendBox = document.getElementById('legend-box');
         var legend = document.createElement('div');
@@ -240,12 +259,12 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         legend.appendChild(item);
         legendBox.appendChild(legend);
         
-        
-        var link = document.createElement('a');
+        var link = document.createElement('button');
         link.className = "link-legend";
         link.innerHTML = "En savoir plus";
         link.title = "En savoir plus";
-        link.href = "#";
+        link.value = indicator;
+        //link.onclick = showInfo(link.value);
         legend.appendChild(link);
         legend.style.display = 'none'; 
     }
@@ -2053,6 +2072,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             });
 
             addLegendEquipement('{{ equipement_type.name }}', 'legend-'+'{{ equipement_type.pk }}', circleColor);
+            addInfo('{{ equipement_type.name }}');
         
             map.on('click', '{{ equipement_type.pk }}', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();

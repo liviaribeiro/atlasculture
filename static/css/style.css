@@ -49,23 +49,42 @@
 
 .title {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 700;
-    font-size: 48px;
+    font-weight: 800;
+    font-size: 40px;
+    color: #150091;
+    line-height: 55px;
 }
 
 .title2 {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 700;
-    font-size: 24px;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 38px;
+    color: #FFFFFF;
+}
+
+.text {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height:24px;
+    color: #150091;
+}
+
+.text2 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height:22px;
     color: #FFFFFF;
 }
 
 .subtitle {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 700;
-    font-size: 32px;
-    color: #00AC8C;
-    line-height:28px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #150091;
+    line-height:22px;
 }
 
 .subtitle2 {
@@ -119,6 +138,27 @@ a {
     color: #383838;
 }
 
+.logo {
+    height:70px; 
+    margin-right:10px;
+}
+
+nav .navbar-nav li a{
+    color: #150091 !important;
+    font-weight: 500;
+    margin-right: 40px;
+}
+
+nav .navbar-nav li a:hover{
+    text-decoration: underline;
+    text-underline-offset: 20px;
+}
+
+nav .navbar-nav .active a{
+    color: #FE8D7D !important;
+}
+
+
 a:link {
     font-size: 16px;
     text-decoration: none;
@@ -127,9 +167,9 @@ a:link {
 
 a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-    color: #383838;
+    font-weight: 800;
+    font-size: 32px;
+    color: #150091;
 }
 
 .b2 {
@@ -247,5 +287,6 @@ input::placeholder {
     .c3 {margin-bottom: 40px; }
     .c1 {width: 80%;}
     .r1 { margin-left:5%;}
+    .logo {height: 30px;}
   }
 

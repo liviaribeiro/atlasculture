@@ -18,6 +18,11 @@ def index(request):
         form = SubscriberForm()
     return render(request, 'subscribers/index.html', {'form': form})
 
+def homepage(request):
+    return render(request, 'subscribers/homepage.html')
+
+def about(request):
+    return render(request, 'subscribers/about.html')
 
 def accessibilite(request):
     return render(request, 'subscribers/accessibilite.html')

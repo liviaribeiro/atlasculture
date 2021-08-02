@@ -19,7 +19,6 @@ def map(request):
     context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural}
     return render(request, 'admindivisions/map.html', context)
 
-
 def equipements(request, domaine):
     path = os.path.join(BASE_DIR, 'static/data/EQUIPEMENTS_ALL.json')
 

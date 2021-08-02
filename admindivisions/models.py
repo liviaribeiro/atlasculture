@@ -220,3 +220,16 @@ class Commune_AAV(models.Model):
     typologie = models.ForeignKey(TypologieAAV, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.AAV.nom + " " + self.commune.name
+
+class Source(models.Model):
+    nom = models.CharField(max_length=200)
+    def __str__(self):
+        return self.nom
+
+class Variable(models.Model):
+    nom = models.CharField(max_length=200)
+    definition = models.CharField(max_length=1000)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True)
+    millesime = models.CharField(max_length=4)
+    def __str__(self):
+        return self.nom

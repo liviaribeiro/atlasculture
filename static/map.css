@@ -164,7 +164,6 @@ a.nav-link:hover {
 
 .c1 {
     width: 54%; 
-    
 }
 
 .c3 {
@@ -184,7 +183,6 @@ a.nav-link:hover {
     text-align-last:end; 
 }
 
-
 .n {
     width: 100%; 
 }
@@ -197,7 +195,7 @@ a.nav-link:hover {
     border-left: 4px solid #FF6F4C;
     height: 185px;
     margin-top: 10px;
-  }
+}
 
 .c {
     border: 1px solid #CECECE;;
@@ -216,7 +214,6 @@ ul {
     font-size: 16px;
 }
 
-
 .btn1 {
 
     background-color: #00AC8C;
@@ -227,7 +224,7 @@ ul {
     width: 266px;
 }
 
- .btn1:hover{
+.btn1:hover{
     background-color: #8ACDB0;
     color: #000000;
 }
@@ -236,7 +233,7 @@ input::placeholder {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 16px;
-  }
+}
 
 .r1 {
     margin-left:10%;
@@ -263,12 +260,10 @@ input::placeholder {
     .r1 { margin-left:5%;}
   }
 
-
 body { 
     margin: 0; 
     padding: 0; 
 }
-
 #map { 
     position: absolute; top: 59px; bottom: 0; width: 100%; z-index: -1;
 }

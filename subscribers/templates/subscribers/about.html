@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Atlas Culture des territoires : Visualiser les dynamiques culturelles en France">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'favicon-32.png' %}"/>
+
+
+</head>
+
+<body>
+        
+    <nav class="navbar navbar-light bg-white">
+        <div class="container n justify-content-start px-0">
+          <a class="navbar-brand" href="{% url 'index' %}">
+                <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" style="height:70px; margin-right:10px"/></a>
+                <img class="logo" alt="Logo Atlas Culture" src="{% static 'ATLAS_FavIcon 1.png' %}"/></a>
+                    <a href="{% url 'index' %}" class="b1" style="line-height:24px;">Atlas Culture des territoires</a>
+            </div>
+        </div>
+      </nav>
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid n justify-content-start px-0">
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'index' %}">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Carte interactive</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Fiches portraits culturels</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'about' %}">À propos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </nav>
+
+
+    <main role="main">
+        {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+
+<div class="container c1">
+
+
+    <h1 class="title text-center py-5 px-0">À propos</h1>
+
+    <p class="pp">
+        L’Atlas Culture des territoires est un site web pensé comme une <b>ressource de référence des données publiques de la culture en France : </b>lieux et offre, dépenses publiques, politiques publiques, entreprises et emploi. Ce site est construit autour d’une carte interactive et de fiches portraits de région. </p>
+        
+    <p class="subtitle5 mt-4">Pourquoi cette initiative ?</p>
+        
+    <p class="pp"><b>Pour les responsables d’affaires culturelles</b>
+    <br>Éclairer les stratégies territoriales d'aménagement culturel</p>
+
+    <p class="pp"><b>Pour les chargés d’étude en observation culturelle</b>
+    <br>Développer les analyses territoriales</p>
+
+    <p class="pp"><b>Pour l’ensemble des acteurs culturels</b>
+    <br>Disposer d’un référentiel commun favorisant le dialogue et la coopération</p>
+
+    <p class="pp"><b>Pour le grand public </b>
+    <br>Comprendre les enjeux liés aux politiques culturelles et participer au débat public</p>
+    
+    <p class="subtitle5 mt-4">D’où viennent les données ?</p>
+
+    <p class="pp">Les données sont collectées et consolidées par le service statistique du ministère de la Culture auprès de sources nationales comme l’Insee, Pôle emploi, le Centre national du cinéma et de l’image animée, Artcena, etc.</p>
+    <p class="pp">Pour la mise en ligne de la version beta en septembre 2021, on compte plus de 100 variables issues de 15 sources différentes.</p>
+
+    <p class="subtitle5 mt-4">Comment utiliser la carte interactive ?</p>
+    <p class="pp">La carte interactive vous permet de visualiser les données de votre choix à différents échelons territoriaux, sur ordinateur ou smartphone. </p>
+    
+    <p class="subtitle3 mt-4">Ajuster la sélection des données pour en assurer la lisibilité</p>
+    <p class="pp">La carte repose sur un principe de sélection libre des données : tous les croisements (hors aplats de couleur) sont possibles. À vous d’ajuster l’affichage, en limitant le nombre de données si nécessaire, pour que le résultat soit bien lisible. </p>
+
+    <p class="subtitle3 mt-4">Explorer les ressources pour aller plus loin</p>
+    <p class="pp">À chaque donnée sont associés des documents ou des études territoriales, référencés pour leur fiabilité et leur pertinence afin d’approfondir l’analyse. N’hésitez pas à les consulter. </p>
+
+    <p class="subtitle3 mt-4">Télécharger les cartes et les bases de données</p>
+    <p class="pp">L’Atlas Culture s’inscrit dans une démarche de transparence de la donnée publique et permet de télécharger les données de votre choix en format tableur. Les cartes peuvent également être exportées pour en format image illustrer des présentations, par exemple.</p>
+    <p class="pp">Toutes les données de l’Atlas sont également disponibles sur les plateformes ouvertes de données publiques françaises <a href='data.culture.gouv.fr'>data.culture.gouv.fr</a></p>
+     
+    <p class="subtitle5 mt-4">Vous souhaitez contribuer ?</p>
+    <p class="pp">Le site est en version beta et nous continuons à travailler en lien constant avec une communauté de futurs usagers  dans la perspective de proposer une solution qui aura la plus grande utilité et la meilleure expérience possible.</p>
+    <p class="pp">Nous sommes donc à l’écoute de toute suggestion d’amélioration ou d’ajout de données et ressources complémentaires (sachant que pour respecter l’objectif de comparabilité de l’atlas, nous n’intégrons que des données disponibles pour l’ensemble de la France).</p>
+    
+    <button>Nous contacter</button>
+    <button>Donner votre avis sur la version beta de ce site</button>
+
+    <p class="subtitle5 mt-4">Qui est à l’origine de cette initiative ?</p>
+
+    <p class="pp"><i>L’Atlas Culture des territoires </i>est une ressource proposée par le service d’études et de statistiques du ministère (Deps-Doc) et initiée en septembre 2020 dans le cadre du programme <a href="https://entrepreneur-interet-general.etalab.gouv.fr/">Entrepreneurs d’intérêt général</a> par une équipe pluridisciplinaire composée de chargés d’étude, de statisticiens, d’une développeuse et d’une designer. Nous appartenons également à l’écosystème de l’incubateur du ministère de la Culture (l’Atelier numérique) et de la communauté <a href="beta.gouv">beta.gouv</a>. </p>
+
+    <p class="pp">Pour en savoir plus sur la réalisation du défi Atlas Culture</p>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/wy_kSDWfskM?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <br><br><br>
+</div>
+</div>
+</div>
+</main>
+
+<div class="container f1 py-3">
+<div class="row">
+<div class="col-md-8">
+   <div class="row">
+        <div class="col-auto mb-3">
+            <a href="{% url 'accessibilite' %}" style="font-size: 12px; line-height:18px;">Accessibilité</a>
+        </div>
+        <div class="col-auto mb-3">
+            <a href="{% url 'legal' %}" style="font-size: 12px; line-height:18px;">Mentions légales</a>
+        </div>
+        <div class="col-auto mb-3">
+            <a href="{% url 'privacy' %}" style="font-size: 12px; line-height:18px;">Données personnelles</a>
+        </div>
+        <div class="col-auto mb-3">
+            <a href="mailto:contact.deps@culture.gouv.fr" style="font-size: 12px; line-height:18px;">Nous contacter</a>
+        </div>
+    </div>
+</div>
+<div class="col">
+    <p class="f2" style="font-size: 12px; color:#6A6A6A;">&copy; Ministère de la Culture 2020</p>
+</div>
+</div>
+</div>
+</body>
+</html>
