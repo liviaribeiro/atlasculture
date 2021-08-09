@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from .forms import SubscriberForm
 from django.contrib import messages
+from admindivisions.models import Region
 
 
 # Create your views here.
@@ -19,10 +20,37 @@ def index(request):
     return render(request, 'subscribers/index.html', {'form': form})
 
 def homepage(request):
-    return render(request, 'subscribers/homepage.html')
+    if request.method == "POST" and "selected_region" in request.POST:
+        selected_region = request.POST.get("selected_region")
+        return redirect('portrait_region', selected_region)
+
+    if request.method == "POST" and "subscribers" in request.POST:
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            form.save(request.user)
+            messages.success(request, "Vote inscription a bien été validé, merci.")
+        else:
+            messages.error(request, "Cette adresse e-mail n'est pas valide, désolé.")
+    else:
+        form = SubscriberForm()
+        
+    regions = Region.objects.all().order_by('name') 
+    context = {'regions': regions, 'form': form}
+    return render(request, 'subscribers/homepage.html', context)
+
+def portrait_region(request, code_region):
+    region = get_object_or_404(Region, codeinsee=code_region)
+    return render(request, 'subscribers/portrait_region.html', {'region': region})
+
+def portraits(request):
+    regions = Region.objects.all().order_by('name') 
+    return render(request, 'subscribers/portraits.html', {'regions': regions})
 
 def about(request):
     return render(request, 'subscribers/about.html')
+
+def contact(request):
+    return render(request, 'subscribers/contact.html')
 
 def accessibilite(request):
     return render(request, 'subscribers/accessibilite.html')

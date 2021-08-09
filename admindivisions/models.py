@@ -7,6 +7,8 @@ class Region(models.Model):
     name = models.CharField(max_length=100)
     codeinsee = models.CharField(max_length=2)
     geom = models.MultiPolygonField(null=True, blank=True)
+    image = models.ImageField(upload_to='portraits/', null=True)
+
     #geom_simplified = models.MultiPolygonField(null=True)
     def __str__(self):
         return self.codeinsee

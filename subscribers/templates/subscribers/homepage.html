@@ -4,59 +4,78 @@
 {% load static %}
 
 
-        <div class="container-fluid mt-4"  style="min-height:636px;background-image: url('{% static 'ATLAS_Map.png' %}');background-size:cover;">
+        <div class="container-fluid main-container">
             <div class="row">
-                <div class="col">
-                    <img alt="Atlas culture des territoires" src="{% static 'ATLAS_MainTitle.png' %}" style="height:489px; margin-left:200px;"/>
+                <div class="col text-center">
+                    <img class="main-logo" alt="Atlas culture des territoires" src="{% static 'ATLAS_MainTitle.png' %}"/>
                 </div>
                 <div class="col text-center">
-                    <p class="title">Comprendre<br>les dynamiques<br>culturelles</p>
-                    <p class="subtitle">Bienvenue sur la ressource dédiée aux données publiques de la culture, de la région à la commune</p>
+                    <div style="max-width: 390px;">
+                    <p class="title main-title">Comprendre les dynamiques culturelles</p>
+                    <p class="subtitle main-subtitle">Bienvenue sur la ressource dédiée aux données publiques de la culture, de la région à la commune</p>
                     <a href="{% url 'map' %}">
-                        <img alt="Explorer carte interactive" src="{% static 'Btn-Accueil.png' %}" width="180px">
+                        <img alt="Explorer carte interactive" src="{% static 'Btn-Accueil.png' %}" width="212px">
                      </a>
+                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="container-fluid"  style="min-height:305px;background-image: url('{% static 'ATLAS_banner 1.png' %}');background-size:cover;">
+        <div class="container-fluid container-img">
             <div class="container p-5 text-center">
                 <p class="title2">Portraits culturels : régions et France entière</p>
                 <p class="text2">Des analyses pour éclairer les données de l'atlas</p>
+                <form action="" method='post'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                    <select class="selector" name="selected_region" id="selected_region">
+                    <option class="text-selector" value="" selected="selected" style="display:none;">Choissez une région</option>
+                    <option value="">France</option>
+                        {% for region in regions %}
+                        <option value="{{region.codeinsee}}">
+                            {{region.name}}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <button class="btn-selector" type="submit" value="Select">Lire la fiche</button>
+                    </div>
+                </form>
             </div>
         </div>
 
         <div class="container p-5 text-center">
             <p class="title">L'Atlas Culture des territoires</p>
             <p class="subtitle">Une initiative du ministère de la Culture pour partager<br>la connaissance de la vie culturelle en France</p>
-            <a href="{% url 'about' %}" class="btn btn-primary">En savoir plus</a>
+            <button type="button" class="btn-blue text-center mt-2">
+            <a class='btn-link' href="{% url 'about' %}" >En savoir plus</a></button>
         </div>
 
-        <div class="container p-5">
+        <div class="container p-2">
             <!-- Example row of columns -->
             <div class="row px-5">
               <div class="col-lg-4 text-center" >
                     <img alt="Image écran" src="{% static 'ATLAS_Chiffre-Regions 1.png' %}" style="height:110px;"/>
                     <div>
-                        <p class="subtitle text-center pt-4" style="font-weight:500;">18 portraits culturels de région et des ressources pour aller plus loin.</p>
+                        <p class="subtitle text-center py-3" style="font-weight:500;">18 portraits culturels de région et des ressources pour aller plus loin.</p>
                     </div>
               </div>
               <div class="col-lg-4 text-center">
                 <img alt="Image livre" src="{% static 'ATLAS_Chiffre-Variables 1.png' %}" style="height:110px;"/>
-                <div>
-                <p class="subtitle text-center pt-4" style="font-weight:500;">Plus de 100 variables issues de sources fiables.</p>
+              <div>
+                <p class="subtitle text-center py-3" style="font-weight:500;">Plus de 100 variables issues de sources fiables.</p>
                 <p class="text">Lieux et offre culturelle
                     <br>Politiques culturelles territoriales
                     <br>Dépenses publiques culturelles
                     <br>Entreprises et emploi culturels
                     <br>Contexte socio-économique
                 </p>              
-                </div>
+            </div>
              </div>
               <div class="col-lg-4 text-center" >
                 <img alt="Image base de données"src="{% static 'ATLAS_Chiffre-Modalites 1.png' %}" style="height:110px;"/>
                 <div>
-                <p class="subtitle text-center pt-4" style="font-weight:500;">3 modalités de visualisation des données.</p>
+                <p class="subtitle text-center py-3" style="font-weight:500;">3 modalités de visualisation des données.</p>
                 <p class="text">Une carte interactive
                 <br>Une vue liste
                 <br>Bientôt, des graphiques interactifs
@@ -66,33 +85,23 @@
             </div>
         </div>
 
-
-        <div class="container py-5 f">
-            <div class="row px-0">
-                <div class="col-md-6 px-0">
-                    <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" class="logof" />
+        <div class="container-fluid p-5 container-img">
+            <div class="row mx-auto container-80">
+                <div class="col">
+                    <p class="title2">Vous utilisez cet atlas numérique réguilèrement ?</p>
+                    <p class="text2">Rejoignez notre communauté pour suivre les actualités de l’outil et participer à nos événements autour de la cartographie et de la valorisation des données publiques.</p>
                 </div>
-                <div class="col-md-6 px-0" >
-                    <div class="row" >
-                    <p class="my-3 p1" style="line-height:24px;">L’Atlas Culture des territoires est un projet lauréat du programme 
-                        Entrepreneurs d’intérêt général, porté par le Département des études, 
-                        de la prospective et des statistiques du ministère de la Culture (Deps).
-                    </p>
-                    </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <a href="https://www.culture.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">culture.gouv.fr</a>
-                            </div>
-                            <div class="col mb-3">
-                                <a href="https://etalab.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">etalab.gouv.fr</a>
-                            </div>
-                            <div class="col mb-3">
-                                <a href="https://data.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">data.gouv.fr</a>
-                            </div>
+                <div class="col">
+                    <form method="POST">
+                        {% csrf_token %}       
+                        <div class="row justify-content-center pt-5 form-box" style="max-width: 290px;">
+                                {{form.email}}
+                                <button type="submit" name="subscribers" style="width: 266px; min-height:40px; margin-top: 20px;" class="btn btn-selector" >S'inscrire à la liste de diffusion</button>
                         </div>
-                    </div>
+                    </form>
+                </div>
             </div>
+        </div>
        
-    </div>
         
     {% endblock content %}

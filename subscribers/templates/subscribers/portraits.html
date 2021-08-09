@@ -1,0 +1,33 @@
+{% extends "subscribers/base.html" %}
+
+{% block content %}
+{% load static %}
+
+<h1 class="title text-center pt-5 px-0">Portraits culturels de régions</h1>
+<p class="text-center pb-5">Des analyses pour éclairer les données de l'atlas</p>
+
+<div class="container">
+    <div class="row">
+            <div class="col-lg-4">
+                <div class="text-center">
+                <img class="img-fr" src="{% static 'ATLAS_Carte-1FR.png' %}"/>
+                    <p class="text-center">France entière</p>
+                </div>
+            </div>
+        <div class="col-lg-8">
+            <div class="row">
+                {%for region in regions%}
+                    <div class="col">
+                        <div class="text-center">
+                            <a href="{% url 'portrait_region' region.codeinsee %}"><img src="{{region.image.url}}"class="card-img-top" style="width: 180px;"></a>
+                            <p><a href="{% url 'portrait_region' region.codeinsee %}">{{region.name}}</a></p>
+                        </div>
+                    </div>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

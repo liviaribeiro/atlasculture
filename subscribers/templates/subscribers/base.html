@@ -17,42 +17,37 @@
 
 <body>
         
-    <nav class="navbar navbar-light bg-white">
-        <div class="container n justify-content-start px-0">
-          <a class="navbar-brand" href="{% url 'index' %}">
-                <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" style="height:70px; margin-right:10px"/></a>
-                <img class="logo" alt="Logo Atlas Culture" src="{% static 'ATLAS_FavIcon 1.png' %}"/></a>
-                    <a href="{% url 'index' %}" class="b1" style="line-height:24px;">Atlas Culture des territoires</a>
-            </div>
-        </div>
-      </nav>
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container-fluid n justify-content-start px-0">
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'index' %}">Accueil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'map' %}">Carte interactive</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Fiches portraits culturels</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">À propos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </div>
-        </div>
-      </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid n px-0">
+        <a class="navbar-brand" href="{% url 'homepage' %}">
+            <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" style="height:70px; margin-right:10px"/></a>
+            <div class="navbar-brand justify-content-start">
+            <img class="logo" alt="Logo Atlas Culture" src="{% static 'ATLAS_FavIcon 1.png' %}"/></a>
+            <a href="{% url 'homepage' %}" class="b1" style="line-height:24px;">Atlas Culture des territoires</a></div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'homepage' %}">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'map' %}">Carte interactive</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'portraits' %}">Fiches portraits culturels</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">À propos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
 
 
     <main role="main">
@@ -64,16 +59,31 @@
                     {% endfor %}
                   {% endif %}
                   {% block content %}{% endblock %}
-                </div>
-            </div>
       </main>
+
+      <div class="container py-5 f">
+        <div class="row px-0">
+            <div class="col-md-3 px-0">
+                <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" class="logof" />
+            </div>
+            <div class="col-md-9 px-0" >
+                <div class="row" >
+                <p class="my-3 p1" style="line-height:24px;">L’Atlas Culture des territoires est réalisé par le département des études, de la prospective, des statistiques et de la documentation du ministère de la Culture et lauréat du programme <a href="https://entrepreneur-interet-general.etalab.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">Entrepreneurs d'intérêt général</a>. Les données et textes de ce site sont sous licence etalab-2.0 et le <a href="https://github.com/liviaribeiro/atlasculture" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">code source</a> en licence libre.
+                </p>
+                </div>
+                    <a href="https://www.culture.gouv.fr/" class="me-5" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">culture.gouv.fr</a>
+                    <a href="https://etalab.gouv.fr/" class="me-5" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">etalab.gouv.fr</a>
+                    <a href="https://data.gouv.fr/" target="_blank" rel="noopener noreferrer" style="font-weight: 700;">data.gouv.fr</a>
+                </div>
+        </div>
+    </div>
 
       <div class="container f1 py-3">
         <div class="row">
            <div class="col-md-8">
                <div class="row">
                     <div class="col-auto mb-3">
-                        <a href="{% url 'accessibilite' %}" style="font-size: 12px; line-height:18px;">Accessibilité</a>
+                        <a href="{% url 'accessibilite' %}" style="font-size: 12px; line-height:18px;">Accessibilité : conforme</a>
                     </div>
                     <div class="col-auto mb-3">
                         <a href="{% url 'legal' %}" style="font-size: 12px; line-height:18px;">Mentions légales</a>
@@ -82,12 +92,12 @@
                         <a href="{% url 'privacy' %}" style="font-size: 12px; line-height:18px;">Données personnelles</a>
                     </div>
                     <div class="col-auto mb-3">
-                        <a href="mailto:contact.deps@culture.gouv.fr" style="font-size: 12px; line-height:18px;">Nous contacter</a>
+                        <a href="#" style="font-size: 12px; line-height:18px;">Plan du site</a>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <p class="f2" style="font-size: 12px; color:#6A6A6A;">&copy; Ministère de la Culture 2020</p>
+                <p class="f2" style="font-size: 12px; color:#7F7FC8;">&copy; Ministère de la Culture 2021</p>
             </div>
         </div>
     </div>

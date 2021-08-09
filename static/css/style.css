@@ -45,7 +45,21 @@
     font-weight:200;
   
 }
-    
+
+@media only screen and (min-width: 960px) {
+    .main-logo {
+        height:489px; 
+        margin-left:200px;
+    }
+}
+
+.form-box {
+    width: 380px;
+    height: 60px;
+    left: 0px;
+    top: 0px;
+    border-radius: 30px;
+}
 
 .title {
     font-family: 'Marianne', Arial, sans-serif;
@@ -129,13 +143,14 @@ p {
     font-weight: 300;
     font-size: 16px;
     line-height:33px;
+    color: #150091;
 }
 
 a {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 16px;
-    color: #383838;
+    color: #7F7FC8;
 }
 
 .logo {
@@ -146,12 +161,11 @@ a {
 nav .navbar-nav li a{
     color: #150091 !important;
     font-weight: 500;
-    margin-right: 40px;
+    margin-right: 20px;
 }
 
 nav .navbar-nav li a:hover{
     text-decoration: underline;
-    text-underline-offset: 20px;
 }
 
 nav .navbar-nav .active a{
@@ -162,13 +176,13 @@ nav .navbar-nav .active a{
 a:link {
     font-size: 16px;
     text-decoration: none;
-    color: #383838;
+    color: #150091;
 }
 
 a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 800;
-    font-size: 32px;
+    font-size: 24px;
     color: #150091;
 }
 
@@ -184,8 +198,7 @@ a.b1 {
 }
 
 .f {
-    border-top: 1px solid #CECECE;
-    width: 80%; 
+    width: 90%; 
 }
 
 .c1 {
@@ -202,17 +215,98 @@ a.b1 {
 }
 
 .f1 {
-    border-top: 1px solid #CECECE;
-    width: 80%; 
+    border-top: 1px solid #C0C0FF;
+    width: 90%; 
 }
 
 .f2 {
     text-align-last:end; 
 }
 
+@media only screen and (min-width: 768px) {
+    .main-container {
+        background-image: url('/static/ATLAS_Map.png');
+        background-size:cover;
+    }
+    .container-80 {
+        width: 80%;
+    }
+    
+}
+
+.container-img {
+    height:auto;
+    background-image: url('/static/ATLAS_banner 1.png');
+    background-size:cover;
+}
+
+.selector {
+    margin-top: 40px;
+    border-radius: 30px;
+    height: 60px;
+    width: 331px;
+}
+
+.main-title {
+    margin-top: 50px;
+}
+
+.main-container {
+    margin-top: 60px;
+    min-height:636px;
+}
+
+.btn-selector {
+    width: 151px;
+    height: 60px;
+    background: #C0C0FF;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn-selector:hover {
+    background: #FFB1A7;
+    color: #000074;
+}
+
+.btn-link {
+    color: white;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn-blue {
+    width: 151px;
+    height: 60px;
+    background: #150091;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+  }
 
 .n {
-    width: 80%; 
+    width: 90%; 
+}
+
+.navbar {
+    margin-top: 0.5em;
+    border-bottom: 1px solid rgba(21,0,145,0.2);
 }
 
 .logof {
@@ -244,7 +338,6 @@ ul {
 
 
 .btn1 {
-
     background-color: #00AC8C;
     color: #000000;
     font-family: 'Marianne', Arial, sans-serif;
@@ -268,9 +361,13 @@ input::placeholder {
     margin-left:10%;
 }
 
-@media (max-width: 768px) {  
-    .title {font-size:36px;} 
-    .subtitle {font-size:28px;} 
+.img-fr {
+    width: 474px;
+}
+
+@media (max-width: 800px) {  
+    .title {font-size:20px;
+        line-height: 25px;} 
     .subtitle2 {font-size:20px;} 
     .subtitle5 {font-size:20px;} 
     .subtitle4 {font-size:18px;} 
@@ -288,5 +385,9 @@ input::placeholder {
     .c1 {width: 80%;}
     .r1 { margin-left:5%;}
     .logo {height: 30px;}
+    .main-logo {height:200px;}
+    .selector {width: auto;}
+    .container-img {height: 500;}
+    .img-fr {width: 180px;}
   }
 

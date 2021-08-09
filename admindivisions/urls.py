@@ -7,5 +7,5 @@ urlpatterns = [
     path('equipements/<int:domaine>', views.equipements, name='equipements'),
     path('pdr', views.pdr, name='pdr'),
     path('festivals', views.festivals, name='festivals'),
-    path('aav', views.aav, name='aav')
+    path('aav', views.aav, name='aav'),
 ]
