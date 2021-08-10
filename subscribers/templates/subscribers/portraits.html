@@ -19,7 +19,7 @@
                 {%for region in regions%}
                     <div class="col">
                         <div class="text-center">
-                            <a href="{% url 'portrait_region' region.codeinsee %}"><img src="{{region.image.url}}"class="card-img-top" style="width: 180px;"></a>
+                            <a href="{% url 'portrait_region' region.codeinsee %}"><img src="{{region.image.url}}"style="width: 180px;"></a>
                             <p><a href="{% url 'portrait_region' region.codeinsee %}">{{region.name}}</a></p>
                         </div>
                     </div>

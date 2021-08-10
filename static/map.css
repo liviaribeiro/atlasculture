@@ -115,7 +115,7 @@ a {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 14px;
-    color: #383838;
+    color: #150091;
     line-height:28px;
     padding-bottom: 3px;
 }
@@ -123,21 +123,29 @@ a {
 a:link {
     font-size: 14px;
     text-decoration: none;
-    color: #383838;
+    color: #150091;
 }
 
 a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 500;
     font-size: 18px;
-    color: #383838;
+    color: #150091;
+}
+
+.navbar-brand {
+    color: #150091;
+}
+
+.navbar-nav .nav-link {
+    color: #150091;
 }
 
 a.nav-link {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 14px;
-    color: #383838;
+    color: #150091;
     line-height: 19px;
     cursor: pointer;
 }

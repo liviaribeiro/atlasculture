@@ -3,32 +3,43 @@
 {% block content %}
 {% load static %}
 
-<div class="container c1">
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="{{portrait.region.image.url}}" style="width: 381px;"/>
+            <p><a href="{% url 'portraits' %}"><img alt="Flèche" src="{% static 'Vector.png' %}" style="width: 12px;" /> Revenir à la liste des fiches</a></p>
+            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="{{ portrait.fiche.url }}">Télécharger la fiche</a>
+            <p></p>
+            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="{{ portrait.chiffres_cle.url }}">Télécharger les chiffres clés</a>
+        </div>
+        <div class="col-md-8">
+            <h1 class="title text-center pt-5 px-0"> {{ portrait.region.name }}</h1>
+
+            <p class="pp text-center"> Portrait culturel</p>
+            <p class="pp text-center"> Date de publication : {{ portrait.date_added|date:"d/m/Y" }}, Dernière mise à jour : {{ portrait.last_updated|date:"d/m/Y" }}</p>
 
 
-    <h1 class="title text-center py-5 px-0">Portrait culturel {{ region.name }}</h1>
+            <p class="pp text-center">
+            {{ portrait.introduction|safe }}
+            </p>
+                
+            <p class="subtitle5 mt-4">Données de contexte</p>      
+            <p class="pp"> {{ portrait.contexte|safe }}
+            </p>
 
-    <p class="pp">
-    Ce site a été conçu pour être accessible. Il respecte les critères d'accessibilité du Référentiel Général d'Accessibilité pour les Administrations (RGAA) niveau AA.</p>
-        
-    <p class="subtitle5 mt-4">Navigation dans le site</p>
-        
-        
-    <p class="pp"> La navigation sur le site se fait au travers de la touche Tabulation :
-    <br> - Un appui sur Tabulation permet de sélectionner le lien suivant sur la page.
-    <br> - Un appui sur Majuscule + Tabulation permet de sélectionner le lien précédent sur  la page.
-    <br><br>
-    Une fois un lien sélectionné, il suffit de presser la touche Entrée pour l’ouvrir.
-    <br><br>
-    Les touches Flèche Haut / Flèche Bas et Page Précédente / Page Suivante permettent de monter ou descendre sur la page.
-   
-    </p>
-    <p class="subtitle5 mt-4"> Grossissement / Diminution de la taille du texte</p>
+            <p class="subtitle5 mt-4"> Offre culturelle</p>
 
-    <p class="mb-5 pp">La taille de texte sur les articles peut être augmentée ou diminuée simplement en cliquant sur les boutons dédiés.
-    <br>
-    <br>
-    <br></p>
+            <p class="mb-5 pp">{{ portrait.culture|safe }}</p>
+
+            <p class="pp"><b>Pour en savoir plus :</b></p>
+            <p><a href="#">Observatoire des territoires</a></p>
+            <p><a href="#">Insee, statistiques locales</a></p>
+            <p><a href="#">Insee, portraits de territoires</a></p>
+            <p><a href="#">Eric Janin (sous la dir. de), Les 18 régions françaises, Ellipses, 2017</a></p>
+
+        </div>
+    </div>
 
 </div>
 

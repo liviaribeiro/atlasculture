@@ -257,9 +257,8 @@ a.b1 {
 }
 
 .btn-selector {
-    width: 151px;
     height: 60px;
-    background: #C0C0FF;
+    background: #150091;    
     border-radius: 30px;
     border: none;
     color: white;
@@ -268,13 +267,44 @@ a.b1 {
     font-weight: 700;
 }
 
+.btn-download {
+    height: 60px;
+    background: #150091;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.btn-download:hover {
+    height: 60px;
+    background: #FEB1A8;
+    border-radius: 30px;
+    border: none;
+    color: 150091;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
 .btn-selector:hover {
     background: #FFB1A7;
     color: #000074;
 }
 
-.btn-link {
+.btn-link:link {
     color: white;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn-link:link:hover {
+    color: #150091;
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;

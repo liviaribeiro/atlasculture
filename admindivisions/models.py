@@ -5,6 +5,7 @@ from django.utils import timezone
 
 class Region(models.Model):
     name = models.CharField(max_length=100)
+    standard_name = models.CharField(max_length=100, null=True)
     codeinsee = models.CharField(max_length=2)
     geom = models.MultiPolygonField(null=True, blank=True)
     image = models.ImageField(upload_to='portraits/', null=True)

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Subscriber
+from .models import Subscriber, Portrait
 
 # Register your models here.
 admin.site.register(Subscriber)
+admin.site.register(Portrait)

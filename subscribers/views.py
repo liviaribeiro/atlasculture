@@ -1,8 +1,8 @@
+from subscribers.models import Portrait
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import SubscriberForm
 from django.contrib import messages
 from admindivisions.models import Region
-
 
 # Create your views here.
 
@@ -34,16 +34,18 @@ def homepage(request):
     else:
         form = SubscriberForm()
         
-    regions = Region.objects.all().order_by('name') 
+    regions = Region.objects.all().order_by('standard_name') 
     context = {'regions': regions, 'form': form}
     return render(request, 'subscribers/homepage.html', context)
 
 def portrait_region(request, code_region):
     region = get_object_or_404(Region, codeinsee=code_region)
-    return render(request, 'subscribers/portrait_region.html', {'region': region})
+    portrait = Portrait.objects.get(region=region)
+    return render(request, 'subscribers/portrait_region.html', {'portrait': portrait})
 
 def portraits(request):
-    regions = Region.objects.all().order_by('name') 
+    regions = Region.objects.all().order_by('standard_name') 
+
     return render(request, 'subscribers/portraits.html', {'regions': regions})
 
 def about(request):
