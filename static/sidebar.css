@@ -50,9 +50,8 @@
     display: flex;
     align-items: stretch;
     position: fixed;
-    top: 59px;
     font-family: 'Open Sans', sans-serif;
-    z-index: 5;
+    z-index: 10;
 }
 
 .title-legend {
@@ -70,11 +69,11 @@
 }
 
 .legend-box {
-    position: fixed;
+    position: absolute;
+    margin-top: 60px;
     right: 0;
     margin-right: 30px;
-    top: 109px;
-    z-index: 1;
+    z-index: 5;
     width: 227px;
     height: 100vh;
     display: block;
@@ -82,10 +81,10 @@
 }
 .geocoder {
     position: absolute;
-    z-index: 5;
+    z-index: 1;
     right: 0;
     margin-right: 30px;
-    top: 69px;
+    margin-top: 20px;
     width: 227px;
 }
 
@@ -98,14 +97,13 @@
     right: 0;
     margin-right: 30px;
     font-family: 'Open Sans', sans-serif;
-    z-index: 5;
+    z-index: 10;
     width: 227px;
     height:fit-content;
-    z-index: 5;
 }
 
 .popup .mapbox-popup {
-    z-index: 10;
+    z-index: 20;
 }
 
 .legend-key {
@@ -130,28 +128,21 @@
     background: #fff;
     width: 63px;
     min-height: 100vh;
-    z-index: 5;
+    z-index: 10;
     position: relative; 
 }
 
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -63px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-}
 
 .sidebutton {
     border: none;
     background: none;
-    z-index: 5;
+    z-index: 10;
     position: relative; 
 }
 
 .sidebutton .sidebuttoninfo{
     display: none;
+    z-index: 10;
 }
 
 .sidebutton:hover .sidebuttonimg{
@@ -159,7 +150,7 @@
 }
 
 .sidebutton:hover .sidebuttoninfo{
-    z-index: 10;
+    z-index: 20;
     background: #ffffff;
     display: flex;
     flex-direction: row;
@@ -188,10 +179,8 @@
 
 .submenu {
     width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 59px;
-    left: 63px;
+    position: relative;
+    z-index: 5;
     bottom: 0px;
     background-color: #fff;
     display: block;
@@ -219,14 +208,26 @@
     text-transform: uppercase;
 }
 
-.submenu .closebtn {
+.closebtn {
     position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+    top: 10px;
+    right: 10px;
     border: none;
-    background: none;
+    width: 14px;
+    height: 14px;
+    background: url('/static/close.png');
+    background-size: cover;  
+}
+
+.infobtn {
+    position: absolute;
+    top: 10px;
+    right: 34px;
+    border: none;
+    width: 14px;
+    height: 14px;
+    background: url('/static/info.png');
+    background-size: cover;  
 }
 
 .submenu .item {

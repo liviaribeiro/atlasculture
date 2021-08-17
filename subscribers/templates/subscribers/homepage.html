@@ -6,10 +6,10 @@
 
         <div class="container-fluid main-container">
             <div class="row">
-                <div class="col text-center">
+                <div class="col-md text-center">
                     <img class="main-logo" alt="Atlas culture des territoires" src="{% static 'ATLAS_MainTitle.png' %}"/>
                 </div>
-                <div class="col text-center">
+                <div class="col-md text-center d-flex justify-content-center">
                     <div style="max-width: 390px;">
                     <p class="title main-title">Comprendre les dynamiques culturelles</p>
                     <p class="subtitle main-subtitle">Bienvenue sur la ressource dédiée aux données publiques de la culture, de la région à la commune</p>
@@ -29,8 +29,8 @@
                     {% csrf_token %}
                     <div class="form-group">
                     <select class="selector" name="selected_region" id="selected_region">
-                    <option class="text-selector" value="" selected="selected" style="display:none;">Choissez une région</option>
-                    <option value="">France</option>
+                    <option class="text-selector" value="00" selected="selected" style="display:none;">Choissez une région</option>
+                    <option value="00">France</option>
                         {% for region in regions %}
                         <option value="{{region.codeinsee}}">
                             {{region.name}}
@@ -47,8 +47,7 @@
         <div class="container p-5 text-center">
             <p class="title">L'Atlas Culture des territoires</p>
             <p class="subtitle">Une initiative du ministère de la Culture pour partager<br>la connaissance de la vie culturelle en France</p>
-            <button type="button" class="btn-blue text-center mt-2">
-            <a class='btn-link' href="{% url 'about' %}" >En savoir plus</a></button>
+            <a class='btn btn-download d-inline-flex align-items-center btn-link' href="{% url 'about' %}" >En savoir plus</a>
         </div>
 
         <div class="container p-2">
@@ -91,12 +90,15 @@
                     <p class="title2">Vous utilisez cet atlas numérique réguilèrement ?</p>
                     <p class="text2">Rejoignez notre communauté pour suivre les actualités de l’outil et participer à nos événements autour de la cartographie et de la valorisation des données publiques.</p>
                 </div>
-                <div class="col">
+                <div class="col text-cente d-flex justify-content-center">
                     <form method="POST">
                         {% csrf_token %}       
-                        <div class="row justify-content-center pt-5 form-box" style="max-width: 290px;">
+                        <div class="row d-flex justify-content-center pt-4" style="max-width: 290px;">
+                            <div class="form-group align-center ">
                                 {{form.email}}
                                 <button type="submit" name="subscribers" style="width: 266px; min-height:40px; margin-top: 20px;" class="btn btn-selector" >S'inscrire à la liste de diffusion</button>
+                        
+                            </div>
                         </div>
                     </form>
                 </div>

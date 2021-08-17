@@ -134,11 +134,15 @@ a.b1 {
 }
 
 .navbar-brand {
-    color: #150091;
+    color: #150091 !important;
 }
 
 .navbar-nav .nav-link {
-    color: #150091;
+    color: #150091 !important;
+}
+
+.navbar-collapse{ 
+    background-color: white;
 }
 
 a.nav-link {

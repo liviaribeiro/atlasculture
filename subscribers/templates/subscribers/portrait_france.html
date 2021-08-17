@@ -1,0 +1,45 @@
+{% extends "subscribers/base.html" %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="" style="width: 381px;"/>
+            <p><a href="{% url 'portraits' %}"><img alt="Flèche" src="{% static 'Vector.png' %}" style="width: 12px;" /> Revenir à la liste des fiches</a></p>
+            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="">Télécharger la fiche</a>
+            <p></p>
+            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="">Télécharger les chiffres clés</a>
+        </div>
+        <div class="col-md-8">
+            <h1 class="title text-center pt-5 px-0"> France entière </h1>
+
+            <p class="pp text-center"> Portrait culturel</p>
+            <p class="pp text-center"> Date de publication : , Dernière mise à jour : </p>
+
+
+            <p class="pp text-center">
+            </p>
+                
+            <p class="subtitle5 mt-4">Données de contexte</p>      
+            <p class="pp">
+            </p>
+
+            <p class="subtitle5 mt-4"> Offre culturelle</p>
+
+            <p class="mb-5 pp"></p>
+
+            <p class="pp"><b>Pour en savoir plus :</b></p>
+            <p><a href="#">Observatoire des territoires</a></p>
+            <p><a href="#">Insee, statistiques locales</a></p>
+            <p><a href="#">Insee, portraits de territoires</a></p>
+            <p><a href="#">Eric Janin (sous la dir. de), Les 18 régions françaises, Ellipses, 2017</a></p>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

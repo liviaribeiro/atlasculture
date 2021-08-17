@@ -28,10 +28,9 @@
             </button></li>
         </ul>
     </nav>
-</div>   
 
 <div id="equipement-menu" class="submenu">
-    <button href="javascript:void(0)" value="equipement-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
+    <button href="javascript:void(0)" value="equipement-menu" class="closebtn" onclick="closeNav(this.value)"></button>
     <p class="title">Offre et lieux culturels</p>
     <div class="item">
         <p class="subtitle">Festivals</p>
@@ -46,7 +45,7 @@
 </div>
 
 <div id="politiques-menu" class="submenu">
-    <button href="javascript:void(0)" value="politiques-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
+    <button href="javascript:void(0)" value="politiques-menu" class="closebtn" onclick="closeNav(this.value)"></button>
     <p class="title">Politiques culturelles territoriales</p>
     <div class="item">
         <button class="btn-tag" value="Contrats territoire lecture" onclick="showLayer(this)">Contrats territoire lecture</button>
@@ -54,7 +53,7 @@
 </div>
 
 <div id="depenses-menu" class="submenu">
-    <button href="javascript:void(0)" value="depenses-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
+    <button href="javascript:void(0)" value="depenses-menu" class="closebtn" onclick="closeNav(this.value)"></button>
     <p class="title">Dépenses culturelles publiques</p>
     <div class="item">
         <p class="subtitle">Dépenses des collectivités territoriales</p>
@@ -69,7 +68,7 @@
 </div>
 
 <div id="entreprises-menu" class="submenu">
-    <button href="javascript:void(0)" value="entreprises-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
+    <button href="javascript:void(0)" value="entreprises-menu" class="closebtn" onclick="closeNav(this.value)"></button>
     <p class="title">Entreprises et emploi culturels</p>
     <div class="item">
         <p class="subtitle">Entreprises</p>
@@ -82,7 +81,7 @@
 </div>
   
 <div id="contexte-menu" class="submenu">
-    <button href="javascript:void(0)" value="contexte-menu" class="closebtn" onclick="closeNav(this.value)">×</button>
+    <button href="javascript:void(0)" value="contexte-menu" class="closebtn" onclick="closeNav(this.value)"></button>
     <p class="title">Données de contexte</p>
     <div class="item">
         <p class="subtitle">Population</p>
@@ -103,9 +102,12 @@
 
     </div>
 </div>
+</div>   
+
+
+<div id="geocoder" class="geocoder"></div>
 
 <div id="legend-box" class="legend-box"></div>
-<div id="geocoder" class="geocoder"></div>
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
@@ -126,23 +128,57 @@
  
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
-    function addInfo(indicator) {
+    function addInfo(indicator, equipementID, definition, source, year) {
         legendBox = document.getElementById('legend-box');
+        closeButton = document.createElement('button');
+        closeButton.className = "closebtn";
+        closeButton.onclick = function () {showInfo(hideInfo(equipementID))};
         var info = document.createElement('div');
         info.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
-        info.setAttribute('id', "info-"+indicator);
+        info.setAttribute('id', "info-"+equipementID);
+        info.appendChild(closeButton);
         var title = document.createElement('div');
         title.className = "title-legend mb-3";
-        title.innerHTML = "Définition";
+        title.innerHTML = indicator;
         info.appendChild(title);
         info.style.display = 'none'; 
         legendBox.appendChild(info);
+        var definitionTitle = document.createElement('p');
+        definitionTitle.innerHTML = "Définition";
+        info.appendChild(definitionTitle);
+        var definitionContent = document.createElement('p');
+        definitionContent.innerHTML = definition;
+        info.appendChild(definitionContent);
+        var sourceTitle = document.createElement('p');
+        sourceTitle.innerHTML = "Source";
+        var sourceContent = document.createElement('p');
+        sourceContent.innerHTML = source + ', ' + year;
+        info.appendChild(sourceTitle);
+        info.appendChild(sourceContent);
     }
 
-    function showInfo(indicator) {
-        console.log("info-"+indicator);
-        info = document.getElementById("info-"+indicator);
+    function showInfo(equipementID) {
+        console.log("info-"+equipementID);
+        info = document.getElementById("info-"+equipementID);
         info.style.display = "block";
+        var legend = document.getElementById("legend-"+equipementID);
+        console.log("legend-"+equipementID);
+        legend.style.display = "none";
+    }
+
+    function hideInfo(equipementID) {
+        console.log("info-"+equipementID);
+        info = document.getElementById("info-"+equipementID);
+        info.style.display = "none";
+        var legend = document.getElementById("legend-"+equipementID);
+        console.log("legend-"+equipementID);
+        legend.style.display = "block";
+    }
+
+    function hideLegend(equipementID) {
+        var legend = document.getElementById("legend-"+equipementID);
+        console.log("legend-"+equipementID);
+        legend.style.display = "none";
     }
 
     function addLegend(indicator, layers, colors) {
@@ -153,7 +189,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         var title = document.createElement('div');
         title.className = "title-legend mb-3";
         title.innerHTML = indicator;
-        legend.appendChild(title)
+        legend.appendChild(title);
 
         for (i = 0;  i < layers.length; i++) {
             var layer = layers[i];
@@ -229,15 +265,20 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         legend.style.display = 'none'; 
     }
 
-    function addLegendEquipement(indicator, legendID, color) {
+    function addLegendEquipement(indicator, equipementID, color) {
         legendBox = document.getElementById('legend-box');
+        closeButton = document.createElement('button');
+        closeButton.className = "closebtn";
+        closeButton.onclick = function () {showInfo(hideLegend(equipementID))};
         var legend = document.createElement('div');
+        legend.appendChild(closeButton);
         legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        var legendID = "legend-"+equipementID;
         legend.setAttribute('id', legendID);
        
         var color = color;
         var item = document.createElement('div');
-        item.className = "row inline"
+        item.className = "row inline mt-2"
         var col1 = document.createElement('div');
         col1.className = "col-2 d-flex align-items-center"
         var key = document.createElement('div');
@@ -259,13 +300,10 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         legend.appendChild(item);
         legendBox.appendChild(legend);
         
-        var link = document.createElement('button');
-        link.className = "link-legend";
-        link.innerHTML = "En savoir plus";
-        link.title = "En savoir plus";
-        link.value = indicator;
-        //link.onclick = showInfo(link.value);
-        legend.appendChild(link);
+        var button = document.createElement('button');
+        button.className = "infobtn";
+        button.onclick = function () {showInfo(equipementID)};
+        legend.appendChild(button);
         legend.style.display = 'none'; 
     }
 
@@ -2071,8 +2109,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                     },      
             });
 
-            addLegendEquipement('{{ equipement_type.name }}', 'legend-'+'{{ equipement_type.pk }}', circleColor);
-            addInfo('{{ equipement_type.name }}');
+            addInfo('{{ equipement_type.name }}', '{{ equipement_type.pk }}', '{{ equipement_type.definition }}', '{{ equipement_type.source }}', '{{ equipement_type.year }}');
+            addLegendEquipement('{{ equipement_type.name }}', '{{ equipement_type.pk }}', circleColor);
         
             map.on('click', '{{ equipement_type.pk }}', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();
@@ -2171,6 +2209,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
             var legend = document.getElementById("legend-"+layer.value);
             legend.style.display = "none";
+            var info = document.getElementById("info-"+layer.value);
+            info.style.display = "none";
         }
 
     }

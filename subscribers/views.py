@@ -22,6 +22,8 @@ def index(request):
 def homepage(request):
     if request.method == "POST" and "selected_region" in request.POST:
         selected_region = request.POST.get("selected_region")
+        if selected_region == "00":
+            return redirect('portraits')
         return redirect('portrait_region', selected_region)
 
     if request.method == "POST" and "subscribers" in request.POST:

@@ -22,3 +22,4 @@ admin.site.register(EquipementLabel)
 admin.site.register(DomaineAtlas)
 admin.site.register(TypologieLieux)
 admin.site.register(DetailLieux)
+

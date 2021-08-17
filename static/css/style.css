@@ -46,12 +46,11 @@
   
 }
 
-@media only screen and (min-width: 960px) {
-    .main-logo {
-        height:489px; 
-        margin-left:200px;
-    }
+.main-logo {
+    height:489px; 
+    margin-left:200px;
 }
+
 
 .form-box {
     width: 380px;
@@ -112,6 +111,7 @@
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: bold;
     font-size: 24px;
+    color: #000074;
 }
 
 .subtitle4 {
@@ -125,7 +125,7 @@
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 700;
     font-size: 32px;
-    color: #00AC8C;
+    color: #000074;
     line-height:38px;
 }
 
@@ -150,7 +150,7 @@ a {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 16px;
-    color: #7F7FC8;
+    color: #150091;
 }
 
 .logo {
@@ -172,11 +172,17 @@ nav .navbar-nav .active a{
     color: #FE8D7D !important;
 }
 
+a.link-footer {
+    font-size: 12px !important; 
+    line-height:18px !important;;
+    font-weight: 400 !important;;
+}
 
 a:link {
     font-size: 16px;
     text-decoration: none;
     color: #150091;
+    font-weight: 700;
 }
 
 a.b1 {
@@ -223,16 +229,15 @@ a.b1 {
     text-align-last:end; 
 }
 
-@media only screen and (min-width: 768px) {
-    .main-container {
-        background-image: url('/static/ATLAS_Map.png');
-        background-size:cover;
-    }
-    .container-80 {
-        width: 80%;
-    }
-    
+.main-container {
+    background-image: url('/static/ATLAS_Map.png');
+    background-size:cover;
 }
+.container-80 {
+    width: 80%;
+}
+    
+
 
 .container-img {
     height:auto;
@@ -253,7 +258,7 @@ a.b1 {
 
 .main-container {
     margin-top: 60px;
-    min-height:636px;
+    height:636px;
 }
 
 .btn-selector {
@@ -265,6 +270,11 @@ a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;
+}
+
+.btn-selector:hover {
+    background: #FFB1A7;
+    color: #000074;
 }
 
 .btn-download {
@@ -280,18 +290,23 @@ a.b1 {
 }
 
 .btn-download:hover {
-    height: 60px;
     background: #FEB1A8;
+    color: #150091;
+}
+
+.btn-base {
+    height: 60px;
+    width: 150px;
+    background: #150091;    
     border-radius: 30px;
     border: none;
-    color: 150091;
+    color: white;
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;
-    vertical-align: middle;
 }
 
-.btn-selector:hover {
+.btn-base:hover {
     background: #FFB1A7;
     color: #000074;
 }
@@ -301,6 +316,7 @@ a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;
+    align-items: center;
 }
 
 .btn-link:link:hover {
@@ -415,7 +431,8 @@ input::placeholder {
     .c1 {width: 80%;}
     .r1 { margin-left:5%;}
     .logo {height: 30px;}
-    .main-logo {height:200px;}
+    .main-logo {height:200px;
+        margin-left:0;}
     .selector {width: auto;}
     .container-img {height: 500;}
     .img-fr {width: 180px;}

@@ -236,3 +236,4 @@ class Variable(models.Model):
     millesime = models.CharField(max_length=4)
     def __str__(self):
         return self.nom
+

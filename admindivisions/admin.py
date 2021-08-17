@@ -67,4 +67,3 @@ admin.site.register(Variable)
 
 
 
-

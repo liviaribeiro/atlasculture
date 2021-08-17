@@ -3,9 +3,8 @@ from admindivisions.models import Commune
 
 # Create your models here.
 
-
 class Source(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     def __str__(self):
         return self.name
 
@@ -43,13 +42,14 @@ class EquipementType(models.Model):
     name = models.CharField(max_length=100)
     code_DEPS = models.CharField(max_length=10)
     domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
+    definition = models.CharField(max_length=1000, null=True)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
     def __str__(self):
         return self.name
     
     class Meta:
         ordering = ('name',)
-    
-
 
 class Label(models.Model):
     name = models.CharField(max_length=100)
