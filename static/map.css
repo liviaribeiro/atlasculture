@@ -109,6 +109,8 @@ p {
     font-weight: 300;
     font-size: 12px;
     font-weight: 400;
+    color: #000074 !important;
+
 }
 
 a {
@@ -277,7 +279,7 @@ body {
     padding: 0; 
 }
 #map { 
-    position: absolute; top: 59px; bottom: 0; width: 100%; z-index: -1;
+    position: fixed; top: 56px; bottom: 0; width: 100%; z-index: -1; left: 63px;
 }
 
 #menu {

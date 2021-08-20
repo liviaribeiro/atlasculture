@@ -52,12 +52,30 @@
     position: fixed;
     font-family: 'Open Sans', sans-serif;
     z-index: 10;
+    top: 56px;
+}
+
+.divnav {
+    width: 90%;
+}
+
+.navcarto {
+    height: 56px;
+}
+
+@media (max-width: 768px) {  
+    .navcarto { height: 96px;}
+    .wrapper {top: 96px;}
+    .geocoder {top: 96px !important;}
+    .legend-box {top: 110px !important;}
+    .divnav {width: 100%;}
 }
 
 .title-legend {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 14px;
+    color: #000074;
 }
 
 .link-legend {
@@ -69,23 +87,25 @@
 }
 
 .legend-box {
-    position: absolute;
+    position: fixed;
     margin-top: 60px;
     right: 0;
     margin-right: 30px;
     z-index: 5;
     width: 227px;
-    height: 100vh;
     display: block;
     overflow-y:auto;
+    top: 56px;
 }
+
 .geocoder {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     right: 0;
     margin-right: 30px;
     margin-top: 20px;
     width: 227px;
+    top: 56px;
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -234,30 +254,32 @@
     position: absolute;
     margin-left: 30px;
     margin-right: 30px;
-    height: fit-content;
 }
 
 .submenu .btn-tag {
     background: #FFFFFF;
-    border: 1px solid #CECECE;
+    border: 1px solid #C0C0FF;
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 33px;
     font-family: 'Marianne', Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
     padding:5px;
-    overflow-wrap: break-word;   
     margin-left: 5px;
     margin-bottom: 8px;
+    color: #150091;
+    overflow-wrap: break-word; 
+    white-space: normal;
+
 }
 .submenu .btn-tag.active {
-    background: #000000;
+    background: #150091;
     color: #ffffff;
 }
 
 .submenu .btn-tag:hover {
-    background: #000000;
-    color: #ffffff;
+    background: #FFE2DE;
+    color: #150091;
 }
 

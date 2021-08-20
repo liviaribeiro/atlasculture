@@ -34,11 +34,11 @@
     <p class="title">Offre et lieux culturels</p>
     <div class="item">
         <p class="subtitle">Festivals</p>
-        <button class="btn-tag" value="Festivals" onclick="showLayer(this)">Festivals</button>
+        <button class="btn-tag" value="Festivals" id="Festivals" onclick="showLayer(this.value)">Festivals</button>
         {% for domaine in domaines%}
             <p class="subtitle">{{ domaine.name }}</p>
             {% for equipement_type in domaine.equipementtype_set.all %}
-            <button class="btn-tag" value="{{ equipement_type.pk }}" onclick="showLayer(this)">{{ equipement_type.name }}</button>
+            <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
             {% endfor %}
         {% endfor %}
     </div>
@@ -48,7 +48,7 @@
     <button href="javascript:void(0)" value="politiques-menu" class="closebtn" onclick="closeNav(this.value)"></button>
     <p class="title">Politiques culturelles territoriales</p>
     <div class="item">
-        <button class="btn-tag" value="Contrats territoire lecture" onclick="showLayer(this)">Contrats territoire lecture</button>
+        <button class="btn-tag" value="Contrats territoire lecture" id="Contrats territoire lecture" onclick="showLayer(this.value)">Contrats territoire lecture</button>
     </div>
 </div>
 
@@ -57,13 +57,13 @@
     <p class="title">Dépenses culturelles publiques</p>
     <div class="item">
         <p class="subtitle">Dépenses des collectivités territoriales</p>
-        <button class="btn-tag" value="Dépenses publiques culturelles des régions" onclick="showLayer(this)">Dépenses culturelles des régions</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles des départements" onclick="showLayer(this)">Dépenses culturelles des départements</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles des intercommunalités" onclick="showLayer(this)">Dépenses culturelles des intercommunalités</button>
-        <button class="btn-tag" value="Dépenses publiques culturelles des communes" onclick="showLayer(this)">Dépenses culturelles des communes</button>
+        <button class="btn-tag" value="Dépenses culturelles des régions" id="Dépenses culturelles des régions" onclick="showLayer(this.value)">Dépenses culturelles des régions</button>
+        <button class="btn-tag" value="Dépenses culturelles des départements" id="Dépenses culturelles des départements" onclick="showLayer(this.value)">Dépenses culturelles des départements</button>
+        <button class="btn-tag" value="Dépenses culturelles des intercommunalités" id="Dépenses culturelles des intercommunalités" onclick="showLayer(this.value)">Dépenses culturelles des intercommunalités</button>
+        <button class="btn-tag" value="Dépenses culturelles des communes" id="Dépenses culturelles des communes" onclick="showLayer(this.value)">Dépenses culturelles des communes</button>
         <p class="subtitle">Dépenses de l'État</p>
-        <button class="btn-tag" value="Plan de relance" onclick="showLayer(this)">Plan de relance</button>
-        <button class="btn-tag" value="Dépenses du ministère de la Culture" onclick="showLayer(this)">Dépenses du ministère de la Culture</button>
+        <button class="btn-tag" value="Plan de relance" id="Plan de relance" onclick="showLayer(this.value)">Plan de relance</button>
+        <button class="btn-tag" value="Dépenses du ministère de la Culture" id="Dépenses du ministère de la Culture" onclick="showLayer(this.value)">Dépenses du ministère de la Culture</button>
     </div>
 </div>
 
@@ -72,11 +72,11 @@
     <p class="title">Entreprises et emploi culturels</p>
     <div class="item">
         <p class="subtitle">Entreprises</p>
-        <button class="btn-tag" value="Entreprises culturelles du secteur marchand" onclick="showLayer(this)">Entreprises culturelles du secteur marchand</button>
-        <button class="btn-tag" value="Salariés actifs des secteurs culturels marchands" onclick="showLayer(this)">Salariés actifs des secteurs culturels marchands</button>
+        <button class="btn-tag" value="Entreprises culturelles du secteur marchand" id="Entreprises culturelles du secteur marchand" onclick="showLayer(this.value)">Entreprises culturelles du secteur marchand</button>
+        <button class="btn-tag" value="Salariés actifs des secteurs culturels marchands" id="Salariés actifs des secteurs culturels marchands" onclick="showLayer(this.value)">Salariés actifs des secteurs culturels marchands</button>
         <p class="subtitle">Emploi</p>
-        <button class="btn-tag" value="Actifs exerçant une profession culturelle" onclick="showLayer(this)">Actifs exerçant une profession culturelle</button>
-        <button class="btn-tag" value="Actifs dans les secteurs culturels" onclick="showLayer(this)">Actifs dans les secteurs culturels</button>
+        <button class="btn-tag" value="Actifs exerçant une profession culturelle" id="Actifs exerçant une profession culturelle" onclick="showLayer(this.value)">Actifs exerçant une profession culturelle</button>
+        <button class="btn-tag" value="Actifs dans les secteurs culturels" id="Actifs dans les secteurs culturels" onclick="showLayer(this.value)">Actifs dans les secteurs culturels</button>
     </div>
 </div>
   
@@ -85,20 +85,20 @@
     <p class="title">Données de contexte</p>
     <div class="item">
         <p class="subtitle">Population</p>
-        <button class="btn-tag" value="Population" onclick="showLayer(this)">Population totale</button>
-        <button class="btn-tag" value="Indice de jeunesse" onclick="showLayer(this)">Indice de jeunesse</button>
-        <button class="btn-tag" value="Densité de la population" onclick="showLayer(this)">Densité de la population</button>
-        <button class="btn-tag" value="Évolution de la population" onclick="showLayer(this)">Évolution de la population</button>
+        <button class="btn-tag" value="Population" id="Population" onclick="showLayer(this.value)">Population totale</button>
+        <button class="btn-tag" value="Indice de jeunesse" id="Indice de jeunesse" onclick="showLayer(this.value)">Indice de jeunesse</button>
+        <button class="btn-tag" value="Densité de la population" id="Densité de la population" onclick="showLayer(this.value)">Densité de la population</button>
+        <button class="btn-tag" value="Évolution de la population" id="Évolution de la population" onclick="showLayer(this.value)">Évolution de la population</button>
         <p class="subtitle" style="display: none;">Structure de la population par âge</p>
         <p class="subtitle">Niveaux de vie et redistribution</p>
-        <button class="btn-tag" value="Niveau de vie médian" onclick="showLayer(this)">Niveau de vie médian</button>
-        <button class="btn-tag" value="Taux de pauvreté" onclick="showLayer(this)">Taux de pauvreté</button>
+        <button class="btn-tag" value="Niveau de vie médian" id="Niveau de vie médian" onclick="showLayer(this.value)">Niveau de vie médian</button>
+        <button class="btn-tag" value="Taux de pauvreté" id="Taux de pauvreté" onclick="showLayer(this.value)">Taux de pauvreté</button>
         <p class="subtitle">Politiques publiques</p>
-        <button class="btn-tag" value="Action coeur de ville" onclick="showLayer(this)">Action coeur de ville</button>
-        <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this)">Quartiers prioritaires de la politique de la ville</button>
+        <button class="btn-tag" value="Action coeur de ville" id="Action coeur de ville" onclick="showLayer(this.value)">Action coeur de ville</button>
+        <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" id="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this.value)">Quartiers prioritaires de la politique de la ville</button>
         <p class="subtitle">Zonage d'études</p>
-        <button class="btn-tag" value="Grille communale de densité" onclick="showLayer(this)">Grille communale de densité</button>
-        <button class="btn-tag" value="Aires d'attraction des villes" onclick="showLayer(this)">Aires d'attraction des villes</button>
+        <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
+        <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
 
     </div>
 </div>
@@ -144,6 +144,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         info.style.display = 'none'; 
         legendBox.appendChild(info);
         var definitionTitle = document.createElement('p');
+        definitionTitle.className = "subtitle3";
         definitionTitle.innerHTML = "Définition";
         info.appendChild(definitionTitle);
         var definitionContent = document.createElement('p');
@@ -151,6 +152,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         info.appendChild(definitionContent);
         var sourceTitle = document.createElement('p');
         sourceTitle.innerHTML = "Source";
+        sourceTitle.className = "subtitle3";
         var sourceContent = document.createElement('p');
         sourceContent.innerHTML = source + ', ' + year;
         info.appendChild(sourceTitle);
@@ -183,11 +185,19 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     function addLegend(indicator, layers, colors) {
         legendBox = document.getElementById('legend-box');
+        var infoButton = document.createElement('button');
+        infoButton.className = "infobtn";
+        infoButton.onclick = function () {showInfo(indicator)};
+        var closeButton = document.createElement('button');
+        closeButton.className = "closebtn";
+        closeButton.onclick = function () {showLayer(indicator)};
         var legend = document.createElement('div');
+        legend.appendChild(closeButton);
+        legend.appendChild(infoButton);
         legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
-        title.className = "title-legend mb-3";
+        title.className = "title-legend mb-3 mt-2";
         title.innerHTML = indicator;
         legend.appendChild(title);
 
@@ -219,11 +229,19 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     function addLegendCircle(indicator, layers, radius, color) {
         legendBox = document.getElementById('legend-box');
+        var infoButton = document.createElement('button');
+        infoButton.className = "infobtn";
+        infoButton.onclick = function () {showInfo(indicator)};
+        var closeButton = document.createElement('button');
+        closeButton.className = "closebtn";
+        closeButton.onclick = function () {showLayer(indicator)};
         var legend = document.createElement('div');
+        legend.appendChild(closeButton);
+        legend.appendChild(infoButton);
         legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
-        title.className = "title-legend mb-3";
+        title.className = "title-legend mb-3 mt-2";
         title.innerHTML = indicator;
         legend.appendChild(title)
 
@@ -267,11 +285,15 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     function addLegendEquipement(indicator, equipementID, color) {
         legendBox = document.getElementById('legend-box');
-        closeButton = document.createElement('button');
+        var infoButton = document.createElement('button');
+        infoButton.className = "infobtn";
+        infoButton.onclick = function () {showInfo(equipementID)};
+        var closeButton = document.createElement('button');
         closeButton.className = "closebtn";
-        closeButton.onclick = function () {showInfo(hideLegend(equipementID))};
+        closeButton.onclick = function () {showLayer(equipementID)};
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
+        legend.appendChild(infoButton);
         legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
         var legendID = "legend-"+equipementID;
         legend.setAttribute('id', legendID);
@@ -300,23 +322,27 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         legend.appendChild(item);
         legendBox.appendChild(legend);
         
-        var button = document.createElement('button');
-        button.className = "infobtn";
-        button.onclick = function () {showInfo(equipementID)};
-        legend.appendChild(button);
         legend.style.display = 'none'; 
     }
 
     function addLegendSymbol(indicator, marker) {
 
         legendBox = document.getElementById('legend-box');
+        var infoButton = document.createElement('button');
+        infoButton.className = "infobtn";
+        infoButton.onclick = function () {showInfo(indicator)};
+        var closeButton = document.createElement('button');
+        closeButton.className = "closebtn";
+        closeButton.onclick = function () {showLayer(indicator)};
         var legend = document.createElement('div');
+        legend.appendChild(closeButton);
+        legend.appendChild(infoButton);
         legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
         legend.setAttribute('id', "legend-"+indicator);
        
         var color = color;
         var item = document.createElement('div');
-        item.className = "row inline"
+        item.className = "row inline mt-2"
         var col1 = document.createElement('div');
         col1.className = "col-2 d-flex justify-content-center align-items-center"
         var key = document.createElement('img');
@@ -347,7 +373,13 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
     }
 
     function openNav(itemMenu) {
-        document.getElementById(itemMenu).style.width = "419px";
+        const mediaQuery = window.matchMedia('(min-width: 768px)')
+        if (mediaQuery.matches) {
+            document.getElementById(itemMenu).style.width = "408px";
+        }
+        else {
+            document.getElementById(itemMenu).style.width = "315px";
+        }
         var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
         for (var i = 0; i < menus.length; i++){
             if (menus[i] != itemMenu) {
@@ -370,6 +402,13 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
     var zoomThreshold = 6;
     var zoomComThreshold = 8;
     var hoveredStateId = null;
+
+    {% for variable in variables %}
+        {% if variable.nom == "Aires attraction des villes" %}
+            addInfo("Aires d'attraction des villes", "Aires d'attraction des villes", "{{variable.definition}}", "{{variable.source}}", "{{variable.year}}");
+        {% endif %}
+        addInfo("{{variable.nom}}", "{{variable.nom}}", "{{variable.definition}}", "{{variable.source}}", "{{variable.year}}");
+    {% endfor %}
 
     map.on('load', function () {
 
@@ -1460,13 +1499,13 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
         var layers = ['0 à 9 €/habitant', '9 à 11 €/habitant', '11 à 14 €/habitant', '14 à 23 €/habitant', 'plus de 23 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
-        var indicator = "Dépenses publiques culturelles des régions";
+        var indicator = "Dépenses culturelles des régions";
 
         addLegend(indicator, layers, colors);
 
         map.addLayer(
             {
-                'id': 'Dépenses publiques culturelles des régions',
+                'id': 'Dépenses culturelles des régions',
                 'source': 'depenses_region',
                 'source-layer': 'REGION_DEPENSES',
                 'type': 'fill',
@@ -1495,7 +1534,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             }  
         );
 
-        map.on('click', 'Dépenses publiques culturelles des régions', function (e) {
+        map.on('click', 'Dépenses culturelles des régions', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
@@ -1517,13 +1556,13 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
         var layers = ['0 à 10 €/habitant', '10 à 13 €/habitant', '13 à 17 €/habitant', '17 à 22 €/habitant', 'plus de 22 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
-        var indicator = "Dépenses publiques culturelles des départements";
+        var indicator = "Dépenses culturelles des départements";
 
         addLegend(indicator, layers, colors);
 
         map.addLayer(
             {
-                'id': 'Dépenses publiques culturelles des départements',
+                'id': 'Dépenses culturelles des départements',
                 'source': 'depenses_departement',
                 'source-layer': 'DEPARTEMENT_DEPENSES',
                 'type': 'fill',
@@ -1552,7 +1591,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             }  
         );
 
-        map.on('click', 'Dépenses publiques culturelles des départements', function (e) {
+        map.on('click', 'Dépenses culturelles des départements', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
@@ -1574,13 +1613,13 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
         var layers = ['0 à 5 €/habitant', '5 à 15 €/habitant', '15 à 30 €/habitant', '30 à 55 €/habitant', 'plus de 55 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
-        var indicator = "Dépenses publiques culturelles des intercommunalités";
+        var indicator = "Dépenses culturelles des intercommunalités";
 
         addLegend(indicator, layers, colors);
 
         map.addLayer(
             {
-                'id': 'Dépenses publiques culturelles des intercommunalités',
+                'id': 'Dépenses culturelles des intercommunalités',
                 'source': 'depenses_epci',
                 'source-layer': 'EPCI_DEPENSES',
                 'type': 'fill',
@@ -1609,7 +1648,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             }  
         );
 
-        map.on('click', 'Dépenses publiques culturelles des intercommunalités', function (e) {
+        map.on('click', 'Dépenses culturelles des intercommunalités', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
@@ -1632,13 +1671,13 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
         var layers = ['0 à 25 €/habitant', '25 à 55 €/habitant', '55 à 90 €/habitant', '90 à 140 €/habitant', 'plus de 140 €/habitant'];
         var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
-        var indicator = "Dépenses publiques culturelles des communes";
+        var indicator = "Dépenses culturelles des communes";
 
         addLegend(indicator, layers, colors);
 
         map.addLayer(
             {
-                'id': 'Dépenses publiques culturelles des communes',
+                'id': 'Dépenses culturelles des communes',
                 'source': 'depenses_commune',
                 'source-layer': 'COMMUNE_DEPENSES',
                 'type': 'fill',
@@ -1667,7 +1706,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             }  
         );
 
-        map.on('click', 'Dépenses publiques culturelles des communes', function (e) {
+        map.on('click', 'Dépenses culturelles des communes', function (e) {
             if (e.features.length > 0) {
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
@@ -2142,30 +2181,32 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
     });
 
     function showLayer(layer) {
-        var visibility = map.getLayoutProperty(layer.value, 'visibility');
+        btnLayer = document.getElementById(layer);
+        console.log(btnLayer);
+        var visibility = map.getLayoutProperty(layer, 'visibility');
         if (visibility == 'none') {
-            if (layer.value == "Entreprises culturelles du secteur marchand"){
+            if (layer == "Entreprises culturelles du secteur marchand"){
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand départements", 'visibility', 'visible');
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand régions", 'visibility', 'visible');
             }
-            if (layer.value == 'Salariés actifs des secteurs culturels marchands'){
+            if (layer == 'Salariés actifs des secteurs culturels marchands'){
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands départements", 'visibility', 'visible');
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands régions", 'visibility', 'visible');
             }
-            if (layer.value == 'Actifs exerçant une profession culturelle'){
+            if (layer == 'Actifs exerçant une profession culturelle'){
                 map.setLayoutProperty("Actifs exerçant une profession culturelle ZE", 'visibility', 'visible');
                 map.setLayoutProperty("Actifs exerçant une profession culturelle région", 'visibility', 'visible');
             }
-            if (layer.value == 'Actifs dans les secteurs culturels'){
+            if (layer == 'Actifs dans les secteurs culturels'){
                 map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'visible');
                 map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'visible');
             }
-            if (layer.value == 'Dépenses du ministère de la Culture'){
+            if (layer == 'Dépenses du ministère de la Culture'){
                 map.setLayoutProperty("Dépenses du ministère de la Culture Département", 'visibility', 'visible');
             }
             
-            layer.className += ' active';
-            map.setLayoutProperty(layer.value, 'visibility', 'visible');
+            btnLayer.className += ' active';
+            map.setLayoutProperty(layer, 'visibility', 'visible');
             map.setLayoutProperty("regionLayer", 'visibility', 'none');
             //map.setLayoutProperty("regionLine", 'visibility', 'none');
             map.setLayoutProperty("departementLayer", 'visibility', 'none');
@@ -2177,39 +2218,39 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             map.moveLayer("state-label");
             map.moveLayer("country-label");
             
-            var legend = document.getElementById("legend-"+layer.value);
+            var legend = document.getElementById("legend-"+layer);
             legend.style.display = "block";
             console.log(map.getStyle().layers)
 
 
         }
         if (visibility == 'visible') {
-            if (layer.value == "Entreprises culturelles du secteur marchand"){
+            if (layer == "Entreprises culturelles du secteur marchand"){
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand départements", 'visibility', 'none');
                 map.setLayoutProperty("Entreprises culturelles du secteur marchand régions", 'visibility', 'none');
             }
-            if (layer.value == 'Salariés actifs des secteurs culturels marchands'){
+            if (layer == 'Salariés actifs des secteurs culturels marchands'){
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands départements", 'visibility', 'none');
                 map.setLayoutProperty("Salariés actifs des secteurs culturels marchands régions", 'visibility', 'none');
             }
-            if (layer.value == 'Actifs exerçant une profession culturelle'){
+            if (layer== 'Actifs exerçant une profession culturelle'){
                 map.setLayoutProperty("Actifs exerçant une profession culturelle ZE", 'visibility', 'none');
                 map.setLayoutProperty("Actifs exerçant une profession culturelle région", 'visibility', 'none');
             }
-            if (layer.value == 'Actifs dans les secteurs culturels'){
+            if (layer == 'Actifs dans les secteurs culturels'){
                 map.setLayoutProperty("Actifs dans les secteurs culturels ZE", 'visibility', 'none');
                 map.setLayoutProperty("Actifs dans les secteurs culturels région", 'visibility', 'none');
             }
-            if (layer.value == 'Dépenses du ministère de la Culture'){
+            if (layer == 'Dépenses du ministère de la Culture'){
                 map.setLayoutProperty("Dépenses du ministère de la Culture Département", 'visibility', 'none');
             }
 
-            layer.className = layer.className.replace(/\bactive\b/g, "");
-            map.setLayoutProperty(layer.value, 'visibility', 'none');
+            btnLayer.className = btnLayer.className.replace(/\bactive\b/g, "");
+            map.setLayoutProperty(layer, 'visibility', 'none');
 
-            var legend = document.getElementById("legend-"+layer.value);
+            var legend = document.getElementById("legend-"+layer);
             legend.style.display = "none";
-            var info = document.getElementById("info-"+layer.value);
+            var info = document.getElementById("info-"+layer);
             info.style.display = "none";
         }
 

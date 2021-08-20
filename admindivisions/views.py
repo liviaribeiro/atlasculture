@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.serializers import serialize
-from .models import Region, Commune
+from .models import Region, Commune, Variable
 from admindivisions.models import ZonageRural
 from equipements.models import Equipement, EquipementType, Domaine
 from django.contrib.gis.geos import GEOSGeometry
@@ -16,7 +16,8 @@ def map(request):
     communes = Commune.objects.all() 
     domaines = Domaine.objects.all()
     zonagerural = ZonageRural.objects.all()
-    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural}
+    variables = Variable.objects.all()
+    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural, 'variables': variables}
     return render(request, 'admindivisions/map.html', context)
 
 def equipements(request, domaine):

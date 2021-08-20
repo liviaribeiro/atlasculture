@@ -232,8 +232,8 @@ class Source(models.Model):
 class Variable(models.Model):
     nom = models.CharField(max_length=200)
     definition = models.CharField(max_length=1000)
-    source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True)
-    millesime = models.CharField(max_length=4)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
     def __str__(self):
         return self.nom
 

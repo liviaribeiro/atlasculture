@@ -236,8 +236,6 @@ a.b1 {
 .container-80 {
     width: 80%;
 }
-    
-
 
 .container-img {
     height:auto;
@@ -245,6 +243,10 @@ a.b1 {
     background-size:cover;
 }
 
+.btn-accueil {
+    background-image: url('/static/Btn-Accueil.png');
+    width: 212px;
+}
 .selector {
     margin-top: 40px;
     border-radius: 30px;

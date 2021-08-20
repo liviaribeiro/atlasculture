@@ -14,7 +14,8 @@
                     <p class="title main-title">Comprendre les dynamiques culturelles</p>
                     <p class="subtitle main-subtitle">Bienvenue sur la ressource dédiée aux données publiques de la culture, de la région à la commune</p>
                     <a href="{% url 'map' %}">
-                        <img alt="Explorer carte interactive" src="{% static 'Btn-Accueil.png' %}" width="212px">
+                        <img alt="Explorer carte interactive" src="{% static 'Btn-Accueil.png' %}" onmouseover="this.src='{% static "Btn-Accueil-rose.png" %}'" 
+                        onmouseout="this.src='{% static "Btn-Accueil.png" %}'" width="212px">
                      </a>
                      </div>
                 </div>
