@@ -53,6 +53,7 @@
     font-family: 'Open Sans', sans-serif;
     z-index: 10;
     top: 56px;
+    min-height: 100vh;
 }
 
 .divnav {
@@ -96,11 +97,12 @@
     display: block;
     overflow-y:auto;
     top: 56px;
+    max-height: 600px;
 }
 
 .geocoder {
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     right: 0;
     margin-right: 30px;
     margin-top: 20px;
@@ -207,6 +209,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     padding-top: 30px;
+    height: auto;
 }
 
 .submenu .title {
@@ -250,7 +253,7 @@
     background-size: cover;  
 }
 
-.submenu .item {
+.item {
     position: absolute;
     margin-left: 30px;
     margin-right: 30px;

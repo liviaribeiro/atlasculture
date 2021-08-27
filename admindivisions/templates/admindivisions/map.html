@@ -585,8 +585,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 }     
         });
 
-        var layers = ['0 à 50 habitants/km²', '50 à 100 habitants/km²', '100 à 1 000 habitants/km²', '1 000 à 1 0000 habitants/km²', 'plus de 10 000 habitants/km²'];
-        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var layers = ['0 à 50 habitants/km²', '50 à 100 habitants/km²', '100 à 1 000 habitants/km²', '1 000 à 1 0000 habitants/km²', 'plus de 10 000 habitants/km²', 'données non disponibles'];
+        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c', "#d9d9d9"];
         var indicator = "Densité de la population";
 
         addLegend(indicator, layers, colors);
@@ -601,7 +601,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                     'fill-color': [
                         "step",
                         ["get", "DENSITE17"],
-                        "#ffffff",
+                        "#d9d9d9",
                         0,
                         "#eff3ff",
                         50,
@@ -638,8 +638,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 }     
         });
 
-        var layers = ['0 à 9%', '9 à 14%', '14 à 20%', '20 à 29%', 'plus de 29%'];
-        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var layers = ['0 à 9%', '9 à 14%', '14 à 20%', '20 à 29%', 'plus de 29%', 'données non disponibles'];
+        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c', "#d9d9d9"];
         var indicator = "Taux de pauvreté";
 
         addLegend(indicator, layers, colors);
@@ -711,7 +711,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                             "get",
                             "TYPOLOGIECODE"
                         ],
-                        "#f7f7f7",
+                        "#d9d9d9",
                         1,
                         "#2166ac",
                         2,
@@ -743,8 +743,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 }     
         });
 
-        var layers = ['0 à 20 000 €', '20 000 à 24 000 €', '24 000 à 28 000 €', '28 000 à 34 0000 €', 'plus de 34 000 €'];
-        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+        var layers = ['0 à 20 000 €', '20 000 à 24 000 €', '24 000 à 28 000 €', '28 000 à 34 0000 €', 'plus de 34 000 €', 'données non disponibles'];
+        var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c', "#d9d9d9"];
         var indicator = "Niveau de vie médian";
 
         addLegend(indicator, layers, colors);
@@ -759,7 +759,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                     'fill-color': [
                         "step",
                         ["get", "NIVEAUDEVIE17"],
-                        "#ffffff",
+                        "#d9d9d9",
                         0,
                         "#eff3ff",
                         20000,
@@ -1497,8 +1497,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 'url': 'mapbox://liviaribeiro.16wk8z7f'
         });
 
-        var layers = ['0 à 9 €/habitant', '9 à 11 €/habitant', '11 à 14 €/habitant', '14 à 23 €/habitant', 'plus de 23 €/habitant'];
-        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var layers = ['0 à 9 €/habitant', '9 à 11 €/habitant', '11 à 14 €/habitant', '14 à 23 €/habitant', 'plus de 23 €/habitant', 'données non disponibles'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c', "#d9d9d9"];
         var indicator = "Dépenses culturelles des régions";
 
         addLegend(indicator, layers, colors);
@@ -1554,8 +1554,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 'url': 'mapbox://liviaribeiro.7plleqb0'
         });
 
-        var layers = ['0 à 10 €/habitant', '10 à 13 €/habitant', '13 à 17 €/habitant', '17 à 22 €/habitant', 'plus de 22 €/habitant'];
-        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var layers = ['0 à 10 €/habitant', '10 à 13 €/habitant', '13 à 17 €/habitant', '17 à 22 €/habitant', 'plus de 22 €/habitant', 'données non disponibles'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c', "#d9d9d9"];
         var indicator = "Dépenses culturelles des départements";
 
         addLegend(indicator, layers, colors);
@@ -1611,8 +1611,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 'url': 'mapbox://liviaribeiro.74bpft4j'
         });
 
-        var layers = ['0 à 5 €/habitant', '5 à 15 €/habitant', '15 à 30 €/habitant', '30 à 55 €/habitant', 'plus de 55 €/habitant'];
-        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var layers = ['0 à 5 €/habitant', '5 à 15 €/habitant', '15 à 30 €/habitant', '30 à 55 €/habitant', 'plus de 55 €/habitant', 'données non disponibles'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c', "#d9d9d9"];
         var indicator = "Dépenses culturelles des intercommunalités";
 
         addLegend(indicator, layers, colors);
@@ -1669,8 +1669,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 'url': 'mapbox://liviaribeiro.bt8usf8p'
         });
 
-        var layers = ['0 à 25 €/habitant', '25 à 55 €/habitant', '55 à 90 €/habitant', '90 à 140 €/habitant', 'plus de 140 €/habitant'];
-        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var layers = ['0 à 25 €/habitant', '25 à 55 €/habitant', '55 à 90 €/habitant', '90 à 140 €/habitant', 'plus de 140 €/habitant', 'données non disponibles'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c', "#d9d9d9"];
         var indicator = "Dépenses culturelles des communes";
 
         addLegend(indicator, layers, colors);
@@ -1726,8 +1726,8 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
                 'url': 'mapbox://liviaribeiro.3idctvsj'
         });
 
-        var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant'];
-        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'];
+        var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant', 'données non disponibles'];
+        var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c', "#d9d9d9"];
         var indicator = "Dépenses du ministère de la Culture";
 
         addLegend(indicator, layers, colors);
