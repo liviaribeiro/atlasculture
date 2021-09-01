@@ -67,7 +67,7 @@
 @media (max-width: 768px) {  
     .navcarto { height: 96px;}
     .wrapper {top: 96px;}
-    .geocoder {top: 96px !important;}
+    .geocoder {display: none !important;}
     .legend-box {top: 110px !important;}
     .divnav {width: 100%;}
 }
@@ -257,6 +257,7 @@
     position: absolute;
     margin-left: 30px;
     margin-right: 30px;
+    height: 1500px;
 }
 
 .submenu .btn-tag {

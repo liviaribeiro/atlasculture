@@ -348,6 +348,11 @@ a.b1 {
     align-items: center;
   }
 
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
 .n {
     width: 90%; 
 }

@@ -7,7 +7,7 @@
 
     <div class="row">
         <div class="col-md-4 text-center">
-            <img src="{{portrait.region.image.url}}" style="width: 381px;"/>
+            <img src="{{portrait.region.image_line.url}}" style="width: 381px;"/>
             <p><a href="{% url 'portraits' %}"><img alt="Flèche" src="{% static 'Vector.png' %}" style="width: 12px;" /> Revenir à la liste des fiches</a></p>
             <a class="btn btn-download d-inline-flex align-items-center btn-link" href="{{ portrait.fiche.url }}">Télécharger la fiche</a>
             <p></p>
@@ -42,5 +42,22 @@
     </div>
 
 </div>
+
+<div class="container-fluid mt-4 text-center vertical-align d-flex justify-content-center" style="background-color: #FFE2DE; height: 296px; background-image: url({% static 'ATLAS_MapLine-small.png' %}); background-size: auto 220px; background-repeat: no-repeat; background-position: right;">
+    <div class="row vertical-align">
+        <div class="col-md-6 d-flex justify-content-center">
+            <div class="row" style="min-width: 273px;">
+                <a href="{% url 'map' %}" style="font-size:20px; font-weight:400; color:#0000FE;">Voir la région {{ portrait.region.name }} sur la carte interactive</a>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+            <a href="{% url 'map' %}">
+                <img alt="Explorer carte interactive" src="{% static 'Btn-Accueil.png' %}" onmouseover="this.src='{% static "Btn-Accueil-rose.png" %}'" 
+                onmouseout="this.src='{% static "Btn-Accueil.png" %}'" width="141px">
+            </a>
+        </div>
+    </div>
+</div>
+
 
 {% endblock content %}

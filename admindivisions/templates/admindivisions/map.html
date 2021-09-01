@@ -109,6 +109,8 @@
 
 <div id="legend-box" class="legend-box"></div>
 
+<div id="legend-mobile" class="legend-mobile"></div>
+
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
     var map = new mapboxgl.Map({
@@ -378,7 +380,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             document.getElementById(itemMenu).style.width = "408px";
         }
         else {
-            document.getElementById(itemMenu).style.width = "315px";
+            document.getElementById(itemMenu).style.width = "100%";
         }
         var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
         for (var i = 0; i < menus.length; i++){

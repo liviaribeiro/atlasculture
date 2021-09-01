@@ -21,7 +21,7 @@ def map(request):
     return render(request, 'admindivisions/map.html', context)
 
 def equipements(request, domaine):
-    path = os.path.join(BASE_DIR, 'static/data/EQUIPEMENTS_ALL.json')
+    path = os.path.join(BASE_DIR, 'static/data/EQUIPEMENTS_BASILIC.json')
 
     with open(path) as f:
         data = json.load(f)

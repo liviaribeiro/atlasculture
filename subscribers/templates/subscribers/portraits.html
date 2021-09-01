@@ -10,7 +10,7 @@
     <div class="row">
             <div class="col-lg-4">
                 <div class="text-center">
-                <img class="img-fr" src="{% static 'ATLAS_Carte-1FR.png' %}"/>
+                <img class="img-fr" src="{% static 'ATLAS_Carte-1FR.png' %}" onmouseover="this.src='{% static "ATLAS_Portrait-1FR.png" %}'" onmouseout="this.src='{% static "ATLAS_Carte-1FR.png" %}'"/>
                     <p class="text-center">France entière</p>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 {%for region in regions%}
                     <div class="col">
                         <div class="text-center">
-                            <a href="{% url 'portrait_region' region.codeinsee %}"><img src="{{region.image.url}}"style="width: 180px;"></a>
+                            <a href="{% url 'portrait_region' region.codeinsee %}"><img src="{{region.image_carte.url}}" onmouseover="this.src='{{region.image_line.url}}'" onmouseout="this.src='{{region.image_carte.url}}'" style="width: 180px;"></a>
                             <p><a href="{% url 'portrait_region' region.codeinsee %}">{{region.name}}</a></p>
                         </div>
                     </div>
