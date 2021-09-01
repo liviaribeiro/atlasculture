@@ -70,6 +70,7 @@
     .geocoder {display: none !important;}
     .legend-box {top: 110px !important;}
     .divnav {width: 100%;}
+    .submenu {top: 96px !important;}
 }
 
 .title-legend {
@@ -201,15 +202,14 @@
 
 .submenu {
     width: 0;
-    position: relative;
+    position: fixed;
     z-index: 5;
-    bottom: 0px;
+    top: 56px; 
+    bottom: 0; 
+    left: 63px; 
     background-color: #fff;
-    display: block;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-top: 30px;
-    height: auto;
 }
 
 .submenu .title {
@@ -219,6 +219,7 @@
     color: #5770BE;
     right: 25px;
     margin-left: 30px;
+    margin-top: 20px;
 }
 
 .submenu .subtitle {
@@ -257,7 +258,6 @@
     position: absolute;
     margin-left: 30px;
     margin-right: 30px;
-    height: 1500px;
 }
 
 .submenu .btn-tag {
