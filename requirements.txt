@@ -23,3 +23,4 @@ urllib3==1.26.1
 whitenoise==5.2.0
 xlrd==1.2.0
 Pillow
+django-storages==1.11.1
