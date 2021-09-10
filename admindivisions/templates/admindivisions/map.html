@@ -3,8 +3,21 @@
 {% block content %}
 {% load static %}
 
-<div id="map"></div>
+<div id="map">
+    <div id="geocoder" class="geocoder"></div>
+</div>
+
+<div id="legend-wrapper" class="legend-wrapper">
+    <button class="btn-legend" value="legend-wrapper" onclick="openCloseLegend(this.value)"><img src="{% static 'Vector1.png' %}" />
+    </button>
+    <div class="legend-content">
+        <p class="title-legend-box">FILTRES ACTIFS</p>
+        <div id="legend-box" class="legend-box"></div>
+    </div>
+</div>  
+
 <div class="wrapper">
+
     <nav id="sidebar">
         <ul class="list-unstyled components text-center">
             <li><button value="equipement-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Offre et lieux culturels" src="{% static 'equipements.png' %}" style="width: 35px; margin-top:30px;"/></span>
@@ -29,87 +42,79 @@
         </ul>
     </nav>
 
-<div id="equipement-menu" class="submenu">
-    <button href="javascript:void(0)" value="equipement-menu" class="closebtn" onclick="closeNav(this.value)"></button>
-    <p class="title">Offre et lieux culturels</p>
-    <div class="item">
-        <p class="subtitle">Festivals</p>
-        <button class="btn-tag" value="Festivals" id="Festivals" onclick="showLayer(this.value)">Festivals</button>
-        {% for domaine in domaines%}
-            <p class="subtitle">{{ domaine.name }}</p>
-            {% for equipement_type in domaine.equipementtype_set.all %}
-            <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+    <div id="equipement-menu" class="submenu">
+        <button href="javascript:void(0)" value="equipement-menu" class="closebtn" onclick="closeNav(this.value)"></button>
+        <p class="title">Offre et lieux culturels</p>
+        <div class="item">
+            <p class="subtitle">Festivals</p>
+            <button class="btn-tag" value="Festivals" id="Festivals" onclick="showLayer(this.value)">Festivals</button>
+            {% for domaine in domaines%}
+                <p class="subtitle">{{ domaine.name }}</p>
+                {% for equipement_type in domaine.equipementtype_set.all %}
+                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        </div>
     </div>
-</div>
 
-<div id="politiques-menu" class="submenu">
-    <button href="javascript:void(0)" value="politiques-menu" class="closebtn" onclick="closeNav(this.value)"></button>
-    <p class="title">Politiques culturelles territoriales</p>
-    <div class="item">
-        <button class="btn-tag" value="Contrats territoire lecture" id="Contrats territoire lecture" onclick="showLayer(this.value)">Contrats territoire lecture</button>
+    <div id="politiques-menu" class="submenu">
+        <button href="javascript:void(0)" value="politiques-menu" class="closebtn" onclick="closeNav(this.value)"></button>
+        <p class="title">Politiques culturelles territoriales</p>
+        <div class="item">
+            <button class="btn-tag" value="Contrats territoire lecture" id="Contrats territoire lecture" onclick="showLayer(this.value)">Contrats territoire lecture</button>
+        </div>
     </div>
-</div>
 
-<div id="depenses-menu" class="submenu">
-    <button href="javascript:void(0)" value="depenses-menu" class="closebtn" onclick="closeNav(this.value)"></button>
-    <p class="title">Dépenses culturelles publiques</p>
-    <div class="item">
-        <p class="subtitle">Dépenses des collectivités territoriales</p>
-        <button class="btn-tag" value="Dépenses culturelles des régions" id="Dépenses culturelles des régions" onclick="showLayer(this.value)">Dépenses culturelles des régions</button>
-        <button class="btn-tag" value="Dépenses culturelles des départements" id="Dépenses culturelles des départements" onclick="showLayer(this.value)">Dépenses culturelles des départements</button>
-        <button class="btn-tag" value="Dépenses culturelles des intercommunalités" id="Dépenses culturelles des intercommunalités" onclick="showLayer(this.value)">Dépenses culturelles des intercommunalités</button>
-        <button class="btn-tag" value="Dépenses culturelles des communes" id="Dépenses culturelles des communes" onclick="showLayer(this.value)">Dépenses culturelles des communes</button>
-        <p class="subtitle">Dépenses de l'État</p>
-        <button class="btn-tag" value="Plan de relance" id="Plan de relance" onclick="showLayer(this.value)">Plan de relance</button>
-        <button class="btn-tag" value="Dépenses du ministère de la Culture" id="Dépenses du ministère de la Culture" onclick="showLayer(this.value)">Dépenses du ministère de la Culture</button>
+    <div id="depenses-menu" class="submenu">
+        <button href="javascript:void(0)" value="depenses-menu" class="closebtn" onclick="closeNav(this.value)"></button>
+        <p class="title">Dépenses culturelles publiques</p>
+        <div class="item">
+            <p class="subtitle">Dépenses des collectivités territoriales</p>
+            <button class="btn-tag" value="Dépenses culturelles des régions" id="Dépenses culturelles des régions" onclick="showLayer(this.value)">Dépenses culturelles des régions</button>
+            <button class="btn-tag" value="Dépenses culturelles des départements" id="Dépenses culturelles des départements" onclick="showLayer(this.value)">Dépenses culturelles des départements</button>
+            <button class="btn-tag" value="Dépenses culturelles des intercommunalités" id="Dépenses culturelles des intercommunalités" onclick="showLayer(this.value)">Dépenses culturelles des intercommunalités</button>
+            <button class="btn-tag" value="Dépenses culturelles des communes" id="Dépenses culturelles des communes" onclick="showLayer(this.value)">Dépenses culturelles des communes</button>
+            <p class="subtitle">Dépenses de l'État</p>
+            <button class="btn-tag" value="Plan de relance" id="Plan de relance" onclick="showLayer(this.value)">Plan de relance</button>
+            <button class="btn-tag" value="Dépenses du ministère de la Culture" id="Dépenses du ministère de la Culture" onclick="showLayer(this.value)">Dépenses du ministère de la Culture</button>
+        </div>
     </div>
-</div>
 
-<div id="entreprises-menu" class="submenu">
-    <button href="javascript:void(0)" value="entreprises-menu" class="closebtn" onclick="closeNav(this.value)"></button>
-    <p class="title">Entreprises et emploi culturels</p>
-    <div class="item">
-        <p class="subtitle">Entreprises</p>
-        <button class="btn-tag" value="Entreprises culturelles du secteur marchand" id="Entreprises culturelles du secteur marchand" onclick="showLayer(this.value)">Entreprises culturelles du secteur marchand</button>
-        <button class="btn-tag" value="Salariés actifs des secteurs culturels marchands" id="Salariés actifs des secteurs culturels marchands" onclick="showLayer(this.value)">Salariés actifs des secteurs culturels marchands</button>
-        <p class="subtitle">Emploi</p>
-        <button class="btn-tag" value="Actifs exerçant une profession culturelle" id="Actifs exerçant une profession culturelle" onclick="showLayer(this.value)">Actifs exerçant une profession culturelle</button>
-        <button class="btn-tag" value="Actifs dans les secteurs culturels" id="Actifs dans les secteurs culturels" onclick="showLayer(this.value)">Actifs dans les secteurs culturels</button>
+    <div id="entreprises-menu" class="submenu">
+        <button href="javascript:void(0)" value="entreprises-menu" class="closebtn" onclick="closeNav(this.value)"></button>
+        <p class="title">Entreprises et emploi culturels</p>
+        <div class="item">
+            <p class="subtitle">Entreprises</p>
+            <button class="btn-tag" value="Entreprises culturelles du secteur marchand" id="Entreprises culturelles du secteur marchand" onclick="showLayer(this.value)">Entreprises culturelles du secteur marchand</button>
+            <button class="btn-tag" value="Salariés actifs des secteurs culturels marchands" id="Salariés actifs des secteurs culturels marchands" onclick="showLayer(this.value)">Salariés actifs des secteurs culturels marchands</button>
+            <p class="subtitle">Emploi</p>
+            <button class="btn-tag" value="Actifs exerçant une profession culturelle" id="Actifs exerçant une profession culturelle" onclick="showLayer(this.value)">Actifs exerçant une profession culturelle</button>
+            <button class="btn-tag" value="Actifs dans les secteurs culturels" id="Actifs dans les secteurs culturels" onclick="showLayer(this.value)">Actifs dans les secteurs culturels</button>
+        </div>
     </div>
-</div>
   
-<div id="contexte-menu" class="submenu">
-    <button href="javascript:void(0)" value="contexte-menu" class="closebtn" onclick="closeNav(this.value)"></button>
-    <p class="title">Données de contexte</p>
-    <div class="item">
-        <p class="subtitle">Population</p>
-        <button class="btn-tag" value="Population" id="Population" onclick="showLayer(this.value)">Population totale</button>
-        <button class="btn-tag" value="Indice de jeunesse" id="Indice de jeunesse" onclick="showLayer(this.value)">Indice de jeunesse</button>
-        <button class="btn-tag" value="Densité de la population" id="Densité de la population" onclick="showLayer(this.value)">Densité de la population</button>
-        <button class="btn-tag" value="Évolution de la population" id="Évolution de la population" onclick="showLayer(this.value)">Évolution de la population</button>
-        <p class="subtitle" style="display: none;">Structure de la population par âge</p>
-        <p class="subtitle">Niveaux de vie et redistribution</p>
-        <button class="btn-tag" value="Niveau de vie médian" id="Niveau de vie médian" onclick="showLayer(this.value)">Niveau de vie médian</button>
-        <button class="btn-tag" value="Taux de pauvreté" id="Taux de pauvreté" onclick="showLayer(this.value)">Taux de pauvreté</button>
-        <p class="subtitle">Politiques publiques</p>
-        <button class="btn-tag" value="Action coeur de ville" id="Action coeur de ville" onclick="showLayer(this.value)">Action coeur de ville</button>
-        <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" id="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this.value)">Quartiers prioritaires de la politique de la ville</button>
-        <p class="subtitle">Zonage d'études</p>
-        <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
-        <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
-
+    <div id="contexte-menu" class="submenu">
+        <button href="javascript:void(0)" value="contexte-menu" class="closebtn" onclick="closeNav(this.value)"></button>
+        <p class="title">Données de contexte</p>
+        <div class="item">
+            <p class="subtitle">Population</p>
+            <button class="btn-tag" value="Population" id="Population" onclick="showLayer(this.value)">Population totale</button>
+            <button class="btn-tag" value="Indice de jeunesse" id="Indice de jeunesse" onclick="showLayer(this.value)">Indice de jeunesse</button>
+            <button class="btn-tag" value="Densité de la population" id="Densité de la population" onclick="showLayer(this.value)">Densité de la population</button>
+            <button class="btn-tag" value="Évolution de la population" id="Évolution de la population" onclick="showLayer(this.value)">Évolution de la population</button>
+            <p class="subtitle" style="display: none;">Structure de la population par âge</p>
+            <p class="subtitle">Niveaux de vie et redistribution</p>
+            <button class="btn-tag" value="Niveau de vie médian" id="Niveau de vie médian" onclick="showLayer(this.value)">Niveau de vie médian</button>
+            <button class="btn-tag" value="Taux de pauvreté" id="Taux de pauvreté" onclick="showLayer(this.value)">Taux de pauvreté</button>
+            <p class="subtitle">Politiques publiques</p>
+            <button class="btn-tag" value="Action coeur de ville" id="Action coeur de ville" onclick="showLayer(this.value)">Action coeur de ville</button>
+            <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" id="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this.value)">Quartiers prioritaires de la politique de la ville</button>
+            <p class="subtitle">Zonage d'études</p>
+            <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
+            <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
+        </div>
     </div>
-</div>
 </div>   
-
-
-<div id="geocoder" class="geocoder"></div>
-
-<div id="legend-box" class="legend-box"></div>
-
-<div id="legend-mobile" class="legend-mobile"></div>
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
@@ -128,7 +133,44 @@
         marker: false
     });
  
-document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+    function openCloseLegend(itemMenu) {
+        if (document.getElementById(itemMenu).style.width == "30px") {
+            document.getElementById(itemMenu).style.width = "257px";
+        }
+        else{
+            document.getElementById(itemMenu).style.width = "30px";
+        }
+    }
+
+    function openLegend(itemMenu) {
+        var width = px*(100/document.documentElement.clientWidth)-63*px;
+        console.log(width);
+        document.getElementById(itemMenu).style.width = "width";
+    }
+
+    function openNav(itemMenu) {
+        const mediaQuery = window.matchMedia('(min-width: 480px)')
+        if (mediaQuery.matches) {
+            document.getElementById(itemMenu).style.width = "408px";
+        }
+        else {
+            var w = document.documentElement.clientWidth-63;
+            document.getElementById(itemMenu).style.width = w.toString()+"px";
+        }
+        var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
+        for (var i = 0; i < menus.length; i++){
+            if (menus[i] != itemMenu) {
+                closeNav(menus[i]);
+            }
+        }
+    }
+    
+    function closeNav(itemMenu) {
+        document.getElementById(itemMenu).style.width = "0";
+    }
+
 
     function addInfo(indicator, equipementID, definition, source, year) {
         legendBox = document.getElementById('legend-box');
@@ -196,7 +238,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
         title.className = "title-legend mb-3 mt-2";
@@ -220,12 +262,6 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             legendBox.appendChild(legend);
         }
         
-        var link = document.createElement('a');
-        link.className = "link-legend";
-        link.innerHTML = "En savoir plus";
-        link.title = "En savoir plus";
-        link.href = "#";
-        legend.appendChild(link);
         legend.style.display = 'none'; 
     }
 
@@ -240,7 +276,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
         title.className = "title-legend mb-3 mt-2";
@@ -276,12 +312,6 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
             legendBox.appendChild(legend);
         }
         
-        var link = document.createElement('a');
-        link.className = "link-legend";
-        link.innerHTML = "En savoir plus";
-        link.title = "En savoir plus";
-        link.href = "#";
-        legend.appendChild(link);
         legend.style.display = 'none'; 
     }
 
@@ -296,7 +326,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
         var legendID = "legend-"+equipementID;
         legend.setAttribute('id', legendID);
        
@@ -339,7 +369,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
         legend.setAttribute('id', "legend-"+indicator);
        
         var color = color;
@@ -364,34 +394,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         legend.appendChild(item);
         legendBox.appendChild(legend);
         
-        
-        var link = document.createElement('a');
-        link.className = "link-legend";
-        link.innerHTML = "En savoir plus";
-        link.title = "En savoir plus";
-        link.href = "#";
-        legend.appendChild(link);
         legend.style.display = 'none'; 
-    }
-
-    function openNav(itemMenu) {
-        const mediaQuery = window.matchMedia('(min-width: 768px)')
-        if (mediaQuery.matches) {
-            document.getElementById(itemMenu).style.width = "408px";
-        }
-        else {
-            document.getElementById(itemMenu).style.width = "100%";
-        }
-        var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
-        for (var i = 0; i < menus.length; i++){
-            if (menus[i] != itemMenu) {
-                closeNav(menus[i]);
-            }
-        }
-    }
-    
-    function closeNav(itemMenu) {
-        document.getElementById(itemMenu).style.width = "0";
     }
 
     map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
@@ -416,16 +419,16 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
         map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']);
         map.setLayoutProperty('state-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('road-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('waterway-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('natural-line-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('natural-point-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('road-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('waterway-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('natural-line-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('natural-point-label', 'text-field', ['get', 'name_fr']);
         map.setLayoutProperty('water-line-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('water-point-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_fr']);
-        map.setLayoutProperty('airport-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('water-point-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_fr']);
+        //map.setLayoutProperty('airport-label', 'text-field', ['get', 'name_fr']);
 
         map.setPaintProperty("water", 'fill-color', "#a8e0f5");
         map.setPaintProperty("national-park", 'fill-color', "#b4e49b");

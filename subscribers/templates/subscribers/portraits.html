@@ -17,7 +17,7 @@
         <div class="col-lg-8">
             <div class="row">
                 {%for region in regions%}
-                    <div class="col">
+                    <div class="col-md-4 col-lg-3">
                         <div class="text-center">
                             <a href="{% url 'portrait_region' region.codeinsee %}"><img src="{{region.image_carte.url}}" onmouseover="this.src='{{region.image_line.url}}'" onmouseout="this.src='{{region.image_carte.url}}'" style="width: 180px;"></a>
                             <p><a href="{% url 'portrait_region' region.codeinsee %}">{{region.name}}</a></p>

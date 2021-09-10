@@ -229,10 +229,6 @@ a.b1 {
     text-align-last:end; 
 }
 
-.main-container {
-    background-image: url('/static/ATLAS_Map.png');
-    background-size:cover;
-}
 .container-80 {
     width: 80%;
 }
@@ -260,7 +256,9 @@ a.b1 {
 
 .main-container {
     margin-top: 60px;
-    height:636px;
+    min-height:636px;
+    background-image: url('/static/ATLAS_Map.png');
+    background-size:cover;
 }
 
 .btn-selector {
@@ -445,3 +443,8 @@ input::placeholder {
     .img-fr {width: 180px;}
   }
 
+  .round-input {
+    border-radius: 30px;
+    width: 380px;
+    height: 60px;
+  }

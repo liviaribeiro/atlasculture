@@ -56,6 +56,21 @@
     min-height: 100vh;
 }
 
+.legend-wrapper {
+    display: flex;
+    align-items: stretch;
+    position: fixed;
+    right: 0;
+    margin-right: 0;
+    z-index: 5;
+    width: 257px;
+    display: block;
+    overflow-y:auto;
+    top: 56px;
+    min-height: 100vh;
+    background-color: transparent;
+}
+
 .divnav {
     width: 90%;
 }
@@ -67,10 +82,17 @@
 @media (max-width: 768px) {  
     .navcarto { height: 96px;}
     .wrapper {top: 96px;}
-    .geocoder {display: none !important;}
-    .legend-box {top: 110px !important;}
+    .legend-wrapper {top: 96px;
+        background-color: #fff;
+        width: 30px;}
     .divnav {width: 100%;}
     .submenu {top: 96px !important;}
+    .btn-legend {display: block !important;}
+    .title-legend-box {display: block !important;}
+}
+
+.title-legend-box {
+    display: none;
 }
 
 .title-legend {
@@ -88,27 +110,19 @@
     line-height:28px;
 }
 
-.legend-box {
-    position: fixed;
-    margin-top: 60px;
-    right: 0;
-    margin-right: 30px;
-    z-index: 5;
-    width: 227px;
-    display: block;
-    overflow-y:auto;
-    top: 56px;
-    max-height: 600px;
+.legend-content {
+    position: absolute;
+    top: 0;
+    left: 30px;
 }
 
-.geocoder {
-    position: fixed;
+.legend-box {
+    position: absolute;
     z-index: 10;
-    right: 0;
-    margin-right: 30px;
-    margin-top: 20px;
     width: 227px;
-    top: 56px;
+    display: block;
+    max-height: 600px;
+    background-color: transparent;
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -159,13 +173,13 @@
 .sidebutton {
     border: none;
     background: none;
-    z-index: 10;
+    z-index: 50;
     position: relative; 
 }
 
 .sidebutton .sidebuttoninfo{
     display: none;
-    z-index: 10;
+    z-index: 50;
 }
 
 .sidebutton:hover .sidebuttonimg{
@@ -241,6 +255,17 @@
     height: 14px;
     background: url('/static/close.png');
     background-size: cover;  
+}
+
+.btn-legend {
+    position: absolute;
+    border: none;
+    width: 20px;
+    height: 100vh;
+    background: url('/static/Vector1.png');
+    background-size: cover;
+    left:0; 
+    display: none; 
 }
 
 .infobtn {

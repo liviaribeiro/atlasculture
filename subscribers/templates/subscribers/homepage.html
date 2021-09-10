@@ -31,7 +31,7 @@
                     <div class="form-group">
                     <select class="selector" name="selected_region" id="selected_region">
                     <option class="text-selector" value="00" selected="selected" style="display:none;">Choissez une région</option>
-                    <option value="00">France</option>
+                    <option value="00">- France -</option>
                         {% for region in regions %}
                         <option value="{{region.codeinsee}}">
                             {{region.name}}
@@ -51,36 +51,42 @@
             <a class='btn btn-download d-inline-flex align-items-center btn-link' href="{% url 'about' %}" >En savoir plus</a>
         </div>
 
-        <div class="container p-2">
+        <div class="container p-4">
             <!-- Example row of columns -->
             <div class="row px-5">
-              <div class="col-lg-4 text-center" >
+              <div class="col-lg-4">
+                <div class="text-center">
                     <img alt="Image écran" src="{% static 'ATLAS_Chiffre-Regions 1.png' %}" style="height:110px;"/>
-                    <div>
-                        <p class="subtitle text-center py-3" style="font-weight:500;">18 portraits culturels de région et des ressources pour aller plus loin</p>
-                    </div>
+                </div>
+                <div class="text-left">
+                    <p class="subtitle py-3 text-center" style="font-weight:500;">18 portraits culturels de région</p>
+                </div>
               </div>
-              <div class="col-lg-4 text-center">
-                <img alt="Image livre" src="{% static 'ATLAS_Chiffre-Variables 1.png' %}" style="height:110px;"/>
-              <div>
-                <p class="subtitle text-center py-3" style="font-weight:500;">Plus de 100 variables issues de sources fiables</p>
-                <p class="text">Lieux et offre culturelle
-                    <br>Politiques culturelles territoriales
-                    <br>Dépenses publiques culturelles
-                    <br>Entreprises et emploi culturels
-                    <br>Contexte socio-économique
-                </p>              
-            </div>
+              <div class="col-lg-4">
+                <div class="text-center">
+                    <img alt="Image livre" src="{% static 'ATLAS_Chiffre-Variables 1.png' %}" style="height:110px;"/>
+                </div>
+                <div class="text-center">
+                    <p class="subtitle py-3 text-center" style="font-weight:500;">Plus de 100 variables issues de sources fiables</p>
+                    <p class="text">Lieux et offre culturelle
+                        <br>Politiques culturelles territoriales
+                        <br>Dépenses publiques culturelles
+                        <br>Entreprises et emploi culturels
+                        <br>Contexte socio-économique
+                    </p>              
+                </div>
              </div>
-              <div class="col-lg-4 text-center" >
-                <img alt="Image base de données"src="{% static 'ATLAS_Chiffre-Modalites 1.png' %}" style="height:110px;"/>
-                <div>
-                <p class="subtitle text-center py-3" style="font-weight:500;">3 modalités de visualisation des données</p>
-                <p class="text">Une carte interactive
-                <br>Une vue liste
-                <br>Bientôt, des graphiques interactifs
-                </p>
-            </div>
+              <div class="col-lg-4">
+                <div class="text-center">
+                    <img alt="Image base de données"src="{% static 'ATLAS_Chiffre-Modalites 1.png' %}" style="height:110px;"/>
+                </div>
+                <div class="text-center">
+                    <p class="subtitle text-center py-3" style="font-weight:500;">3 modalités de visualisation des données</p>
+                    <p class="text px-2">Une carte interactive
+                    <br>Une vue liste
+                    <br>Bientôt, des graphiques interactifs
+                    </p>
+                </div>
             </div>
             </div>
         </div>

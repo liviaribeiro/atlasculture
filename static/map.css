@@ -279,7 +279,20 @@ body {
     padding: 0; 
 }
 #map { 
-    position: fixed; top: 56px; bottom: 0; width: 100%; z-index: -1; left: 63px;
+    position: absolute; top: 56px; bottom: 0; right: 0; z-index: -1; left: 63px;
+}
+
+.geocoder {
+    position: relative;
+    z-index: 5;
+    right: 0;
+    margin-top: 20px;
+    width: 227px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 768px) {  
 }
 
 #menu {
@@ -323,4 +336,10 @@ body {
 #menu a.active:hover {
     background: #3074a4;
 }
+
+.mapboxgl-ctrl-attrib-inner a {
+    font-size: 12px;
+    color: black;
+}
+
     
