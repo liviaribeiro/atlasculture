@@ -1774,7 +1774,7 @@
                 pourcentage = e.features[0].properties.DEPENSESHABITANTS
                 nombre = e.features[0].properties.DEPENSESTOTALES
                 texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses du ministère de la Culture : "
-                        +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
+                        +"<p>- "+formatNumber(nombre.toFixed(0))+" euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
                 if (nombre == -1) {
                     texte = "Données non disponibles"
                 }
