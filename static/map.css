@@ -284,15 +284,10 @@ body {
 
 .geocoder {
     position: relative;
-    z-index: 5;
-    right: 0;
-    margin-top: 20px;
+    z-index: 20;
+    margin-left: 30px;
+    margin-top: 10px;
     width: 227px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media (max-width: 768px) {  
 }
 
 #menu {
@@ -341,5 +336,4 @@ body {
     font-size: 12px;
     color: black;
 }
-
     

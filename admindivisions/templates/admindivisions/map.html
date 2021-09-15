@@ -4,14 +4,15 @@
 {% load static %}
 
 <div id="map">
-    <div id="geocoder" class="geocoder"></div>
 </div>
 
 <div id="legend-wrapper" class="legend-wrapper">
+
+    <div id="geocoder" class="geocoder"></div>
+
     <button class="btn-legend" value="legend-wrapper" onclick="openCloseLegend(this.value)"><img src="{% static 'Vector1.png' %}" />
     </button>
     <div class="legend-content">
-        <p class="title-legend-box">FILTRES ACTIFS</p>
         <div id="legend-box" class="legend-box"></div>
     </div>
 </div>  
@@ -118,7 +119,7 @@
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
-    var map = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v10',
         center: [4.079306, 48.293024],
@@ -132,7 +133,7 @@
         mapboxgl: mapboxgl,
         marker: false
     });
- 
+
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     function openCloseLegend(itemMenu) {
@@ -178,7 +179,7 @@
         closeButton.className = "closebtn";
         closeButton.onclick = function () {showInfo(hideInfo(equipementID))};
         var info = document.createElement('div');
-        info.className = "legend shadow-sm p-3 mb-1 bg-white rounded";
+        info.className = "legend shadow-sm p-3 mb-1 bg-white";
         info.setAttribute('id', "info-"+equipementID);
         info.appendChild(closeButton);
         var title = document.createElement('div');
@@ -238,7 +239,7 @@
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
         title.className = "title-legend mb-3 mt-2";
@@ -276,7 +277,7 @@
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
         title.className = "title-legend mb-3 mt-2";
@@ -326,21 +327,18 @@
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white";
         var legendID = "legend-"+equipementID;
         legend.setAttribute('id', legendID);
        
-        var color = color;
         var item = document.createElement('div');
         item.className = "row inline mt-2"
         var col1 = document.createElement('div');
         col1.className = "col-2 d-flex align-items-center"
-        var key = document.createElement('div');
-        key.className = 'legend-circle';
-        key.style.backgroundColor = color;
+        var key = document.createElement('img');
 
-        key.style.height = "12px";
-        key.style.width = "12px";
+        key.src = color;
+        key.style.height = "10px";
 
         var col2 = document.createElement('div');
         col2.className = "col-10 d-flex align-items-center";
@@ -369,7 +367,7 @@
         var legend = document.createElement('div');
         legend.appendChild(closeButton);
         legend.appendChild(infoButton);
-        legend.className = "legend shadow-sm p-3 my-2 bg-white rounded";
+        legend.className = "legend shadow-sm p-3 my-2 bg-white";
         legend.setAttribute('id', "legend-"+indicator);
        
         var color = color;
@@ -396,8 +394,6 @@
         
         legend.style.display = 'none'; 
     }
-
-    map.addControl(new mapboxgl.NavigationControl(),'bottom-right');
 
     var popup = new mapboxgl.Popup({
             closeButton: false,
@@ -806,7 +802,78 @@
             'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
             function (error, image) {
             if (error) throw error;
-            map.addImage('custom-marker', image);})
+            map.addImage('custom-marker', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_bleu-vert-foncé.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_jauneclair', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_bleu.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_jaunefonce', image);}
+        )
+        
+        map.loadImage(
+            '{% static 'star-of-life-solid_marron.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_orangeclair', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_NOIR.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_orangefonce', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_rose-rouge-foncé.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_roseclair', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_rose.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_rosefonce', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_ROUGE.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_vertclair', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_vert-foncé.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_vertfonce', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_VIOLET-foncé.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_violetclair', image);}
+        )
+
+        map.loadImage(
+            '{% static 'star-of-life-solid_violet.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('star_violetfonce', image);}
+        )
 
 
         var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
@@ -2009,18 +2076,8 @@
                 'source': 'pdr',
                 'source-layer': 'PDR',
                 'layout': {
-                        'icon-image': [
-                        "case",
-                        [
-                            "match",
-                            ["get", "ACV"],
-                            ["000000"],
-                            false,
-                            true
-                        ],
-                        "custom-marker",
-                        ""
-                        ],           
+                        'icon-image': 
+                        "custom-marker",        
                         'icon-size': 0.5,
                         'visibility': 'none',
                         'icon-allow-overlap': true, 
@@ -2112,49 +2169,68 @@
                 'data': "{% url 'equipements' equipement_type.pk %}",
             });
 
-            if ('{{domaine.name}}' == "Service d'archives"){
-                circleColor = '#006837';
+            var symbol = 'star_jauneclair';
+            var img = '{% static 'star-of-life-solid_bleu-vert-foncé.png' %}';
+    
+            if ('{{equipement_type.name}}' == "Architecture contemporaine remarquable"){
+                symbol = 'star_jauneclair';
+                img = '{% static 'star-of-life-solid_bleu-vert-foncé.png' %}';
+
             }
-            if ('{{domaine.name}}' == "Arts du spectacle"){
-                circleColor = '#253494';
+            if ('{{equipement_type.name}}' == "Centre culturel de rencontre"){
+                symbol = 'star_jaunefonce';
+                img = '{% static 'star-of-life-solid_bleu.png' %}';
+
             }
-            if ('{{domaine.name}}' == "Arts visuels"){
-                circleColor = '#810f7c';
+            if ('{{equipement_type.name}}' == "Jardin remarquable"){
+                symbol = 'star_orangeclair';
+                img = '{% static 'star-of-life-solid_marron.png' %}';
             }
-            if ('{{domaine.name}}' == "Cinéma"){
-                circleColor = '#ae017e';
+            if ('{{equipement_type.name}}' == "Lieu archéologique"){
+                symbol = 'star_orangefonce';
+                img = '{% static 'star-of-life-solid_NOIR.png' %}';
             }
-            if ('{{domaine.name}}' == "Éducation, Formation"){
-                circleColor = '#cc4c02';
+            if ('{{equipement_type.name}}' == "Maison des Illustres"){
+                symbol = 'star_roseclair';
+                img = '{% static 'star-of-life-solid_rose-rouge-foncé.png' %}';
             }
-            if ('{{domaine.name}}' == "Lieux de lecture publique"){
-                circleColor = '#bd0026';
+            if ('{{equipement_type.name}}' == "Micro-folie"){
+                symbol = 'star_rosefonce';
+                img = '{% static 'star-of-life-solid_rose.png' %}';
             }
-            if ('{{domaine.name}}' == "Livre et presse"){
-                circleColor = '#bd0026';
+            if ('{{equipement_type.name}}' == "Monument historique"){
+                symbol = 'star_vertclair';
+                img = '{% static 'star-of-life-solid_ROUGE.png' %}';
             }
-            if ('{{domaine.name}}' == "Patrimoine artistique et monumental"){
-                circleColor = '#00796b';
+            if ('{{equipement_type.name}}' == "Monument national"){
+                symbol = 'star_vertfonce';
+                img = '{% static 'star-of-life-solid_vert-foncé.png' %}';
             }
-            
-        
+            if ('{{equipement_type.name}}' == "Musée de France"){
+                symbol = 'star_violetclair';
+                img = '{% static 'star-of-life-solid_VIOLET-foncé.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Patrimoine mondial Unesco"){
+                symbol = 'star_violetfonce';
+                img = '{% static 'star-of-life-solid_violet.png' %}';
+            }
+
             map.addLayer({
                 'id': '{{ equipement_type.pk}}',
-                'type': 'circle',
-                'source': 'equipements'+'{{ equipement_type.pk }}',
-                'paint': {
-                    'circle-color': circleColor,
-                    'circle-radius': {
-                        stops: [[6, 1.5], [9, 7], [16, 8]]
-                    }          
-                },            
+                'type': 'symbol',
+                'source': 'equipements'+'{{ equipement_type.pk }}',           
                 'layout': {
-                        'visibility': 'none',
+                    'icon-image': symbol,
+                    'icon-size': {stops: [[6, 0.25], [9, 0.5], [16, 1]]},
+                    'icon-allow-overlap': true, 
+                    'visibility': 'none',   
                     },      
             });
 
+            var circleColor = '#074382';
+
             addInfo('{{ equipement_type.name }}', '{{ equipement_type.pk }}', '{{ equipement_type.definition }}', '{{ equipement_type.source }}', '{{ equipement_type.year }}');
-            addLegendEquipement('{{ equipement_type.name }}', '{{ equipement_type.pk }}', circleColor);
+            addLegendEquipement('{{ equipement_type.name }}', '{{ equipement_type.pk }}', img);
         
             map.on('click', '{{ equipement_type.pk }}', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();

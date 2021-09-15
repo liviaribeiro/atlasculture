@@ -112,7 +112,7 @@
 
 .legend-content {
     position: absolute;
-    top: 0;
+    top: 10;
     left: 30px;
 }
 
@@ -137,6 +137,7 @@
     z-index: 10;
     width: 227px;
     height:fit-content;
+    border-radius: 20px;
 }
 
 .popup .mapbox-popup {

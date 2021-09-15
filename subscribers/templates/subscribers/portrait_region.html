@@ -9,10 +9,51 @@
         <div class="col-md-4 text-center">
             <img src="{{portrait.region.image_line.url}}" style="width: 381px;"/>
             <p><a href="{% url 'portraits' %}"><img alt="Flèche" src="{% static 'Vector.png' %}" style="width: 12px;" /> Revenir à la liste des fiches</a></p>
-            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="{{ portrait.fiche.url }}">Télécharger la fiche</a>
+            
+            <p class="subtitle3 mt-4">SOMMAIRE</p>
+            <button class="collapsible">Données de contexte</button>
+            <div class="content">
+                <p><a href="#geographie">Géographie</a></p>
+                <p><a href="#demographie">Démographie</a></p>
+                <p><a href="#niveaudevie">Niveau de vie</a></p>
+                <p><a href="#economie">Économie</a></p>
+                <p><a href="#travail">Marché du travail</a></p>
+                <p><a href="#education">Niveau d'éducation</a></p>
+                <p><a href="#qualitedevie">Qualité de vie</a></p>
+            </div>
+            <button class="collapsible">Données culturelles</button>
+            <div class="content">
+                <p><a href="#offre">Offre culturelle</a></p>
+                <p><a href="#emploi">Emploi culturel</a></p>
+                <p><a href="#entreprise">Entreprises culturelles</a></p>
+                <p><a href="#depenses">Dépenses culturelles publiques</a></p>
+            </div>
+            
+            <a class="btn btn-download d-inline-flex align-items-center btn-link mt-5" href="{{ portrait.fiche.url }}">Télécharger la fiche</a>
             <p></p>
-            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="{{ portrait.chiffres_cle.url }}">Télécharger les chiffres clés</a>
+            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="{{ portrait.chiffres_cle.url }}">Télécharger les données de contexte</a>
+            <p></p>
+            <a class="btn btn-download d-inline-flex align-items-center btn-link" href="{{ portrait.chiffres_cle.url }}">Télécharger les données culturelles</a>
+
         </div>
+
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+            
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                } 
+              });
+            }
+            </script>
+
         <div class="col-md-8">
             <h1 class="title text-center pt-5 px-0"> {{ portrait.region.name }}</h1>
 
@@ -24,19 +65,53 @@
             {{ portrait.introduction|safe }}
             </p>
                 
-            <p class="subtitle5 mt-4">Données de contexte</p>      
-            <p class="pp"> {{ portrait.contexte|safe }}
-            </p>
+            <p class="subtitle5 mt-4">Données de contexte</p> 
 
-            <p class="subtitle5 mt-4"> Offre culturelle</p>
+            <p class="subtitle3 mt-4" id="geographie">Géographie</p>    
+            <p class="pp"> {{ portrait.geographie|safe }}</p>
 
-            <p class="mb-5 pp">{{ portrait.culture|safe }}</p>
+            <p class="subtitle3 mt-4" id="demographie">Démographie</p>    
+            <p class="pp"> {{ portrait.demographie|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="niveaudevie">Niveau de vie</p>
+            <p class="pp"> {{ portrait.niveaudevie|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="economie">Économie</p>
+            <p class="pp"> {{ portrait.economie|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="travail">Marché du travail</p>
+            <p class="pp"> {{ portrait.travail|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="education">Niveau d'éducation</p>
+            <p class="pp"> {{ portrait.education|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="qualitedevie">Qualité de vie</p>
+            <p class="pp"> {{ portrait.qualitedevie|safe }}</p>
+
+            <p class="subtitle5 mt-4">Données culturelles</p> 
+
+            <p class="subtitle3 mt-4" id="offre">Offre culturelle</p>
+            <p class="pp"> {{ portrait.offre|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="emploi">Emploi culturel</p>
+            <p class="pp"> {{ portrait.emploi|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="entreprise">Entreprises culturelles</p>
+            <p class="pp"> {{ portrait.entreprise|safe }}</p>
+
+            <p class="subtitle3 mt-4" id="depenses">Dépenses culturelles publiques</p>
+            <p class="pp"> {{ portrait.depenses|safe }}</p>
 
             <p class="pp"><b>Pour en savoir plus :</b></p>
-            <p><a href="#">Observatoire des territoires</a></p>
-            <p><a href="#">Insee, statistiques locales</a></p>
-            <p><a href="#">Insee, portraits de territoires</a></p>
-            <p><a href="#">Eric Janin (sous la dir. de), Les 18 régions françaises, Ellipses, 2017</a></p>
+            <p><a href="https://www.insee.fr/fr/information/3544265">Insee, comparateur de territoires</a></p>
+            <p><a href="https://statistiques-
+                locales.insee.fr/#c=report&chapter=compar&report=r01&selgeo1=epci.244400404&selgeo2=reg
+                .52">Insee, statistiques locales</a></p>
+            <p><a href="https://blog.insee.fr/ma-region-cest-lessentiel/">Insee, l’essentiel sur... -> par région</a></p>
+            <p><a href="https://www.observatoire-des-territoires.gouv.fr/portraits-
+                et-comparaisons-de-territoires">CGET, Observatoire des territoires</a></p>
+            <p><a href="#">Christian Noël, « Bretagne : les paradoxes d’un développement territorial entre terre et mer »,
+                in Éric Janin, Les 18 régions françaises, Ellipses, 2017</a></p>
 
         </div>
     </div>
