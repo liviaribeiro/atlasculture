@@ -806,7 +806,7 @@
         )
 
         map.loadImage(
-            '{% static 'star-of-life-solid_bleu-vert-foncé.png' %}',
+            '{% static 'star-of-life-solid_bleu-vert-fonce.png' %}',
             function (error, image) {
             if (error) throw error;
             map.addImage('star_jauneclair', image);}
@@ -834,7 +834,7 @@
         )
 
         map.loadImage(
-            '{% static 'star-of-life-solid_rose-rouge-foncé.png' %}',
+            '{% static 'star-of-life-solid_rose-rouge-fonce.png' %}',
             function (error, image) {
             if (error) throw error;
             map.addImage('star_roseclair', image);}
@@ -855,14 +855,14 @@
         )
 
         map.loadImage(
-            '{% static 'star-of-life-solid_vert-foncé.png' %}',
+            '{% static 'star-of-life-solid_vert-fonce.png' %}',
             function (error, image) {
             if (error) throw error;
             map.addImage('star_vertfonce', image);}
         )
 
         map.loadImage(
-            '{% static 'star-of-life-solid_VIOLET-foncé.png' %}',
+            '{% static 'star-of-life-solid_VIOLET-fonce.png' %}',
             function (error, image) {
             if (error) throw error;
             map.addImage('star_violetclair', image);}
@@ -2170,11 +2170,11 @@
             });
 
             var symbol = 'star_jauneclair';
-            var img = '{% static 'star-of-life-solid_bleu-vert-foncé.png' %}';
+            var img = '{% static 'star-of-life-solid_bleu-vert-fonce.png' %}';
     
             if ('{{equipement_type.name}}' == "Architecture contemporaine remarquable"){
                 symbol = 'star_jauneclair';
-                img = '{% static 'star-of-life-solid_bleu-vert-foncé.png' %}';
+                img = '{% static 'star-of-life-solid_bleu-vert-fonce.png' %}';
 
             }
             if ('{{equipement_type.name}}' == "Centre culturel de rencontre"){
@@ -2192,7 +2192,7 @@
             }
             if ('{{equipement_type.name}}' == "Maison des Illustres"){
                 symbol = 'star_roseclair';
-                img = '{% static 'star-of-life-solid_rose-rouge-foncé.png' %}';
+                img = '{% static 'star-of-life-solid_rose-rouge-fonce.png' %}';
             }
             if ('{{equipement_type.name}}' == "Micro-folie"){
                 symbol = 'star_rosefonce';
@@ -2204,11 +2204,11 @@
             }
             if ('{{equipement_type.name}}' == "Monument national"){
                 symbol = 'star_vertfonce';
-                img = '{% static 'star-of-life-solid_vert-foncé.png' %}';
+                img = '{% static 'star-of-life-solid_vert-fonce.png' %}';
             }
             if ('{{equipement_type.name}}' == "Musée de France"){
                 symbol = 'star_violetclair';
-                img = '{% static 'star-of-life-solid_VIOLET-foncé.png' %}';
+                img = '{% static 'star-of-life-solid_VIOLET-fonce.png' %}';
             }
             if ('{{equipement_type.name}}' == "Patrimoine mondial Unesco"){
                 symbol = 'star_violetfonce';
