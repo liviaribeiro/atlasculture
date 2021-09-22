@@ -2,7 +2,7 @@ from django.contrib.gis import admin
 
 from equipements.models import (EquipementType, Source, Equipement, Domaine, DomaineAtlas, Function,
 Cinema, Bibliotheque, Librairie, Architecture, MonumentHistorique, Unesco,
-EquipementCommune, EquipementLabel, TypologieLieux, DetailLieux)
+EquipementCommune, EquipementLabel, TypologieLieux, DetailLieux, SousDomaine)
 
 # Register your models here.
 
@@ -22,4 +22,5 @@ admin.site.register(EquipementLabel)
 admin.site.register(DomaineAtlas)
 admin.site.register(TypologieLieux)
 admin.site.register(DetailLieux)
+admin.site.register(SousDomaine)
 

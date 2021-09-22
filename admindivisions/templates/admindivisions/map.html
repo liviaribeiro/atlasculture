@@ -21,24 +21,24 @@
 
     <nav id="sidebar">
         <ul class="list-unstyled components text-center">
-            <li><button value="equipement-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Offre et lieux culturels" src="{% static 'equipements.png' %}" style="width: 35px; margin-top:30px;"/></span>
-                <span class="sidebuttoninfo"><img alt="Offre et lieux culturels" src="{% static 'equipements.png' %}" style="width: 35px;" /><span class ='sidebuttontxt'>Offre et lieux culturels</span></span>
+            <li><button value="equipement-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Offre et lieux culturels" src="{% static 'equipements.png' %}" style="margin-top:30px;"/></span>
+                <span class="sidebuttoninfo"><img alt="Offre et lieux culturels" src="{% static 'equipements1.png' %}" /><span class ='sidebuttontxt'>Offre et lieux culturels</span></span>
             </button></li>
 
-            <li><button value="politiques-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Politiques publiques culturelles" src="{% static 'politiques.png' %}" style="width: 35px; margin-top:30px"/></span>
-                <span class="sidebuttoninfo"><img alt="Politiques publiques culturelles" src="{% static 'politiques.png' %}" style="width: 35px;" /><span class ='sidebuttontxt'>Politiques publiques culturelles</span></span>
+            <li><button value="politiques-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Politiques publiques culturelles" src="{% static 'politiques.png' %}" style="margin-top:30px"/></span>
+                <span class="sidebuttoninfo"><img alt="Politiques publiques culturelles" src="{% static 'politiques1.png' %}" /><span class ='sidebuttontxt'>Politiques publiques culturelles</span></span>
             </button></li>
 
-            <li><button value="depenses-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Dépénses publiques culturelles" src="{% static 'depenses.png' %}" style="width: 35px; margin-top:30px"/></span>
-                <span class="sidebuttoninfo"><img alt="Dépenses publiques culturelles" src="{% static 'depenses.png' %}" style="width: 35px;" /><span class ='sidebuttontxt'>Dépenses publiques culturelles</span></span>
+            <li><button value="depenses-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Dépénses publiques culturelles" src="{% static 'depenses.png' %}" style="margin-top:30px"/></span>
+                <span class="sidebuttoninfo"><img alt="Dépenses publiques culturelles" src="{% static 'depenses1.png' %}" /><span class ='sidebuttontxt'>Dépenses publiques culturelles</span></span>
             </button></li>
 
-            <li><button value="entreprises-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Entreprises et emploi culturels" src="{% static 'entreprises.png' %}" style="width: 35px; margin-top:30px"/></span>
-                <span class="sidebuttoninfo"><img alt="Entreprises et emploi culturels" src="{% static 'entreprises.png' %}" style="width: 35px;" /><span class ='sidebuttontxt'>Entreprises et emploi culturels</span></span>
+            <li><button value="entreprises-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Entreprises et emploi culturels" src="{% static 'entreprises.png' %}" style="margin-top:30px"/></span>
+                <span class="sidebuttoninfo"><img alt="Entreprises et emploi culturels" src="{% static 'entreprises1.png' %}" /><span class ='sidebuttontxt'>Entreprises et emploi culturels</span></span>
             </button></li>
 
-            <li><button value="contexte-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Données de contexte" src="{% static 'contexte.png' %}" style="width: 35px; margin-top:30px"/></span>
-                <span class="sidebuttoninfo"><img alt="Données de contexte" src="{% static 'contexte.png' %}" style="width: 35px;" /><span class ='sidebuttontxt'>Données de contexte</span></span>
+            <li><button value="contexte-menu" onclick="openNav(this.value)" class="sidebutton"><span class="sidebuttonimg"><img alt="Données de contexte" src="{% static 'contexte.png' %}" style="margin-top:30px"/></span>
+                <span class="sidebuttoninfo"><img alt="Données de contexte" src="{% static 'contexte1.png' %}" /><span class ='sidebuttontxt'>Données de contexte</span></span>
             </button></li>
         </ul>
     </nav>
@@ -47,16 +47,33 @@
         <button href="javascript:void(0)" value="equipement-menu" class="closebtn" onclick="closeNav(this.value)"></button>
         <p class="title">Offre et lieux culturels</p>
         <div class="item">
-            <p class="subtitle">Festivals</p>
-            <button class="btn-tag" value="Festivals" id="Festivals" onclick="showLayer(this.value)">Festivals</button>
             {% for domaine in domaines%}
-                <p class="subtitle">{{ domaine.name }}</p>
-                {% for equipement_type in domaine.equipementtype_set.all %}
-                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
-                {% endfor %}
+                <button class="btn-submenu" value="{{ domaine.name }}" onclick="openSubmenuNav(this.value)">{{ domaine.name }}</button>
             {% endfor %}
         </div>
     </div>
+
+    {% for domaine in domaines%}
+    <div id="{{ domaine.name }}" class="submenu">
+        <button href="javascript:void(0)" value="{{ domaine.name }}" class="closebtn" onclick="closeNav(this.value)"></button>
+        <p class="title">Offre et lieux culturels</p>
+        <button href="javascript:void(0)" value="{{ domaine.name }}" class="domaine-title" onclick="closeNav(this.value)">{{ domaine.name }}</button>
+        <div class="item">
+            {% if domaine.sousdomaine_set.all|length > 0 %}
+                {% for sousdomaine in domaine.sousdomaine_set.all%}
+                <p class="sousdomaine-title">{{ sousdomaine.name }}</p>
+                    {% for equipement_type in sousdomaine.equipementtype_set.all %}
+                        <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+            {% for equipement_type in domaine.equipementtype_set.all %}
+                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
 
     <div id="politiques-menu" class="submenu">
         <button href="javascript:void(0)" value="politiques-menu" class="closebtn" onclick="closeNav(this.value)"></button>
@@ -70,12 +87,12 @@
         <button href="javascript:void(0)" value="depenses-menu" class="closebtn" onclick="closeNav(this.value)"></button>
         <p class="title">Dépenses culturelles publiques</p>
         <div class="item">
-            <p class="subtitle">Dépenses des collectivités territoriales</p>
+            <p class="sousdomaine-title">Dépenses des collectivités territoriales</p>
             <button class="btn-tag" value="Dépenses culturelles des régions" id="Dépenses culturelles des régions" onclick="showLayer(this.value)">Dépenses culturelles des régions</button>
             <button class="btn-tag" value="Dépenses culturelles des départements" id="Dépenses culturelles des départements" onclick="showLayer(this.value)">Dépenses culturelles des départements</button>
             <button class="btn-tag" value="Dépenses culturelles des intercommunalités" id="Dépenses culturelles des intercommunalités" onclick="showLayer(this.value)">Dépenses culturelles des intercommunalités</button>
             <button class="btn-tag" value="Dépenses culturelles des communes" id="Dépenses culturelles des communes" onclick="showLayer(this.value)">Dépenses culturelles des communes</button>
-            <p class="subtitle">Dépenses de l'État</p>
+            <p class="sousdomaine-title">Dépenses de l'État</p>
             <button class="btn-tag" value="Plan de relance" id="Plan de relance" onclick="showLayer(this.value)">Plan de relance</button>
             <button class="btn-tag" value="Dépenses du ministère de la Culture" id="Dépenses du ministère de la Culture" onclick="showLayer(this.value)">Dépenses du ministère de la Culture</button>
         </div>
@@ -85,10 +102,10 @@
         <button href="javascript:void(0)" value="entreprises-menu" class="closebtn" onclick="closeNav(this.value)"></button>
         <p class="title">Entreprises et emploi culturels</p>
         <div class="item">
-            <p class="subtitle">Entreprises</p>
+            <p class="sousdomaine-title">Entreprises</p>
             <button class="btn-tag" value="Entreprises culturelles du secteur marchand" id="Entreprises culturelles du secteur marchand" onclick="showLayer(this.value)">Entreprises culturelles du secteur marchand</button>
             <button class="btn-tag" value="Salariés actifs des secteurs culturels marchands" id="Salariés actifs des secteurs culturels marchands" onclick="showLayer(this.value)">Salariés actifs des secteurs culturels marchands</button>
-            <p class="subtitle">Emploi</p>
+            <p class="sousdomaine-title">Emploi</p>
             <button class="btn-tag" value="Actifs exerçant une profession culturelle" id="Actifs exerçant une profession culturelle" onclick="showLayer(this.value)">Actifs exerçant une profession culturelle</button>
             <button class="btn-tag" value="Actifs dans les secteurs culturels" id="Actifs dans les secteurs culturels" onclick="showLayer(this.value)">Actifs dans les secteurs culturels</button>
         </div>
@@ -98,19 +115,19 @@
         <button href="javascript:void(0)" value="contexte-menu" class="closebtn" onclick="closeNav(this.value)"></button>
         <p class="title">Données de contexte</p>
         <div class="item">
-            <p class="subtitle">Population</p>
+            <p class="sousdomaine-title">Population</p>
             <button class="btn-tag" value="Population" id="Population" onclick="showLayer(this.value)">Population totale</button>
             <button class="btn-tag" value="Indice de jeunesse" id="Indice de jeunesse" onclick="showLayer(this.value)">Indice de jeunesse</button>
             <button class="btn-tag" value="Densité de la population" id="Densité de la population" onclick="showLayer(this.value)">Densité de la population</button>
             <button class="btn-tag" value="Évolution de la population" id="Évolution de la population" onclick="showLayer(this.value)">Évolution de la population</button>
-            <p class="subtitle" style="display: none;">Structure de la population par âge</p>
-            <p class="subtitle">Niveaux de vie et redistribution</p>
+            <p class="sousdomaine-title" style="display: none;">Structure de la population par âge</p>
+            <p class="sousdomaine-title">Niveaux de vie et redistribution</p>
             <button class="btn-tag" value="Niveau de vie médian" id="Niveau de vie médian" onclick="showLayer(this.value)">Niveau de vie médian</button>
             <button class="btn-tag" value="Taux de pauvreté" id="Taux de pauvreté" onclick="showLayer(this.value)">Taux de pauvreté</button>
-            <p class="subtitle">Politiques publiques</p>
+            <p class="sousdomaine-title">Politiques publiques</p>
             <button class="btn-tag" value="Action coeur de ville" id="Action coeur de ville" onclick="showLayer(this.value)">Action coeur de ville</button>
             <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" id="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this.value)">Quartiers prioritaires de la politique de la ville</button>
-            <p class="subtitle">Zonage d'études</p>
+            <p class="sousdomaine-title">Zonage d'études</p>
             <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
             <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
         </div>
@@ -160,18 +177,29 @@
             var w = document.documentElement.clientWidth-63;
             document.getElementById(itemMenu).style.width = w.toString()+"px";
         }
-        var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu"]
+        var menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu", "Arts du spectacle",
+        "Arts visuels", "Cinéma", "Archives", "Éducation et formation", "Patrimoine", "Livre, lecture et presse"]
         for (var i = 0; i < menus.length; i++){
             if (menus[i] != itemMenu) {
                 closeNav(menus[i]);
             }
         }
     }
+
+    function openSubmenuNav(itemMenu) {
+        const mediaQuery = window.matchMedia('(min-width: 480px)')
+        if (mediaQuery.matches) {
+            document.getElementById(itemMenu).style.width = "408px";
+        }
+        else {
+            var w = document.documentElement.clientWidth-63;
+            document.getElementById(itemMenu).style.width = w.toString()+"px";
+        }   
+    }
     
     function closeNav(itemMenu) {
         document.getElementById(itemMenu).style.width = "0";
     }
-
 
     function addInfo(indicator, equipementID, definition, source, year) {
         legendBox = document.getElementById('legend-box');
@@ -262,7 +290,6 @@
             legend.appendChild(item);
             legendBox.appendChild(legend);
         }
-        
         legend.style.display = 'none'; 
     }
 
@@ -283,7 +310,6 @@
         title.className = "title-legend mb-3 mt-2";
         title.innerHTML = indicator;
         legend.appendChild(title)
-
 
         for (i = 0;  i < layers.length; i++) {
             var layer = layers[i];
@@ -312,7 +338,6 @@
             legend.appendChild(item);
             legendBox.appendChild(legend);
         }
-        
         legend.style.display = 'none'; 
     }
 
@@ -875,6 +900,110 @@
             map.addImage('star_violetfonce', image);}
         )
 
+        map.loadImage(
+            '{% static 'theatre-rouge.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-rouge', image);}
+        )
+
+        map.loadImage(
+            '{% static 'theatre-violet.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-violet', image);}
+        )
+        
+        map.loadImage(
+            '{% static 'theatre-rose.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-rose', image);}
+        )
+
+        map.loadImage(
+            '{% static 'theatre-vert.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-vert', image);}
+        )
+
+        map.loadImage(
+            '{% static 'theatre-jaune.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-jaune', image);}
+        )
+
+        map.loadImage(
+            '{% static 'theatre-orange.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-orange', image);}
+        )
+
+        map.loadImage(
+            '{% static 'theatre-marron.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-marron', image);}
+        )
+
+        map.loadImage(
+            '{% static 'theatre-bleu.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-bleu', image);}
+        )
+
+        map.loadImage(
+            '{% static 'theatre-noir.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('theatre-noir', image);}
+        )
+
+        map.loadImage(
+            '{% static 'musique-violet.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('musique-violet', image);}
+        )
+
+        map.loadImage(
+            '{% static 'musique-vert.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('musique-vert', image);}
+        )
+
+        map.loadImage(
+            '{% static 'musique-jaune.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('musique-jaune', image);}
+        )
+
+        map.loadImage(
+            '{% static 'musique-orange.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('musique-orange', image);}
+        )
+
+        map.loadImage(
+            '{% static 'musique-marron.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('musique-marron', image);}
+        )
+
+        map.loadImage(
+            '{% static 'musique-noir.png' %}',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('musique-noir', image);}
+        )
 
         var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
         var colors = ['#d01c8b', '#f1b6da', '#b8e186', '#4dac26'];
@@ -2214,6 +2343,68 @@
                 symbol = 'star_violetfonce';
                 img = '{% static 'star-of-life-solid_violet.png' %}';
             }
+            if ('{{equipement_type.name}}' == "Centre dramatique national"){
+                symbol = 'theatre-rouge';
+                img = '{% static 'theatre-rouge.png' %}';
+
+            }
+            if ('{{equipement_type.name}}' == "Théatre lyrique d'intérêt national"){
+                symbol = 'theatre-violet';
+                img = '{% static 'theatre-violet.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Centre dramatique régional"){
+                symbol = 'theatre-rose';
+                img = '{% static 'theatre-rose.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Théâtre de ville"){
+                symbol = 'theatre-vert';
+                img = '{% static 'theatre-vert.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Théâtre national"){
+                symbol = 'theatre-jaune';
+                img = '{% static 'theatre-jaune.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Théâtre privé"){
+                symbol = 'theatre-orange';
+                img = '{% static 'theatre-orange.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Compagnie avec lieu"){
+                symbol = 'theatre-marron';
+                img = '{% static 'theatre-marron.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Théâtre hors label"){
+                symbol = 'theatre-bleu';
+                img = '{% static 'theatre-bleu.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Établissement de spectacles privés"){
+                symbol = 'star_violetclair';
+                img = '{% static 'theatre-noir.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Centre national de création musicale"){
+                symbol = 'musique-violet';
+                img = '{% static 'musique-violet.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Scène de musiques actuelles"){
+                symbol = 'musique-vert';
+                img = '{% static 'musique-vert.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Scène conventionnée d’intérêt national"){
+                symbol = 'musique-jaune';
+                img = '{% static 'musique-jaune.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Scène nationale"){
+                symbol = 'musique-orange';
+                img = '{% static 'musique-orange.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Scène"){
+                symbol = 'musique-marron';
+                img = '{% static 'musique-marron.png' %}';
+            }
+            if ('{{equipement_type.name}}' == "Zénith"){
+                symbol = 'musique-noir';
+                img = '{% static 'musique-noir.png' %}';
+            }
+
 
             map.addLayer({
                 'id': '{{ equipement_type.pk}}',

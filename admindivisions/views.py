@@ -17,7 +17,9 @@ def map(request):
     domaines = Domaine.objects.all()
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
-    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural, 'variables': variables}
+    artsduspectacle = Domaine.objects.get(name="Arts du spectacle")
+    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural, 'variables': variables,
+    'artsduspectacle': artsduspectacle}
     return render(request, 'admindivisions/map.html', context)
 
 def equipements(request, domaine):

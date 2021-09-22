@@ -140,6 +140,11 @@
     border-radius: 20px;
 }
 
+.col-legend-title {
+    width: 163px;
+    align-items: flex-start;
+}
+
 .popup .mapbox-popup {
     z-index: 20;
 }
@@ -183,26 +188,27 @@
     z-index: 50;
 }
 
-.sidebutton:hover .sidebuttonimg{
-    display: none;
-}
+@media only screen and (min-width: 768px) {
+    .sidebutton:hover .sidebuttonimg{
+        display: none;
+    }
 
-.sidebutton:hover .sidebuttoninfo{
-    z-index: 20;
-    background: #ffffff;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    padding: 10px; 
-    position: relative;   
-    width: 300px;
-    height: 50px;
-    border: 1px solid #C0C0FF;
-    box-sizing: border-box;
-    border-radius: 90px;
-    margin-top:30px
-
+    .sidebutton:hover .sidebuttoninfo{
+        z-index: 20;
+        background: #ffffff;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        padding: 10px; 
+        position: relative;   
+        width: 300px;
+        height: 50px;
+        border: 1px solid #C0C0FF;
+        box-sizing: border-box;
+        border-radius: 90px;
+        margin-top:30px
+    }
 }
 
 .sidebuttontxt {
@@ -313,3 +319,49 @@
     color: #150091;
 }
 
+.submenu .btn-submenu {
+    width: 100%;
+    background-color: white;
+    color: #000074;
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: normal;
+    padding: 12px 16px 12px 16px;
+}
+
+.submenu .btn-submenu:after {
+    content: url('/static/Vector2.png');
+    height: 7px;
+    float: right;
+}
+
+.submenu .domaine-title {
+    font-family: 'Marianne', Arial, sans-serif;
+    color: #000074;
+    font-weight: 700;
+    font-size: 20px;
+    background-color:#F5F5FF;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    width: 100%;
+    text-align: left;
+    height: 62px;
+    margin-bottom: 24px;
+}
+
+.submenu .domaine-title:before {
+    content: url('/static/Back.png');
+    float: left;
+    padding-right: 8px;
+}
+
+.submenu .sousdomaine-title {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}

@@ -16,6 +16,13 @@ class Domaine(models.Model):
     def get_by_natural_key(self):
         return self.name
 
+class SousDomaine(models.Model):
+    name = models.CharField(max_length=100)
+    domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self.name
+
+
 class DomaineAtlas(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
@@ -42,6 +49,7 @@ class EquipementType(models.Model):
     name = models.CharField(max_length=100)
     code_DEPS = models.CharField(max_length=10)
     domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
+    sous_domaine = models.ForeignKey(SousDomaine, on_delete=models.CASCADE, null=True)
     definition = models.CharField(max_length=1000, null=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
@@ -59,8 +67,6 @@ class Label(models.Model):
 class Equipement(models.Model):
     id_DEPS = models.CharField(max_length=20, null=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True)
-    domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
-    sous_domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True, related_name='sous_domaine')
     fonction = models.ForeignKey(Function, on_delete=models.CASCADE, null=True)
     fonction_secondaire = models.ForeignKey(Function, on_delete=models.CASCADE, null=True, related_name='secondary_function')
     equipement_type = models.ForeignKey(EquipementType, on_delete=models.CASCADE, null=True)
