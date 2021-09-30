@@ -49,7 +49,7 @@ class EquipementType(models.Model):
     name = models.CharField(max_length=100)
     code_DEPS = models.CharField(max_length=10)
     domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
-    sous_domaine = models.ForeignKey(SousDomaine, on_delete=models.CASCADE, null=True)
+    sous_domaine = models.ForeignKey(SousDomaine, on_delete=models.CASCADE, null=True, blank=True)
     definition = models.CharField(max_length=1000, null=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
