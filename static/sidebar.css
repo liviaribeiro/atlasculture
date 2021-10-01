@@ -89,8 +89,9 @@
     .submenu {top: 96px !important;}
     .btn-legend {display: block !important;}
     .title-legend-box {display: block !important;}
-    .infobtn {width: 5px; height: 5px;}
+    .infobtn {background-size: 10px 10px !important;}
     .closebtn {background-size: 10px 10px !important;}
+    .submenu .subtitle {font-size: 16px !important;}
 }
 
 .title-legend-box {
@@ -285,7 +286,8 @@
     width: 14px;
     height: 14px;
     background: url('/static/info.png');
-    background-size: cover;  
+    background-size: cover; 
+    background-repeat: no-repeat; 
 }
 
 .item {
