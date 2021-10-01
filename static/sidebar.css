@@ -90,7 +90,7 @@
     .btn-legend {display: block !important;}
     .title-legend-box {display: block !important;}
     .infobtn {width: 5px; height: 5px;}
-    .closebtn {width: 5px; height: 5px;}
+    .closebtn {background-size: 10px 10px !important;}
 }
 
 .title-legend-box {
@@ -263,6 +263,7 @@
     height: 14px;
     background: url('/static/close.png');
     background-size: cover;  
+    background-repeat: no-repeat;
 }
 
 .btn-legend {
