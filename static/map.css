@@ -285,7 +285,6 @@ body {
 .geocoder {
     position: relative;
     z-index: 20;
-    margin-left: 30px;
     margin-top: 10px;
     width: 227px;
 }

@@ -67,7 +67,7 @@
     display: block;
     overflow-y:auto;
     top: 56px;
-    min-height: 100vh;
+    bottom: 0;
     background-color: transparent;
 }
 
@@ -89,6 +89,8 @@
     .submenu {top: 96px !important;}
     .btn-legend {display: block !important;}
     .title-legend-box {display: block !important;}
+    .infobtn {width: 5px; height: 5px;}
+    .closebtn {width: 5px; height: 5px;}
 }
 
 .title-legend-box {
@@ -121,7 +123,6 @@
     z-index: 10;
     width: 227px;
     display: block;
-    max-height: 600px;
     background-color: transparent;
 }
 
@@ -278,7 +279,7 @@
 .infobtn {
     position: absolute;
     top: 10px;
-    right: 34px;
+    right: 39px;
     border: none;
     width: 14px;
     height: 14px;

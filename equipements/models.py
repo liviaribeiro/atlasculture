@@ -21,6 +21,8 @@ class SousDomaine(models.Model):
     domaine = models.ForeignKey(Domaine, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.name
+    class Meta:
+        ordering = ['name']
 
 
 class DomaineAtlas(models.Model):

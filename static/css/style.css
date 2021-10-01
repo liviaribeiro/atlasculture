@@ -300,7 +300,7 @@ a.b1 {
     background: #150091;    
     border-radius: 30px;
     border: none;
-    color: white;
+    color: white !important;
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;
@@ -308,7 +308,7 @@ a.b1 {
 
 .btn-base:hover {
     background: #FFB1A7;
-    color: #000074;
+    color: #000074 !important;
 }
 
 .btn-link:link {

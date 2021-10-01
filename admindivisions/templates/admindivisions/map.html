@@ -12,9 +12,7 @@
 
     <button class="btn-legend" value="legend-wrapper" onclick="openCloseLegend(this.value)"><img src="{% static 'Vector1.png' %}" />
     </button>
-    <div class="legend-content">
         <div id="legend-box" class="legend-box"></div>
-    </div>
 </div>  
 
 <div class="wrapper">
@@ -211,7 +209,7 @@
         info.setAttribute('id', "info-"+equipementID);
         info.appendChild(closeButton);
         var title = document.createElement('div');
-        title.className = "title-legend mb-3";
+        title.className = "title-legend mb-3 mt-3";
         title.innerHTML = indicator;
         info.appendChild(title);
         info.style.display = 'none'; 
@@ -270,7 +268,7 @@
         legend.className = "legend shadow-sm p-3 my-2 bg-white";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
-        title.className = "title-legend mb-3 mt-2";
+        title.className = "title-legend mb-3 mt-3";
         title.innerHTML = indicator;
         legend.appendChild(title);
 
@@ -307,7 +305,7 @@
         legend.className = "legend shadow-sm p-3 my-2 bg-white";
         legend.setAttribute('id', "legend-"+indicator);
         var title = document.createElement('div');
-        title.className = "title-legend mb-3 mt-2";
+        title.className = "title-legend mb-3 mt-3";
         title.innerHTML = indicator;
         legend.appendChild(title)
 
@@ -369,7 +367,7 @@
         col2.className = "col-10 d-flex align-items-center";
         var value = document.createElement('div');
         value.innerHTML = indicator;
-        value.className = 'title-legend';
+        value.className = 'title-legend mb-3 mt-3';
         item.appendChild(col1);
         col1.appendChild(key);
         item.appendChild(col2);
@@ -410,7 +408,7 @@
         col2.className = "col-10 d-flex align-items-center";
         var value = document.createElement('div');
         value.innerHTML = indicator;
-        value.className = 'title-legend';
+        value.className = 'title-legend mb-3 mt-3';
 
         item.appendChild(col2);
         col2.appendChild(value);
@@ -2462,7 +2460,7 @@
                 symbol = 'theatre-orange';
                 img = '{% static 'icones/theatre-orange.png' %}';
             }
-            if ('{{equipement_type.name}}' == "Théatre lyrique d’intérêt national"){
+            if ('{{equipement_type.name}}' == "Théâtre lyrique d’intérêt national"){
                 symbol = 'theatre-jaune';
                 img = '{% static 'icones/theatre-jaune.png' %}';
             }

@@ -14,12 +14,10 @@ from django.http import JsonResponse
 # Create your views here.
 def map(request):
     communes = Commune.objects.all() 
-    domaines = Domaine.objects.all()
+    domaines = Domaine.objects.all().order_by('name')
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
-    artsduspectacle = Domaine.objects.get(name="Arts du spectacle")
-    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural, 'variables': variables,
-    'artsduspectacle': artsduspectacle}
+    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural, 'variables': variables}
     return render(request, 'admindivisions/map.html', context)
 
 def equipements(request, domaine):
