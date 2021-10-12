@@ -235,6 +235,8 @@ class Variable(models.Model):
     definition = models.CharField(max_length=1000)
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
+    position = models.IntegerField(null=True)
     def __str__(self):
         return self.nom
-
+    class Meta:
+        ordering = ('position',)

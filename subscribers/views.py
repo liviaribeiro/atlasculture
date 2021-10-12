@@ -30,7 +30,7 @@ def homepage(request):
         form = SubscriberForm(request.POST)
         if form.is_valid():
             form.save(request.user)
-            messages.success(request, "Vote inscription a bien été validé, merci.")
+            messages.success(request, "Votre inscription a bien été validée, merci.")
         else:
             messages.error(request, "Cette adresse e-mail n'est pas valide, désolé.")
     else:

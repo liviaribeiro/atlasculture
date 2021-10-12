@@ -81,8 +81,10 @@ class Equipement(models.Model):
     labels = models.ManyToManyField(Label, through = 'EquipementLabel')
     id_origine = models.CharField(max_length=20, null=True)
     gps = models.PointField(null=True)
+    
     def __str__(self):
         return self.nom
+
 
 class EquipementCommune(models.Model):
     equipement = models.ForeignKey(Equipement, on_delete=models.CASCADE)
