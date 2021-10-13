@@ -9,27 +9,27 @@
 <div id="legend-wrapper" class="legend-wrapper">
     <div id="geocoder" class="geocoder"></div>
 
-    <button class="btn-legend" value="legend-wrapper" onclick="openCloseLegend(this.value)"><img src="{% static 'Vector1.png' %}" />
-    </button>
-        <div id="legend-box" class="legend-box"></div>
+    <button class="btn-legend" value="legend-wrapper" onclick="openCloseLegend(this.value)"><img src="{% static 'Vector1.png' %}" /></button>
+    <div id="legend-box" class="legend-box"></div>
 </div>  
+
 
 <div class="regions-wrapper">
     <div class="row region-row">
         <div class="col p-0 text-center">
-            <button class="region-btn" value="Guadeloupe" onclick="goToRegion(this.value)"></span>Guadeloupe<span><img src="{% static 'Guadeloupe.png' %}" /></button>
+            <button class="region-btn" value="Guadeloupe" onclick="goToRegion(this.value)">Guadeloupe<span><img src="{% static 'Guadeloupe.png' %}" /></span></button>
         </div>
         <div class="col p-0 text-center">
-            <button class="region-btn" value="Guyane" onclick="goToRegion(this.value)">Guyane<span><img src="{% static 'Guyane.png' %}" /></button>
+            <button class="region-btn" value="Guyane" onclick="goToRegion(this.value)">Guyane<span><img src="{% static 'Guyane.png' %}" /></span></button>
         </div>
         <div class="col p-0 text-center">
-            <button class="region-btn" value="La Réunion" onclick="goToRegion(this.value)">La Réunion<span><img src="{% static 'La Réunion.png' %}" /></button>
+            <button class="region-btn" value="La Réunion" onclick="goToRegion(this.value)">La Réunion<span><img src="{% static 'La Réunion.png' %}" /></span></button>
         </div>
         <div class="col p-0 text-center">
-            <button class="region-btn" value="Martinique" onclick="goToRegion(this.value)">Martinique<span><img src="{% static 'Martinique.png' %}" /></button>
+            <button class="region-btn" value="Martinique" onclick="goToRegion(this.value)">Martinique<span><img src="{% static 'Martinique.png' %}" /></span></button>
         </div>
         <div class="col p-0 text-center">
-            <button class="region-btn" value="Mayotte" onclick="goToRegion(this.value)">Mayotte<span><img src="{% static 'Mayotte.png' %}" /></button>
+            <button class="region-btn" value="Mayotte" onclick="goToRegion(this.value)">Mayotte<span><img src="{% static 'Mayotte.png' %}" /></span></button>
         </div>
     </div>
 </div>
@@ -150,6 +150,29 @@
         </div>
     </div>
 </div>   
+
+<button type="button" class="btn btn-download-map" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display:None">
+    <img src="{% static 'download-icon.png' %}" />Télécharger
+</button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Télécharger</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Données
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+          <button type="button" class="btn btn-primary">Télécharger</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGl2aWFyaWJlaXJvIiwiYSI6ImNraTRuOTFlNDBjNTIzMW1od3FhdTh0em8ifQ.TM5OGqVV7cV2IWdq_ZMb3A';
@@ -939,7 +962,7 @@
         });
         map.addSource('acv', {
             'type': 'vector',
-            'url': 'mapbox://liviaribeiro.2f6ii8rh',
+            'url': 'mapbox://liviaribeiro.8msgii19',
         });
         map.addSource('pdr', {
                 'type': 'vector',
@@ -2294,20 +2317,9 @@
                     'id': 'Action coeur de ville',
                     'type': 'symbol',
                     'source': 'acv',
-                    'source-layer': 'COMMUNE_CARTO_ACV-834rrb',
+                    'source-layer': 'COMMUNE_CARTO_POINTS_ACV-9a52rz',
                     'layout': {
-                    'icon-image': [
-                        "case",
-                        [
-                            "match",
-                            ["get", "ACV"],
-                            ["000000"],
-                            false,
-                            true
-                        ],
-                        "custom-marker",
-                        ""
-                        ],
+                    'icon-image': "custom-marker",
                     'icon-size': 0.5,
                     'visibility': 'none',
                     'icon-allow-overlap': true
@@ -2323,6 +2335,7 @@
             }
 
             if (indicator == "Plan de relance") { 
+                marker = 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png';
                 addLegendSymbol("Plan de relance", marker);
                 addInfo(indicator, "{{variable.nom}}", "{{variable.definition}}", "{{variable.source}}", "{{variable.year}}");
 

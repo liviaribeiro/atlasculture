@@ -67,7 +67,7 @@
     display: block;
     overflow-y:auto;
     top: 56px;
-    bottom: 0;
+    bottom: 70px;
     background-color: transparent;
 }
 
@@ -76,6 +76,21 @@
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+.btn-download-map {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #000074;
+    border-radius: 30px;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: white;
+    width: 135px;
+    height: 43px;
+    border: none;
 }
 
 .region-row {

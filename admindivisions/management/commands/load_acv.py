@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 
         """
 
-        with open('admindivisions/data/COMMUNE_CARTO_2019_SIMPLIFIED.json') as f:
+        with open('admindivisions/data/COMMUNE_CARTO_2019_POINTS.json') as f:
             data = json.load(f)
 
         data['features'] = [feature for feature in data['features'] if not feature['properties']['STATUT'] == "Arrondissement municipal"]
@@ -41,9 +41,10 @@ class Command(BaseCommand):
             code_acv = "000000"
             if acv != None:
                 code_acv = acv.code_acv
-                
             feature["properties"].update({"ACV":code_acv})
-                                                                                      
-        with open('admindivisions/data/COMMUNE_CARTO_ACV.json', 'w') as f:
+        
+        data['features'] = [feature for feature in data['features'] if not feature['properties']['ACV'] == "000000"]
+                                                                           
+        with open('admindivisions/data/COMMUNE_CARTO_POINTS_ACV.json', 'w') as f:
             json.dump(data, f)
         
