@@ -152,7 +152,7 @@
     </div>
 </div>   
 
-<button type="button" class="btn btn-download-map" id="myBtn">
+<button type="button" class="btn btn-download-map" id="myBtn" style="display: none">
     <img src="{% static 'download-icon.png' %}" />Télécharger
 </button>
   
@@ -195,7 +195,7 @@
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     aplats = ['Indice de jeunesse', 'Densité de la population', 'Évolution de la population', 'Niveau de vie médian', 'Taux de pauvreté', 
-        'Grille communale de densité', "Aires d'attraction des villes", "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
+        'Grille communale de densité', "Aires d'attraction des villes", 'Typologie communale urbain et rural', "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
         'Salariés actifs des secteurs culturels marchands', "Salariés actifs des secteurs culturels marchands départements", "Salariés actifs des secteurs culturels marchands régions",
         'Actifs exerçant une profession culturelle', "Actifs exerçant une profession culturelle ZE", "Actifs exerçant une profession culturelle région", 
         'Actifs dans les secteurs culturels', "Actifs dans les secteurs culturels ZE", "Actifs dans les secteurs culturels région",
@@ -2757,7 +2757,7 @@
 
     function showLayer(layer) {
         aplats = ['Indice de jeunesse', 'Densité de la population', 'Évolution de la population', 'Niveau de vie médian', 'Taux de pauvreté', 
-        'Grille communale de densité', "Aires d'attraction des villes", "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
+        'Grille communale de densité', "Aires d'attraction des villes", "Typologie communale urbain et rural", "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
         'Salariés actifs des secteurs culturels marchands', "Salariés actifs des secteurs culturels marchands départements", "Salariés actifs des secteurs culturels marchands régions",
         'Actifs exerçant une profession culturelle', "Actifs exerçant une profession culturelle ZE", "Actifs exerçant une profession culturelle région", 
         'Actifs dans les secteurs culturels', "Actifs dans les secteurs culturels ZE", "Actifs dans les secteurs culturels région",
