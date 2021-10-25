@@ -10,7 +10,6 @@ import os
 import json
 from django.http import JsonResponse
 
-
 # Create your views here.
 def map(request):
     communes = Commune.objects.all() 
@@ -20,51 +19,41 @@ def map(request):
     context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural, 'variables': variables}
     return render(request, 'admindivisions/map.html', context)
 
+def download(request, layers):
+    variables = Variable.objects.filter(layers)
+    context = {'variables': variables}
+    return render(request, 'admindivisions/download.html', context)
+
 def equipements(request, domaine):
     path = os.path.join(BASE_DIR, 'static/data/EQUIPEMENTS_BASILIC.json')
-
     with open(path) as f:
         data = json.load(f)
-
     if domaine == 'all':
         response = JsonResponse(data, safe=False)    
-    
     else:        
         filtered_data = [feature for feature in data["features"] if feature['properties']['equipement_type'] == domaine]
         data["features"] = filtered_data
-
         response = JsonResponse(data, safe=False)
-
     return response
-
 
 def pdr(request):
     path = os.path.join(BASE_DIR, 'static/data/PDR.json')
-
     with open(path) as f:
         data = json.load(f)
-    
         response = JsonResponse(data, safe=False)
-
     return response
 
 def festivals(request):
     path = os.path.join(BASE_DIR, 'static/data/COMMUNE_FESTIVALS.json')
-
     with open(path) as f:
         data = json.load(f)
-    
         response = JsonResponse(data, safe=False)
-
     return response
 
 
 def aav(request):
     path = os.path.join(BASE_DIR, 'static/data/AAV2020.json')
-
     with open(path) as f:
         data = json.load(f)
-    
         response = JsonResponse(data, safe=False)
-
     return response

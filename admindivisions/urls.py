@@ -8,4 +8,5 @@ urlpatterns = [
     path('pdr', views.pdr, name='pdr'),
     path('festivals', views.festivals, name='festivals'),
     path('aav', views.aav, name='aav'),
+    path('download', views.download, name='download')
 ]

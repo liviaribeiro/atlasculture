@@ -236,6 +236,7 @@ class Variable(models.Model):
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
     position = models.IntegerField(null=True)
+    file = models.FileField(upload_to='documents/', null=True)
     def __str__(self):
         return self.nom
     class Meta:

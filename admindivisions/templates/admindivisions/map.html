@@ -147,11 +147,12 @@
             <p class="sousdomaine-title">Zonage d'études</p>
             <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
             <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
+            <button class="btn-tag" value="Typologie communale urbain et rural" id="Typologie communale urbain et rural" onclick="showLayer(this.value)">Typologie communale urbain et rural</button>
         </div>
     </div>
 </div>   
 
-<button type="button" class="btn btn-download-map" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display:None">
+<button type="button" class="btn btn-download-map" id="myBtn">
     <img src="{% static 'download-icon.png' %}" />Télécharger
 </button>
   
@@ -163,7 +164,7 @@
           <h5 class="modal-title" id="exampleModalLabel">Télécharger</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="modal-body">
           Données
         </div>
         <div class="modal-footer">
@@ -192,6 +193,40 @@
     });
 
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+    aplats = ['Indice de jeunesse', 'Densité de la population', 'Évolution de la population', 'Niveau de vie médian', 'Taux de pauvreté', 
+        'Grille communale de densité', "Aires d'attraction des villes", "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
+        'Salariés actifs des secteurs culturels marchands', "Salariés actifs des secteurs culturels marchands départements", "Salariés actifs des secteurs culturels marchands régions",
+        'Actifs exerçant une profession culturelle', "Actifs exerçant une profession culturelle ZE", "Actifs exerçant une profession culturelle région", 
+        'Actifs dans les secteurs culturels', "Actifs dans les secteurs culturels ZE", "Actifs dans les secteurs culturels région",
+        'Dépenses culturelles des régions', 'Dépenses culturelles des départements', 'Dépenses culturelles des intercommunalités',
+        'Dépenses culturelles des communes', 'Dépenses du ministère de la Culture', "Dépenses du ministère de la Culture Département"]
+
+    function generate_modal_body(){
+        modal = document.getElementById('modal-body');
+        modal.innerHTML = "";
+        active_layers = []
+        for (var i = 0; i < aplats.length; i++){
+            layer = aplats[i];
+            var layer_visibility = map.getLayoutProperty(layer, 'visibility');
+            if (layer_visibility == 'visible') {
+                var layer_toDownload = document.createElement('a');
+                layer_toDownload.class = "btn btn-download d-inline-flex align-items-center btn-link mt-5";
+                layer_toDownload.href = "{{ portrait.fiche.url }}"
+                layer_toDownload.innerHTML = layer;
+                modal.appendChild(layer_toDownload)
+            }
+        }
+    }
+
+    $(document).ready(function(){
+        $("#myBtn").click(function(){
+            $("#exampleModal").modal("show");
+        });
+        $('#exampleModal').on('shown.bs.modal', function() { 
+            generate_modal_body();
+        }) ;
+    });
 
     function goToRegion(region) {
         if (region == "Guadeloupe") {
@@ -900,6 +935,10 @@
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.3u0ajjj4'
         });
+        map.addSource('zonage urbain', {
+            'type': 'vector',
+            'url': 'mapbox://liviaribeiro.bumheafq'
+        });
         map.addSource('qp', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.82f38xhh'
@@ -1252,7 +1291,7 @@
 
             if (indicator == "Grille communale de densité") {
                 var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
-                var colors = ['#d01c8b', '#f1b6da', '#b8e186', '#4dac26'];
+                var colors = ['#d01c8b', '#f1b6da', '#74c476', '#238b45'];
 
                 addLegend(indicator, layers, colors);
                 addInfo(indicator, "{{variable.nom}}", "{{variable.definition}}", "{{variable.source}}", "{{variable.year}}");
@@ -1289,6 +1328,54 @@
                         popup.setLngLat(e.lngLat)
                             .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
                                 +e.features[0].properties.ZONAGE_RURAL_NOM+' </p>')
+                            .addTo(map);
+                        }     
+                });    
+            }
+
+            if (indicator == "Typologie communale urbain et rural") {
+                var layers = ["rural sous forte influence d'un pôle", "rural sous faible influence d'un pôle", "rural autonome peu dense", "rural autonome très peu dense", "urbain dense", "urbain densité intérmediaire"];
+                var colors = ['#edf8e9', '#bae4b3', '#74c476', '#238b45', '#d01c8b', '#f1b6da'];
+
+                addLegend(indicator, layers, colors);
+                addInfo(indicator, "{{variable.nom}}", "{{variable.definition}}", "{{variable.source}}", "{{variable.year}}");
+
+                //add zonage rural layer
+                map.addLayer(
+                    {
+                        'id': indicator,
+                        'source': 'zonage urbain',
+                        'source-layer': 'COMMUNE_CARTO_URBAIN_SIMPLE-cns1m3',
+                        'type': 'fill',
+                        'paint': {
+                            'fill-color':[
+                                "match",
+                                ["get", "ZONAGE_URBAIN"],
+                                ["rural sous forte influence d'un pôle"],
+                                "#edf8e9",
+                                ["rural sous faible influence d'un pôle"],
+                                "#bae4b3",
+                                ["rural autonome peu dense"],
+                                "#74c476",
+                                ["rural autonome très peu dense"],
+                                "#238b45",
+                                ["urbain dense"],
+                                "#d01c8b",
+                                "#f1b6da",
+                                ],'fill-opacity': 0.75
+                        },
+                        'layout': {
+                            // make layer visible by default
+                            'visibility': 'none'
+                        }
+                    }  
+                );
+
+                map.on('click', indicator, function (e) {
+                    if (e.features.length > 0) {
+                        popup.setLngLat(e.lngLat)
+                            .setHTML('<p>'+e.features[0].properties.NOM_COM+'</p><p>'
+                                +e.features[0].properties.ZONAGE_URBAIN+' </p>')
                             .addTo(map);
                         }     
                 });    
