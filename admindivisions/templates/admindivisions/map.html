@@ -147,7 +147,7 @@
             <p class="sousdomaine-title">Zonage d'études</p>
             <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
             <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
-            <button class="btn-tag" value="Typologie communale urbain et rural" id="Typologie communale urbain et rural" onclick="showLayer(this.value)">Typologie communale urbain et rural</button>
+            <button class="btn-tag" value="Catégories du rural et de l’urbain" id="Catégories du rural et de l’urbain" onclick="showLayer(this.value)">Catégories du rural et de l’urbain</button>
         </div>
     </div>
 </div>   
@@ -195,7 +195,7 @@
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     aplats = ['Indice de jeunesse', 'Densité de la population', 'Évolution de la population', 'Niveau de vie médian', 'Taux de pauvreté', 
-        'Grille communale de densité', "Aires d'attraction des villes", 'Typologie communale urbain et rural', "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
+        'Grille communale de densité', "Aires d'attraction des villes", 'Catégories du rural et de l’urbain', "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
         'Salariés actifs des secteurs culturels marchands', "Salariés actifs des secteurs culturels marchands départements", "Salariés actifs des secteurs culturels marchands régions",
         'Actifs exerçant une profession culturelle', "Actifs exerçant une profession culturelle ZE", "Actifs exerçant une profession culturelle région", 
         'Actifs dans les secteurs culturels', "Actifs dans les secteurs culturels ZE", "Actifs dans les secteurs culturels région",
@@ -1291,7 +1291,7 @@
 
             if (indicator == "Grille communale de densité") {
                 var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
-                var colors = ['#d01c8b', '#f1b6da', '#74c476', '#238b45'];
+                var colors = ['#d01c8b', '#f1b6da', '#74c476', '#006d2c'];
 
                 addLegend(indicator, layers, colors);
                 addInfo(indicator, "{{variable.nom}}", "{{variable.definition}}", "{{variable.source}}", "{{variable.year}}");
@@ -1333,9 +1333,9 @@
                 });    
             }
 
-            if (indicator == "Typologie communale urbain et rural") {
-                var layers = ["rural sous forte influence d'un pôle", "rural sous faible influence d'un pôle", "rural autonome peu dense", "rural autonome très peu dense", "urbain dense", "urbain densité intérmediaire"];
-                var colors = ['#edf8e9', '#bae4b3', '#74c476', '#238b45', '#d01c8b', '#f1b6da'];
+            if (indicator == "Catégories du rural et de l’urbain") {
+                var layers = ["rural sous forte influence d'un pôle", "rural sous faible influence d'un pôle", "rural autonome peu dense", "rural autonome très peu dense", "urbain dense", "urbain à densité intérmediaire"];
+                var colors = ['#bae4b3', '#74c476', '#31a354', '#006d2c', '#d01c8b', '#f1b6da'];
 
                 addLegend(indicator, layers, colors);
                 addInfo(indicator, "{{variable.nom}}", "{{variable.definition}}", "{{variable.source}}", "{{variable.year}}");
@@ -1352,13 +1352,13 @@
                                 "match",
                                 ["get", "ZONAGE_URBAIN"],
                                 ["rural sous forte influence d'un pôle"],
-                                "#edf8e9",
-                                ["rural sous faible influence d'un pôle"],
                                 "#bae4b3",
-                                ["rural autonome peu dense"],
+                                ["rural sous faible influence d'un pôle"],
                                 "#74c476",
+                                ["rural autonome peu dense"],
+                                "#31a354",
                                 ["rural autonome très peu dense"],
-                                "#238b45",
+                                "#006d2c",
                                 ["urbain dense"],
                                 "#d01c8b",
                                 "#f1b6da",
@@ -2757,7 +2757,7 @@
 
     function showLayer(layer) {
         aplats = ['Indice de jeunesse', 'Densité de la population', 'Évolution de la population', 'Niveau de vie médian', 'Taux de pauvreté', 
-        'Grille communale de densité', "Aires d'attraction des villes", "Typologie communale urbain et rural", "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
+        'Grille communale de densité', "Aires d'attraction des villes", "Catégories du rural et de l’urbain", "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
         'Salariés actifs des secteurs culturels marchands', "Salariés actifs des secteurs culturels marchands départements", "Salariés actifs des secteurs culturels marchands régions",
         'Actifs exerçant une profession culturelle', "Actifs exerçant une profession culturelle ZE", "Actifs exerçant une profession culturelle région", 
         'Actifs dans les secteurs culturels', "Actifs dans les secteurs culturels ZE", "Actifs dans les secteurs culturels région",
