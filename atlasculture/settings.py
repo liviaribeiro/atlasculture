@@ -14,11 +14,13 @@ from pathlib import Path
 import os
 import django_heroku
 from django.contrib.messages import constants as messages
-
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -100,7 +102,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'atlas-culture',
-        'USER' : 'livia.ribeiro',
+        'USER' : env('DB_USER'),
     }
 }
 
