@@ -12,11 +12,19 @@ from django.http import JsonResponse
 
 # Create your views here.
 def map(request):
-    communes = Commune.objects.all() 
+    from django.db.models.functions import Replace
+    communes = Commune.objects.all()
     domaines = Domaine.objects.all().order_by('name')
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
-    context = {'communes': communes, 'domaines': domaines, 'zonagerural': zonagerural, 'variables': variables}
+    context = {'communes': communes,
+    'domaines': domaines,
+    'zonagerural': zonagerural,
+    'variables': variables,
+    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source','year')]
+    }
+    # import pdb; pdb.set_trace()
+#  [variable for variable in Variable.objects.values('nom','definition','source','year')]
     return render(request, 'admindivisions/map.html', context)
 
 def download(request, layers):
@@ -29,8 +37,8 @@ def equipements(request, domaine):
     with open(path) as f:
         data = json.load(f)
     if domaine == 'all':
-        response = JsonResponse(data, safe=False)    
-    else:        
+        response = JsonResponse(data, safe=False)
+    else:
         filtered_data = [feature for feature in data["features"] if feature['properties']['equipement_type'] == domaine]
         data["features"] = filtered_data
         response = JsonResponse(data, safe=False)

@@ -28,7 +28,7 @@ class EpciType(models.Model):
     acronym = models.CharField(max_length=10)
     def __str__(self):
         return f"{self.name} ({self.acronym})"
-        
+
 class Epci(models.Model):
     name = models.CharField(max_length=100)
     annee = models.CharField(max_length=4)
