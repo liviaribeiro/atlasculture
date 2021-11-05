@@ -183,6 +183,25 @@
 
 <div data-variables="{{ data_variables }}" id='data-variables'></div>
 
+{% for domaine in domaines %}
+  {% for equipement_type in domaine.equipementtype_set.all %}
+
+   <div
+    data-equipement-type="{{ equipement_type }}"
+    data-equipement-type-pk="{{ equipement_type.pk }}"
+    data-equipement-type-name="{{ equipement_type.name }}"
+    data-equipement-type-definition="{{ equipement_type.definition}}"
+    data-equipement-type-source="{{ equipement_type.source }}"
+    data-equipement-type-year="{{ equipement_type.year }}"
+    data-equipement-type-pk-url="{% url 'equipements' equipement_type.pk %}"
+    data-img="{% static 'star-of-life-solid_bleu-vert-fonce.png' %}"
+
+    class='datas-equipements-types'></div>
+
+  {% endfor %}
+{% endfor %}
+
+
 
 <script src="{% static 'index-bundle.js' %}"></script>
 

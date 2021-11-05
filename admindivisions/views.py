@@ -12,18 +12,20 @@ from django.http import JsonResponse
 
 # Create your views here.
 def map(request):
-    from django.db.models.functions import Replace
     communes = Commune.objects.all()
     domaines = Domaine.objects.all().order_by('name')
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
+    # import ipdb; ipdb.set_trace()
     context = {'communes': communes,
     'domaines': domaines,
     'zonagerural': zonagerural,
     'variables': variables,
-    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source','year')]
+    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source','year')],
+    'data_domaines': domaines
     }
-    # import pdb; pdb.set_trace()
+# 'data_domaines': [equipement_type for equipement_type in domaine.equipementtype_set.all for domaine in domaines]
+
 #  [variable for variable in Variable.objects.values('nom','definition','source','year')]
     return render(request, 'admindivisions/map.html', context)
 

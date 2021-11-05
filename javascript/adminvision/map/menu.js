@@ -1,7 +1,10 @@
 const openNav = (itemMenu)  => {
     const mediaQuery = window.matchMedia('(min-width: 480px)')
     if (mediaQuery.matches) {
-        document.getElementById(itemMenu).style.width = "408px";
+        if (itemMenu) {
+          document.getElementById(itemMenu).style.width = "408px";
+        }
+
     }
     else {
         var w = document.documentElement.clientWidth-63;
@@ -17,10 +20,12 @@ const openNav = (itemMenu)  => {
 }
 
 const closeNav = (itemMenu) => {
-    document.getElementById(itemMenu).style.width = "0";
+    if (itemMenu) {
+      document.getElementById(itemMenu).style.width = "0";
+    }
 }
 
-function openSubmenuNav(itemMenu) {
+const openSubmenuNav = (itemMenu) => {
     const mediaQuery = window.matchMedia('(min-width: 480px)')
     if (mediaQuery.matches) {
         document.getElementById(itemMenu).style.width = "408px";

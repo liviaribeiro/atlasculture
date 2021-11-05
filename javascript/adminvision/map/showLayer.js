@@ -11,7 +11,7 @@ const showLayer = (layer) => {
     const btnLayer = document.getElementById(layer);
 
     var visibility = map.getLayoutProperty(layer, 'visibility');
-
+    let other_layer = ''
     if (visibility == 'none') {
         if (aplats.includes(layer)) {
             for (var i = 0; i < aplats.length; i++){
