@@ -1,15 +1,14 @@
-import { coco } from './adminvision/test.js';
+import { initMap } from './adminvision/map/init.js';
+import { goToRegion } from './adminvision/map/goToRegion.js'
+import {showLayer } from './adminvision/map/showLayer.js';
+import { openNav, closeNav } from './adminvision/map/menu.js';
 
 
+initMap();
 
-import { loadDynamicBannerText } from './adminvision/components/banner.js';
-import _ from 'lodash';
+buildMap();
 
-const component = () => {
-  const element =  _.join(['Hello', 'lodash'], ' ');
-  return element;
-}
-coco()
-console.log(component());
-console.log('fkjdhf')
-loadDynamicBannerText();
+openNav();
+closeNav();
+
+
