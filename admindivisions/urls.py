@@ -8,5 +8,7 @@ urlpatterns = [
     path('pdr', views.pdr, name='pdr'),
     path('festivals', views.festivals, name='festivals'),
     path('aav', views.aav, name='aav'),
-    path('download', views.download, name='download')
+    path('download', views.download, name='download'),
+    path('export/csv/<int:equipement_type>', views.export_equipements_csv, name='export_equipements_csv'),
+
 ]
