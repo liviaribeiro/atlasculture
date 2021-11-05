@@ -46,6 +46,17 @@ def equipements(request, domaine):
         response = JsonResponse(data, safe=False)
     return response
 
+def export_equipements_csv(request, equipement_type):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="equipements.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['ID Deps', 'Equipement', 'Domaine', 'Adresse', 'Commune', 'Source'])
+    equipement_type = EquipementType.objects.get(pk=equipement_type)
+    equipements = Equipement.objects.filter(equipement_type=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type', 'adresse', 'commune', 'source')
+    for equipement in equipements:
+        writer.writerow(equipement)
+    return response
+
 def pdr(request):
     path = os.path.join(BASE_DIR, 'static/data/PDR.json')
     with open(path) as f:
