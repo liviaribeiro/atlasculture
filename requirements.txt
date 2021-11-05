@@ -25,6 +25,6 @@ xlrd==1.2.0
 Pillow
 django-storages==1.11.1
 boto3
-pip install ipdb
+ipdb
 
 django-environ
