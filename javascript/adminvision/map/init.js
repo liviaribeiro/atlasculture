@@ -40,6 +40,7 @@ const initMap = () => {
     const zoomComThreshold = 8;
     window.map = map
     window.geocoder = geocoder
+    window.popup = popup
     window.zoomComThreshold = zoomComThreshold
     window.zoomThreshold = zoomThreshold
     window.hoveredStateId =hoveredStateId
