@@ -17,7 +17,7 @@ const initMap = () => {
         trackProximity: true,
         marker: false
     });
-    console.log('[2.209666999999996, 46.232192999999995]')
+
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     const aplats = ['Indice de jeunesse', 'Densité de la population', 'Évolution de la population', 'Niveau de vie médian', 'Taux de pauvreté',

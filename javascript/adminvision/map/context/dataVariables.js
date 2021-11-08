@@ -1,17 +1,7 @@
 import { layerDataVariables } from '../layer/dataVariables/layer.js'
+import { loadDataVariables } from './loadDataVariables.js';
 const dataVariables = (zoomThreshold,zoomComThreshold) => {
-  const elementVariables = document.getElementById('data-variables')
-  let dataVariables = elementVariables.dataset.variables
-  dataVariables = dataVariables.replace(/'nom'/g,`"nom"`)
-  dataVariables = dataVariables.replace(/'definition'/g,`"definition"`)
-  dataVariables = dataVariables.replace(/'source'/g,`"source"`)
-  dataVariables = dataVariables.replace(/'year'/g,`"year"`)
-  dataVariables = dataVariables.replace(/: '/g,`: "`)
-  dataVariables = dataVariables.replace(/', "/g,`", "`)
-  dataVariables = dataVariables.replace(/'}, {"/g,`"}, {"`)
-  dataVariables = dataVariables.replace(/'}]/g,`"}]`)
-
-  dataVariables = JSON.parse(dataVariables);
+  const dataVariables = loadDataVariables();
 
   dataVariables.forEach((dataVariable) => {
 
