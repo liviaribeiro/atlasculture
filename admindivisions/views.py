@@ -9,6 +9,7 @@ from atlasculture.settings import BASE_DIR
 import os
 import json
 from django.http import JsonResponse
+import csv
 
 # Create your views here.
 def map(request):
@@ -48,11 +49,14 @@ def equipements(request, domaine):
 
 def export_equipements_csv(request, equipement_type):
     response = HttpResponse(content_type='text/csv')
+    pks_list = request.GET.get('pks_list', 'default').split(',')
+    pks_list = [int(x) for x in pks_list]
     response['Content-Disposition'] = 'attachment; filename="equipements.csv"'
     writer = csv.writer(response)
     writer.writerow(['ID Deps', 'Equipement', 'Domaine', 'Adresse', 'Commune', 'Source'])
-    equipement_type = EquipementType.objects.get(pk=equipement_type)
-    equipements = Equipement.objects.filter(equipement_type=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type', 'adresse', 'commune', 'source')
+    equipement_type = EquipementType.objects.filter(pk__in=pks_list)
+    equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune', 'source')
+
     for equipement in equipements:
         writer.writerow(equipement)
     return response

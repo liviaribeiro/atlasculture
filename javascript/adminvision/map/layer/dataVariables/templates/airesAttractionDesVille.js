@@ -1,5 +1,5 @@
 const airesAttractionDesVille = (indicator,dataVariable) => {
-    if (indicator == "Aires attraction des villes") {
+    if (indicator == "Aires d'attraction des villes") {
       var layers = ['Aire de moins de 50 000 habitants', 'Aire de 50 000 à moins de 200 000 habitants', 'Aire de 200 000 à moins de 700 000 habitants', 'Aire de 700 000 habitants ou plus'];
       var colors = ['#fdb863', '#e66101', '#b2abd2', '#5e3c99'];
       var indicator = "Aires d'attraction des villes";
