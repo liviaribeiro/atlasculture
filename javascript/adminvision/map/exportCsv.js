@@ -1,4 +1,4 @@
-
+import { loadDataVariables } from './context/loadDataVariables.js';
 const callModel = () => {
   $(document).ready(function(){
     $("#myBtn").click(function(){
@@ -6,48 +6,62 @@ const callModel = () => {
     });
     $('#exampleModal').on('shown.bs.modal', function() {
         generate_modal_body();
-    }) ;
-});
+
+    });
+  })
 }
 
-// function generate_modal_body(){
-//         modal = document.getElementById('modal-body');
-//         modal.innerHTML = "";
-//         active_layers = []
-//         var layers_list = document.createElement('ul');
-//         {% for domaine in domaines %}
-//             {% for equipement_type in domaine.equipementtype_set.all %}
-//                 layer = '{{ equipement_type.pk }}'
-//                 layer_name = '{{ equipement_type.name }}'
-//                 var layer_visibility = map.getLayoutProperty(layer, 'visibility');
-//                 if (layer_visibility == 'visible') {
-//                     var layer_element = document.createElement('li');
-//                     layer_element.innerHTML = layer_name;
-//                     var layer_toDownload = document.createElement('a');
-//                     layer_toDownload.className = "btn btn-export btn-link";
-//                     // Passer une liste dans la methode export_equipements_csv
-//                     layer_toDownload.href = "{% url 'export_equipements_csv' equipement_type.pk %}"
-//                     layer_toDownload.innerHTML = 'csv';
-//                     layer_element.appendChild(layer_toDownload);
-//                     layers_list.appendChild(layer_element);
-//                 }
-//             {% endfor %}
-//         {% endfor %}
-//         {% for variable in variables %}
-//             layer = '{{ variable.nom }}'
-//             var layer_visibility = map.getLayoutProperty(layer, 'visibility');
-//             if (layer_visibility == 'visible') {
-//                 var layer_element = document.createElement('li');
-//                 layer_element.innerHTML = layer;
-//                 var layer_toDownload = document.createElement('a');
-//                 layer_toDownload.className = "btn btn-export btn-link";
-//                 layer_toDownload.href = "#"
-//                 layer_toDownload.innerHTML = 'csv';
-//                 layer_element.appendChild(layer_toDownload);
-//                 layers_list.appendChild(layer_element);
-//             }
-//         {% endfor %}
-//         modal.appendChild(layers_list);
-//     }
 
+const generate_modal_body = () => {
+  const modal = document.getElementById('modal-body');
+  modal.innerHTML = "";
+  const active_layers = []
+  var layers_list = document.createElement('ul');
+  const dataDomainesElements = document.querySelectorAll('.datas-equipements-types')
+  dataDomainesElements.forEach((dataDomainesElement) => {
+    const equipementType = dataDomainesElement.dataset.equipementType
+    const equipementTypePk = dataDomainesElement.dataset.equipementTypePk
+    const equipementTypeDefinition = dataDomainesElement.dataset.equipementTypeDefinition
+    const equipementTypeSource = dataDomainesElement.dataset.equipementTypeSource
+    const equipementTypeYear = dataDomainesElement.dataset.equipementTypeYear
+    const equipementTypeName = dataDomainesElement.dataset.equipementTypeName
+    const equipementTypePkUrl = dataDomainesElement.dataset.equipementTypePkUrl
+
+
+    const layer = equipementTypePk
+    const layer_name = equipementTypeName
+    var layer_visibility = map.getLayoutProperty(layer, 'visibility');
+
+    if (layer_visibility == 'visible') {
+        var layer_element = document.createElement('li');
+        layer_element.innerHTML = layer_name;
+        var layer_toDownload = document.createElement('a');
+        layer_toDownload.className = "btn btn-export btn-link";
+        // Passer une liste dans la methode export_equipements_csv
+        const urlExportEquipementsCsv = document.getElementById('url-export-equipement-csv')
+        layer_toDownload.href = urlExportEquipementsCsv.dataset.urlExportEquipementsCsv
+        // layer_toDownload.href = "{% url 'export_equipements_csv' equipement_type.pk %}"
+        layer_toDownload.innerHTML = 'csv';
+        layer_element.appendChild(layer_toDownload);
+        layers_list.appendChild(layer_element);
+    }
+
+  });
+  const dataVariables = loadDataVariables();
+  dataVariables.forEach((dataVariable) => {
+    const layer = dataVariable.nom
+    var layer_visibility = map.getLayoutProperty(layer, 'visibility');
+    if (layer_visibility == 'visible') {
+        var layer_element = document.createElement('li');
+        layer_element.innerHTML = layer;
+        var layer_toDownload = document.createElement('a');
+        layer_toDownload.className = "btn btn-export btn-link";
+        layer_toDownload.href = "#"
+        layer_toDownload.innerHTML = 'csv';
+        layer_element.appendChild(layer_toDownload);
+        layers_list.appendChild(layer_element);
+    }
+  })
+
+}
 export { callModel }
