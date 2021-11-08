@@ -18,6 +18,8 @@ import { airesAttractionDesVille } from './templates/airesAttractionDesVille.js'
 import { population } from './templates/population.js';
 import { actionCoeurDeVille } from './templates/actionCoeurDeVille.js';
 import { planDeRelance } from './templates/planDeRelance.js';
+import { indiceDeJeunesse } from './templates/indiceDeJeunesse.js';
+
 const layerDataVariables = (indicator,dataVariable) => {
 
   densiteDeLaPopulation(indicator,dataVariable);
@@ -49,6 +51,7 @@ const layerDataVariables = (indicator,dataVariable) => {
   actionCoeurDeVille(indicator,dataVariable);
   planDeRelance(indicator,dataVariable);
 
+  indiceDeJeunesse(indicator,dataVariable);
 }
 
 export { layerDataVariables }

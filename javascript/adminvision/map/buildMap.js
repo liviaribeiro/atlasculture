@@ -1,10 +1,11 @@
 import { addLegend, hideLegend,openCloseLegend, openLegend, addLegendCircle,addLegendEquipement, addLegendSymbol } from './legend/legends.js';
 import { showInfo, hideInfo, addInfo } from './legend/info.js';
-import { addSource } from './addSource.js';
+import { addSource } from './sources/addSource.js';
 import { dataVariables } from './context/dataVariables.js';
 import { dataDomaines } from './context/dataDomaines.js';
 import { addZoneLayer } from './layer/addZoneLayer.js';
 import { addMultipleZoneLayer } from './layer/addMultipleZoneLayer.js'
+import { festival } from './layer/templates/festival.js';
 const buildMap = () => {
 
 
@@ -52,55 +53,11 @@ const buildMap = () => {
 
       addMultipleZoneLayer();
       addSource();
+      festival();
 
       dataVariables(zoomThreshold,zoomComThreshold);
       dataDomaines();
 
-      //Festivals
-      map.addSource('festivals', {
-          'type': 'vector',
-          'url': "mapbox://liviaribeiro.d49j0q6z"
-      });
-
-      map.addLayer(
-          {
-          'id': 'Festivals',
-          'type': 'circle',
-          'source': 'festivals',
-          'source-layer': 'COMMUNE_FESTIVALS-91tdqh',
-          'paint': {
-           'circle-radius': ['*', 30, ['/',['sqrt', ["get", "NOMBREFESTIVALS"]],['sqrt', 290]]],
-           'circle-color': "#de2d26",
-           'circle-opacity': 0.75,
-           },
-           'layout': {
-                  // make layer not visible by default
-            'visibility': 'none'
-            }
-     });
-
-     map.on('click', 'Festivals', function (e) {
-              var coordinates = e.features[0].geometry.coordinates.slice();
-              var nombre = e.features[0].properties.NOMBREFESTIVALS;
-              var commune = e.features[0].properties.NOM_COM;
-
-              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                  coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-              }
-
-              popup.setLngLat(coordinates)
-                  .setHTML('<p><b>'+commune+'</b></p>'+
-                  '<p>'+nombre+' festival(s)</p>'
-              )
-              .addTo(map);
-          });
-
-      map.on("mouseenter", 'Festivals', () => {
-          map.getCanvas().style.cursor = "pointer";
-      });
-      map.on("mouseleave", 'Festivals', () => {
-          map.getCanvas().style.cursor = "";
-      });
 
 
   });
