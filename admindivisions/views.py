@@ -47,7 +47,7 @@ def equipements(request, domaine):
         response = JsonResponse(data, safe=False)
     return response
 
-def export_equipements_csv(request, equipement_type):
+def export_equipements_csv(request):
     response = HttpResponse(content_type='text/csv')
     pks_list = request.GET.get('pks_list', 'default').split(',')
     pks_list = [int(x) for x in pks_list]
@@ -55,7 +55,7 @@ def export_equipements_csv(request, equipement_type):
     writer = csv.writer(response)
     writer.writerow(['ID Deps', 'Equipement', 'Domaine', 'Adresse', 'Commune', 'Source'])
     equipement_type = EquipementType.objects.filter(pk__in=pks_list)
-    equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune', 'source')
+    equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune__name', 'source__name')
 
     for equipement in equipements:
         writer.writerow(equipement)

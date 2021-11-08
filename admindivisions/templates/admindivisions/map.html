@@ -197,14 +197,13 @@
     data-img="{% static 'star-of-life-solid_bleu-vert-fonce.png' %}"
 
     class='datas-equipements-types'></div>
-
-    <div
-    data-url-export-equipements-csv="{% url 'export_equipements_csv' equipement_type.pk %}" id='url-export-equipement-csv'>
-
     </div>
+
 
   {% endfor %}
 {% endfor %}
+
+<div data-url-export-equipements-csv="{% url 'export_equipements_csv' %}" id='url-export-equipement-csv'></div>
 
 
 

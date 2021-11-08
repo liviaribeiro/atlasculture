@@ -13,51 +13,48 @@ const callModal = () => {
 
 
 const generate_modal_body = () => {
-  const modal = document.getElementById('modal-body');
-  modal.innerHTML = "";
-  const active_layers = []
-  var layers_list = document.createElement('ul');
-  const dataDomainesElements = document.querySelectorAll('.datas-equipements-types')
-  let equipementPkList = []
-  dataDomainesElements.forEach((dataDomainesElement) => {
-    const equipementType = dataDomainesElement.dataset.equipementType
-    const equipementTypePk = dataDomainesElement.dataset.equipementTypePk
-    const equipementTypeDefinition = dataDomainesElement.dataset.equipementTypeDefinition
-    const equipementTypeSource = dataDomainesElement.dataset.equipementTypeSource
-    const equipementTypeYear = dataDomainesElement.dataset.equipementTypeYear
-    const equipementTypeName = dataDomainesElement.dataset.equipementTypeName
-    const equipementTypePkUrl = dataDomainesElement.dataset.equipementTypePkUrl
-    const layer = equipementTypePk
-    const layer_name = equipementTypeName
+    const modal = document.getElementById('modal-body');
+    modal.innerHTML = "";
+    const active_layers = []
+    var layers_list = document.createElement('ul');
+    const dataDomainesElements = document.querySelectorAll('.datas-equipements-types')
+    let equipementPkList = []
+    dataDomainesElements.forEach((dataDomainesElement) => {
+        const equipementType = dataDomainesElement.dataset.equipementType
+        const equipementTypePk = dataDomainesElement.dataset.equipementTypePk
+        const equipementTypeDefinition = dataDomainesElement.dataset.equipementTypeDefinition
+        const equipementTypeSource = dataDomainesElement.dataset.equipementTypeSource
+        const equipementTypeYear = dataDomainesElement.dataset.equipementTypeYear
+        const equipementTypeName = dataDomainesElement.dataset.equipementTypeName
+        const equipementTypePkUrl = dataDomainesElement.dataset.equipementTypePkUrl
+        const layer = equipementTypePk
+        const layer_name = equipementTypeName
 
-    var layer_visibility = map.getLayoutProperty(layer, 'visibility');
+        var layer_visibility = map.getLayoutProperty(layer, 'visibility');
 
-    if (layer_visibility == 'visible') {
+        if (layer_visibility == 'visible') {
+            // Passer une liste dans la methode export_equipements_csv
+            equipementPkList.push(equipementTypePk)
+        }
+    });
 
-        var layer_element = document.createElement('li');
-        layer_element.innerHTML = layer_name;
-        var layer_toDownload = document.createElement('a');
-        layer_toDownload.className = "btn btn-export btn-link";
-        // Passer une liste dans la methode export_equipements_csv
-        const urlExportEquipementsCsv = document.getElementById('url-export-equipement-csv')
-
-
-        equipementPkList.push(equipementTypePk)
-        layer_toDownload.href = `${urlExportEquipementsCsv.dataset.urlExportEquipementsCsv}?pks_list=${equipementPkList}`
-
-        // layer_toDownload.href = "{% url 'export_equipements_csv' equipement_type.pk %}"
-        layer_toDownload.innerHTML = 'csv';
-        layer_element.appendChild(layer_toDownload);
-        layers_list.appendChild(layer_element);
-
-    }
+    const urlExportEquipementsCsv = document.getElementById('url-export-equipement-csv')
+    var layer_element = document.createElement('li');
+    layer_element.innerHTML = "Offre et lieux culturels";
+    var layer_toDownload = document.createElement('a');
+    layer_toDownload.className = "btn btn-export btn-link";
+    layer_toDownload.href = `${urlExportEquipementsCsv.dataset.urlExportEquipementsCsv}?pks_list=${equipementPkList}`
+    // layer_toDownload.href = "{% url 'export_equipements_csv' equipement_type.pk %}"
+    layer_toDownload.innerHTML = 'csv';
+    layer_element.appendChild(layer_toDownload);
+    layers_list.appendChild(layer_element);
     modal.appendChild(layers_list);
-  });
 
-  const dataVariables = loadDataVariables();
-  dataVariables.forEach((dataVariable) => {
-    const layer = dataVariable.nom
-    var layer_visibility = map.getLayoutProperty(layer, 'visibility');
+    const dataVariables = loadDataVariables();
+    
+    dataVariables.forEach((dataVariable) => {
+        const layer = dataVariable.nom
+        var layer_visibility = map.getLayoutProperty(layer, 'visibility');
 
     if (layer_visibility == 'visible') {
         var layer_element = document.createElement('li');
