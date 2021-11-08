@@ -1,3 +1,4 @@
+import { addSourceZoneLayer } from '../sources/addSource.js';
 const addZoneLayer = (zoneLayer, zoneLayerURL, zoneSourceLayer, maxZoom, minZoom) => {
 
   var lineWidth = 1;
@@ -7,11 +8,8 @@ const addZoneLayer = (zoneLayer, zoneLayerURL, zoneSourceLayer, maxZoom, minZoom
   var zoneLayerID = zoneLayer + 'Layer';
   var zoneLineID = zoneLayer + 'Line';
 
+  addSourceZoneLayer(zoneLayer,zoneLayerURL)
 
-  map.addSource(zoneLayer, {
-  'type': 'vector',
-  'url': zoneLayerURL
-  });
 
   map.addLayer(
   {

@@ -1,4 +1,11 @@
+const addSourceZoneLayer = (zoneLayer,zoneLayerURL) => {
+  map.addSource(zoneLayer, {
+    'type': 'vector',
+    'url': zoneLayerURL
+  });
+}
 const addSource = () => {
+
           // mapbox sources
         map.addSource('cadrage', {
             'type': 'vector',
@@ -82,4 +89,4 @@ const addSource = () => {
         });
 }
 
-export { addSource }
+export { addSource, addSourceZoneLayer}

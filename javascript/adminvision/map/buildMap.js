@@ -1,6 +1,6 @@
 import { addLegend, hideLegend,openCloseLegend, openLegend, addLegendCircle,addLegendEquipement, addLegendSymbol } from './legend/legends.js';
 import { showInfo, hideInfo, addInfo } from './legend/info.js';
-import { addSource } from './addSource.js';
+import { addSource } from './sources/addSource.js';
 import { dataVariables } from './context/dataVariables.js';
 import { dataDomaines } from './context/dataDomaines.js';
 import { addZoneLayer } from './layer/addZoneLayer.js';
