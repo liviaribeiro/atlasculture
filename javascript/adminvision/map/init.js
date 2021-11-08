@@ -28,15 +28,7 @@ const initMap = () => {
         'Dépenses culturelles des régions', 'Dépenses culturelles des départements', 'Dépenses culturelles des intercommunalités',
         'Dépenses culturelles des communes', 'Dépenses du ministère de la Culture', "Dépenses du ministère de la Culture Département"]
 
-    $(document).ready(function(){
-        $("#myBtn").click(function(){
-            $("#exampleModal").modal("show");
-        });
-        $('#exampleModal').on('shown.bs.modal', function() {
-            generate_modal_body();
-        }) ;
-    });
-
+// __
     var popup = new mapboxgl.Popup({
             closeButton: false,
             closeOnMove: true
