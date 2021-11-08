@@ -1,5 +1,5 @@
 import { loadDataVariables } from './context/loadDataVariables.js';
-const callModel = () => {
+const callModal = () => {
   $(document).ready(function(){
     $("#myBtn").click(function(){
         $("#exampleModal").modal("show");
@@ -64,4 +64,4 @@ const generate_modal_body = () => {
   })
 
 }
-export { callModel }
+export { callModal }
