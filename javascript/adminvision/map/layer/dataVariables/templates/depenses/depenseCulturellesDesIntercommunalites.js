@@ -39,12 +39,12 @@ const depenseCulturellesDesIntercommunalites = (indicator,dataVariable) => {
 
       map.on('click', indicator, function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.DEPENSESHABITANTS
-              nombre = e.features[0].properties.DEPENSESTOTALES
-              texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p><p>Dépenses publiques culturelles : "
+              const pourcentage = e.features[0].properties.DEPENSESHABITANTS
+              const nombre = e.features[0].properties.DEPENSESTOTALES
+              let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p><p>Dépenses publiques culturelles : "
                       +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
               if (nombre == -1) {
-                  texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p>Données non disponibles pour les intercommunalités de moins de 3 500 habitants"
+                texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_EPCI+"</p>Données non disponibles pour les intercommunalités de moins de 3 500 habitants"
               }
               popup.setLngLat(e.lngLat)
                   .setHTML(texte)

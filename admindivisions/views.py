@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.serializers import serialize
-from .models import Region, Commune, Variable
+from .models import DepensesRegion, Region, Commune, Variable, Cadrage, Departement
 from admindivisions.models import ZonageRural
 from equipements.models import Equipement, EquipementType, Domaine
 from django.contrib.gis.geos import GEOSGeometry
@@ -59,6 +59,37 @@ def export_equipements_csv(request):
 
     for equipement in equipements:
         writer.writerow(equipement)
+    return response
+
+def export_variable_csv(request, variable):
+    variable_name="Indice de jeunesse"
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.csv"'
+    variable = Variable.objects.get(nom=variable_name)
+    if variable_name=="Indice de jeunesse": 
+        writer = csv.writer(response)
+        writer.writerow(['Commune', 'Indice de Jeunesse'])
+        cadrages = Cadrage.objects.filter(year="2017").values_list('commune__name', 'youthindex')
+        for cadrage in cadrages:
+            writer.writerow(cadrage)
+    if variable_name=="Population totale":
+        writer = csv.writer(response)
+        writer.writerow(['Commune', 'Population totale'])
+        cadrages = Cadrage.objects.filter(year="2017").values_list('commune__name', 'population')
+        for cadrage in cadrages:
+            writer.writerow(cadrage)
+    if variable_name=="Dépenses culturelles des régions":
+        writer = csv.writer(response)
+        writer.writerow(['Région', 'Secteur', 'Dépénses totales'])
+       
+        depenses = DepensesRegion.objects.filter(year="2017").values_list('region__name', 'secteur', 'depenses_totales')
+        for depense in depenses:
+            reg = Region.objects.get(codeinsee=feature['properties']['INSEE_REG'])
+            deps = Departement.objects.filter(region=reg)
+            coms = Commune.objects.filter(departement__in=deps, year="2020")
+            cads = Cadrage.objects.filter(commune__in=coms)
+            writer.writerow(depense)
+
     return response
 
 def pdr(request):
