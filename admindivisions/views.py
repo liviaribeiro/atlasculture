@@ -62,13 +62,13 @@ def export_equipements_csv(request):
         writer.writerow(equipement)
     return response
 
-def export_variable_csv(request, variable):
+def export_variable_csv(request):
     variable_name="Indice de jeunesse"
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.csv"'
     variable = Variable.objects.get(nom=variable_name)
-
-    export_csv.variable(variable_name=variable)
+    writer = csv.writer(response)
+    writer = export_csv.variables(variable=variable,response=response,writer=writer)
 
     return response
 

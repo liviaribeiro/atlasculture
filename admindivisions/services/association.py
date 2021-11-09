@@ -4,7 +4,7 @@ def ressource_variable():
     data_variables = []
     info_dict = {}
     for variable in Variable.objects.all():
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         info_dict['variable'] = {
                 'nom': variable.nom,
                 'definition' : variable.definition,
