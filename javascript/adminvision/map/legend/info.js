@@ -1,3 +1,4 @@
+import { addcomplementaryRessource } from './complementaryRessource.js'
 
 const addInfo = (indicator, equipementID, definition, source, year) => {
     let legendBox = document.getElementById('legend-box');
@@ -28,6 +29,8 @@ const addInfo = (indicator, equipementID, definition, source, year) => {
     sourceContent.innerHTML = source + ', ' + year;
     info.appendChild(sourceTitle);
     info.appendChild(sourceContent);
+
+    // addcomplementaryRessource(indicator);
 }
 const showInfo = (equipementID) => {
     console.log("info-"+equipementID);
