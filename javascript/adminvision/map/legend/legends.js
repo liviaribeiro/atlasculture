@@ -1,3 +1,4 @@
+
 const openCloseLegend = (itemMenu) => {
     if (document.getElementById(itemMenu).style.width == "30px") {
         document.getElementById(itemMenu).style.width = "257px";
@@ -57,7 +58,7 @@ const addLegend = (indicator, layers, colors) => {
         legend.appendChild(item);
         legendBox.appendChild(legend);
     }
-    // addcomplementaryRessource();
+
     legend.style.display = 'none';
 }
 

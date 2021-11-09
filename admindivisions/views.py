@@ -20,12 +20,13 @@ def map(request):
     domaines = Domaine.objects.all().order_by('name')
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
-    association.ressource_variable()
+    data_variables_rich = association.ressource_variable()
     context = {'communes': communes,
     'domaines': domaines,
     'zonagerural': zonagerural,
     'variables': variables,
-    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source','year', 'pk')],
+    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source__nom','year', 'pk')],
+    'data_variables_rich': data_variables_rich,
     'data_domaines': domaines
     }
 
