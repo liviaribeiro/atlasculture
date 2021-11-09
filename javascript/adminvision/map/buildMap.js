@@ -44,13 +44,6 @@ const buildMap = () => {
       map.setPaintProperty("water", 'fill-color', "#a8e0f5");
       map.setPaintProperty("national-park", 'fill-color', "#b4e49b");
 
-
-
-      function formatNumber(num) {
-          return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
-          }
-
-
       addMultipleZoneLayer();
       addSource();
       festival();
@@ -58,10 +51,13 @@ const buildMap = () => {
       dataVariables(zoomThreshold,zoomComThreshold);
       dataDomaines();
 
-
-
   });
-
+  
 }
+const formatNumber = (num) => {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
+}
+
+window.formatNumber = formatNumber
 window.buildMap = buildMap
 export { buildMap }

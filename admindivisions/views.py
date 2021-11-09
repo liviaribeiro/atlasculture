@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.serializers import serialize
-from .models import Region, Commune, Variable
 from admindivisions.models import ZonageRural,ComplementaryRessource
+from .models import DepensesRegion, Region, Commune, Variable, Cadrage, Departement
 from equipements.models import Equipement, EquipementType, Domaine
 from django.contrib.gis.geos import GEOSGeometry
 from atlasculture.settings import BASE_DIR
@@ -11,6 +11,8 @@ import json
 from django.http import JsonResponse
 import csv
 from admindivisions.services import association
+from admindivisions.services import export_csv
+
 
 # Create your views here.
 def map(request):
@@ -46,7 +48,7 @@ def equipements(request, domaine):
         response = JsonResponse(data, safe=False)
     return response
 
-def export_equipements_csv(request, equipement_type):
+def export_equipements_csv(request):
     response = HttpResponse(content_type='text/csv')
     pks_list = request.GET.get('pks_list', 'default').split(',')
     pks_list = [int(x) for x in pks_list]
@@ -54,10 +56,20 @@ def export_equipements_csv(request, equipement_type):
     writer = csv.writer(response)
     writer.writerow(['ID Deps', 'Equipement', 'Domaine', 'Adresse', 'Commune', 'Source'])
     equipement_type = EquipementType.objects.filter(pk__in=pks_list)
-    equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune', 'source')
-
+    equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune__name', 'source__name')
+    export_csv_variables(variable_name)
     for equipement in equipements:
         writer.writerow(equipement)
+    return response
+
+def export_variable_csv(request, variable):
+    variable_name="Indice de jeunesse"
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.csv"'
+    variable = Variable.objects.get(nom=variable_name)
+
+    export_csv.variable(variable_name=variable)
+
     return response
 
 def pdr(request):
