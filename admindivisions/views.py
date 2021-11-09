@@ -25,7 +25,7 @@ def map(request):
     'domaines': domaines,
     'zonagerural': zonagerural,
     'variables': variables,
-    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source','year')],
+    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source','year', 'pk')],
     'data_domaines': domaines
     }
 
@@ -63,13 +63,13 @@ def export_equipements_csv(request):
     return response
 
 def export_variable_csv(request):
-    variable_name="Indice de jeunesse"
+    variable_id = int(request.GET.get('variable_id'))
+    variable = Variable.objects.get(pk=variable_id)
+    variable_name=variable.nom
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.csv"'
-    variable = Variable.objects.get(nom=variable_name)
     writer = csv.writer(response)
     writer = export_csv.variables(variable=variable,response=response,writer=writer)
-
     return response
 
 def pdr(request):

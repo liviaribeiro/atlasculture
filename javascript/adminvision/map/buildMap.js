@@ -49,7 +49,7 @@ const buildMap = () => {
       festival();
 
       dataVariables(zoomThreshold,zoomComThreshold);
-      dataDomaines();
+      //dataDomaines();
 
   });
   

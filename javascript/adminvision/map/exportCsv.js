@@ -53,18 +53,19 @@ const generate_modal_body = () => {
     }
 
     const dataVariables = loadDataVariables();
+    const urlExportVariableCsv = document.getElementById('url-export-variable-csv')
 
     dataVariables.forEach((dataVariable) => {
         const layer = dataVariable.nom
         var layer_visibility = map.getLayoutProperty(layer, 'visibility');
-        const urlExportVariableCsv = document.getElementById('url-export-variable-csv')
 
         if (layer_visibility == 'visible') {
             var layer_element = document.createElement('li');
             layer_element.innerHTML = layer;
             var layer_toDownload = document.createElement('a');
             layer_toDownload.className = "btn btn-export btn-link";
-            layer_toDownload.href = `${urlExportVariableCsv.dataset.urlExportVariableCsv}`
+            debugger
+            layer_toDownload.href = `${urlExportVariableCsv.dataset.urlExportVariableCsv}?variable_id=${dataVariable.pk}`
             layer_toDownload.innerHTML = 'csv';
             layer_element.appendChild(layer_toDownload);
             layers_list.appendChild(layer_element);
