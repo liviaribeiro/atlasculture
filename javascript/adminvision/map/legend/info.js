@@ -6,8 +6,11 @@ const addInfo = (indicator, equipementID, definition, source, year) => {
     closeButton.className = "closebtn";
     closeButton.onclick = function () {showInfo(hideInfo(equipementID))};
     const info = document.createElement('div');
-    info.className = "legend shadow-sm p-3 mb-1 bg-white";
+    const cleanIndicator = indicator.toLowerCase().replace(/[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]/g,'-')
+
+    info.className = `legend shadow-sm p-3 mb-1 bg-white info-indicator-${cleanIndicator}`;
     info.setAttribute('id', "info-"+equipementID);
+
     info.appendChild(closeButton);
     var title = document.createElement('div');
     title.className = "title-legend mb-3 mt-3";
@@ -30,7 +33,7 @@ const addInfo = (indicator, equipementID, definition, source, year) => {
     info.appendChild(sourceTitle);
     info.appendChild(sourceContent);
 
-    // addcomplementaryRessource(indicator);
+    addcomplementaryRessource(indicator);
 }
 const showInfo = (equipementID) => {
     console.log("info-"+equipementID);
@@ -46,6 +49,7 @@ const hideInfo = (equipementID) => {
     const info = document.getElementById("info-"+equipementID);
     info.style.display = "none";
     var legend = document.getElementById("legend-"+equipementID);
+
     console.log("legend-"+equipementID);
     legend.style.display = "block";
 }
