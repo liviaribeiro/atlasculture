@@ -10,6 +10,7 @@ import os
 import json
 from django.http import JsonResponse
 import csv
+from admindivisions.services import export_csv
 
 # Create your views here.
 def map(request):
@@ -56,7 +57,7 @@ def export_equipements_csv(request):
     writer.writerow(['ID Deps', 'Equipement', 'Domaine', 'Adresse', 'Commune', 'Source'])
     equipement_type = EquipementType.objects.filter(pk__in=pks_list)
     equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune__name', 'source__name')
-
+    export_csv_variables(variable_name)
     for equipement in equipements:
         writer.writerow(equipement)
     return response
@@ -66,29 +67,8 @@ def export_variable_csv(request, variable):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.csv"'
     variable = Variable.objects.get(nom=variable_name)
-    if variable_name=="Indice de jeunesse": 
-        writer = csv.writer(response)
-        writer.writerow(['Commune', 'Indice de Jeunesse'])
-        cadrages = Cadrage.objects.filter(year="2017").values_list('commune__name', 'youthindex')
-        for cadrage in cadrages:
-            writer.writerow(cadrage)
-    if variable_name=="Population totale":
-        writer = csv.writer(response)
-        writer.writerow(['Commune', 'Population totale'])
-        cadrages = Cadrage.objects.filter(year="2017").values_list('commune__name', 'population')
-        for cadrage in cadrages:
-            writer.writerow(cadrage)
-    if variable_name=="Dépenses culturelles des régions":
-        writer = csv.writer(response)
-        writer.writerow(['Région', 'Secteur', 'Dépénses totales'])
-       
-        depenses = DepensesRegion.objects.filter(year="2017").values_list('region__name', 'secteur', 'depenses_totales')
-        for depense in depenses:
-            reg = Region.objects.get(codeinsee=feature['properties']['INSEE_REG'])
-            deps = Departement.objects.filter(region=reg)
-            coms = Commune.objects.filter(departement__in=deps, year="2020")
-            cads = Cadrage.objects.filter(commune__in=coms)
-            writer.writerow(depense)
+
+    export_csv.variable(variable_name=variable)
 
     return response
 
