@@ -418,9 +418,8 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _adm
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
+/******/ 		if(__webpack_module_cache__[moduleId]) {
+/******/ 			return __webpack_module_cache__[moduleId].exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -466,11 +465,9 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _adm
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
 /******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./javascript/index.js");
-/******/ 	
+/******/ 	// Load entry module
+/******/ 	__webpack_require__("./javascript/index.js");
+/******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;
