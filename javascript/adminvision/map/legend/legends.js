@@ -21,6 +21,7 @@ const hideLegend = (equipementID) => {
 }
 
 const addLegend = (indicator, layers, colors) => {
+
     let legendBox = document.getElementById('legend-box');
     var infoButton = document.createElement('button');
     infoButton.className = "infobtn";
@@ -39,6 +40,7 @@ const addLegend = (indicator, layers, colors) => {
     legend.appendChild(title);
 
 
+
     for (let i = 0;  i < layers.length; i++) {
         var layer = layers[i];
         var color = colors[i];
@@ -55,6 +57,7 @@ const addLegend = (indicator, layers, colors) => {
         legend.appendChild(item);
         legendBox.appendChild(legend);
     }
+    // addcomplementaryRessource();
     legend.style.display = 'none';
 }
 

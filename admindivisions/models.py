@@ -241,3 +241,12 @@ class Variable(models.Model):
         return self.nom
     class Meta:
         ordering = ('position',)
+
+class ComplementaryRessource(models.Model):
+    link = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    logo = models.CharField(max_length=100)
+    variables = models.ManyToManyField(Variable)
+    def __str__(self):
+        return self.name
+

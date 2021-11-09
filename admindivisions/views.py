@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.serializers import serialize
 from .models import Region, Commune, Variable
-from admindivisions.models import ZonageRural
+from admindivisions.models import ZonageRural,ComplementaryRessource
 from equipements.models import Equipement, EquipementType, Domaine
 from django.contrib.gis.geos import GEOSGeometry
 from atlasculture.settings import BASE_DIR
@@ -10,6 +10,7 @@ import os
 import json
 from django.http import JsonResponse
 import csv
+from admindivisions.services import association
 
 # Create your views here.
 def map(request):
@@ -17,7 +18,7 @@ def map(request):
     domaines = Domaine.objects.all().order_by('name')
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
-    # import ipdb; ipdb.set_trace()
+    association.ressource_variable()
     context = {'communes': communes,
     'domaines': domaines,
     'zonagerural': zonagerural,
@@ -25,9 +26,7 @@ def map(request):
     'data_variables': [variable for variable in Variable.objects.values('nom','definition','source','year')],
     'data_domaines': domaines
     }
-# 'data_domaines': [equipement_type for equipement_type in domaine.equipementtype_set.all for domaine in domaines]
 
-#  [variable for variable in Variable.objects.values('nom','definition','source','year')]
     return render(request, 'admindivisions/map.html', context)
 
 def download(request, layers):
@@ -82,3 +81,4 @@ def aav(request):
         data = json.load(f)
         response = JsonResponse(data, safe=False)
     return response
+

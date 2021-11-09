@@ -1,10 +1,10 @@
 from django.contrib.gis import admin
-from admindivisions.models import (Region, Departement, Commune, EpciType, Epci, ZonageRural, 
-                                    ActionCoeurVille, ZoneEmploi, Cadrage, Entreprises_communes, 
+from admindivisions.models import (Region, Departement, Commune, EpciType, Epci, ZonageRural,
+                                    ActionCoeurVille, ZoneEmploi, Cadrage, Entreprises_communes,
                                     Entreprises_departements, Entreprises_regions, TypologieEvolution,
-                                    Domaine, Secteur, DepensesRegion, TypologieAAV, AireAttractionVille, Commune_AAV, 
+                                    Domaine, Secteur, DepensesRegion, TypologieAAV, AireAttractionVille, Commune_AAV,
                                     Emploi_ZE, Emploi_Departement, Emploi_Region, DepensesDepartement, DepensesEPCI, DepensesCommunes,
-                                    DepensesMinistereRegion, DepensesMinistereDepartement, Source, Variable)
+                                    DepensesMinistereRegion, DepensesMinistereDepartement, Source, Variable,ComplementaryRessource)
 # Register your models here.
 
 class RegionAdmin(admin.OSMGeoAdmin):
@@ -63,7 +63,7 @@ admin.site.register(Emploi_Departement)
 admin.site.register(Emploi_Region)
 admin.site.register(Source)
 admin.site.register(Variable)
-
+admin.site.register(ComplementaryRessource)
 
 
 
