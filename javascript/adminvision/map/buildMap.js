@@ -6,7 +6,9 @@ import { dataDomaines } from './context/dataDomaines.js';
 import { addZoneLayer } from './layer/addZoneLayer.js';
 import { addMultipleZoneLayer } from './layer/addMultipleZoneLayer.js'
 import { festival } from './layer/templates/festival.js';
+import { loadDataVariablesRich } from './context/loadDataVariables.js'
 const buildMap = () => {
+  loadDataVariablesRich()
 
 
   map.on('load', function () {
@@ -49,10 +51,12 @@ const buildMap = () => {
       festival();
 
       dataVariables(zoomThreshold,zoomComThreshold);
-      dataDomaines();
+
+      // Comment equipement to speed loading page
+      // dataDomaines();
 
   });
-  
+
 }
 const formatNumber = (num) => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
