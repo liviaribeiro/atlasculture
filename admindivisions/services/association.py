@@ -10,7 +10,7 @@ def ressource_variable():
                 list_cr.append(build_dict_cr(cr=cr))
                 i = i + 1
         else:
-            list_cr.append(build_dict_cr(cr=cr))
+            list_cr.append(build_dict_cr(cr=''))
 
         info_dict["complementary_ressource"] = list_cr
         data_variables.append(info_dict)

@@ -8,9 +8,18 @@ const addcomplementaryRessource = (indicator) => {
       if (dataRich.variable.nom == indicator) {
           const elementLegendeBox = event.currentTarget.parentNode.parentNode
           const infoElement = elementLegendeBox.querySelector(`.info-indicator-${cleanIndicator}`)
-
+          let i = 0
           dataRich.complementary_ressource.forEach(cr => {
-            infoElement.insertAdjacentHTML("beforeend", `<li>${cr.link}</li>`);
+            if (cr.link != '') {
+              const htmlCR = `
+              <p>Ressource complementaire n°: ${i}</p>
+              <p>${cr.name}</p>
+              <p>${cr.link}</p>
+              <p>${cr.logo}</p>
+              `
+              infoElement.insertAdjacentHTML("beforeend", `${htmlCR}`);
+              i = i + 1
+            }
           })
 
           // infoElement.insertAdjacentHtml('beforeend', '<p>Coco</p>')
