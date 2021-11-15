@@ -4,10 +4,14 @@ const addInfo = (indicator, equipementID, definition, source, year) => {
     let legendBox = document.getElementById('legend-box');
     let closeButton = document.createElement('button');
     closeButton.className = "closebtn";
-    closeButton.onclick = function () {showInfo(hideInfo(equipementID))};
+
+    closeButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      hideInfo(equipementID);
+    })
+
     const info = document.createElement('div');
     const cleanIndicator = indicator.toLowerCase().replace(/[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]/g,'-')
-
     info.className = `legend shadow-sm p-3 mb-1 bg-white info-indicator-${cleanIndicator}`;
     info.setAttribute('id', "info-"+equipementID);
 

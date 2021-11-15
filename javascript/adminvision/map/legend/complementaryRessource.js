@@ -6,6 +6,8 @@ const addcomplementaryRessource = (indicator) => {
     infoBtnId.addEventListener('click', (event) => {
       dataVariablesRichGlobal.forEach((dataRich) => {
       if (dataRich.variable.nom == indicator) {
+
+        if (document.getElementById(`info-indicator-${cleanIndicator}-active`) == null) {
           const elementLegendeBox = event.currentTarget.parentNode.parentNode
           const infoElement = elementLegendeBox.querySelector(`.info-indicator-${cleanIndicator}`)
           let i = 0
@@ -18,17 +20,21 @@ const addcomplementaryRessource = (indicator) => {
           dataRich.complementary_ressource.forEach(cr => {
             if (cr.link != '') {
               const htmlCR = `
-              <p>Ressource complementaire n°: ${i}</p>
-              <p>${cr.name}</p>
-              <p>${cr.link}</p>
-              <p>${cr.logo}</p>
+              <div class="cr-content">
+                <p>
+                  <a href="${cr.link}" target='_blank'>
+                    ${cr.name}
+                  </a>
+                </p>
+              </div>
               `
-              debugger
-              const coco = document.getElementById(`info-indicator-${cleanIndicator}-active`)
-              coco.insertAdjacentHTML("beforeend", `${htmlCR}`);
+              const insertContentInfoCR = document.getElementById(`info-indicator-${cleanIndicator}-active`)
+              insertContentInfoCR.insertAdjacentHTML("beforeend", `${htmlCR}`);
               i = i + 1
             }
           })
+
+        }
 
           // infoElement.insertAdjacentHtml('beforeend', '<p>Coco</p>')
           // console.log(dataRich.variable.definition)
