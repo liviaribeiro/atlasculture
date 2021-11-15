@@ -10,9 +10,8 @@ import os
 import json
 from django.http import JsonResponse
 import csv
-from admindivisions.services import association
-from admindivisions.services import export_csv
-
+import xlwt
+from admindivisions.services import association, export_csv, export_excel
 
 # Create your views here.
 def map(request):
@@ -25,7 +24,7 @@ def map(request):
     'domaines': domaines,
     'zonagerural': zonagerural,
     'variables': variables,
-    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source__nom','year', 'pk')],
+    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source__nom','year', 'pk', 'file')],
     'data_variables_rich': data_variables_rich,
     'data_domaines': domaines
     }
@@ -58,7 +57,6 @@ def export_equipements_csv(request):
     writer.writerow(['ID Deps', 'Equipement', 'Domaine', 'Adresse', 'Commune', 'Source'])
     equipement_type = EquipementType.objects.filter(pk__in=pks_list)
     equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune__name', 'source__name')
-    export_csv_variables(variable_name)
     for equipement in equipements:
         writer.writerow(equipement)
     return response
@@ -71,6 +69,20 @@ def export_variable_csv(request):
     response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.csv"'
     writer = csv.writer(response)
     writer = export_csv.variables(variable=variable,response=response,writer=writer)
+    return response
+
+def export_variable_excel(request):
+    variable_id = int(request.GET.get('variable_id'))
+    variable = Variable.objects.get(pk=variable_id)
+    variable_name=variable.nom
+    response = HttpResponse(content_type='text/csv')
+
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.xls"'
+
+    writer = xlwt.Workbook(encoding='utf-8')
+    writer = export_excel.variables(variable=variable,response=response,writer=writer)
+    writer.save(response)
     return response
 
 def pdr(request):

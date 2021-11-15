@@ -64,8 +64,7 @@ const generate_modal_body = () => {
             layer_element.innerHTML = layer;
             var layer_toDownload = document.createElement('a');
             layer_toDownload.className = "btn btn-export btn-link";
-            debugger
-            layer_toDownload.href = `${urlExportVariableCsv.dataset.urlExportVariableCsv}?variable_id=${dataVariable.pk}`
+            layer_toDownload.href = dataVariable.file
             layer_toDownload.innerHTML = 'csv';
             layer_element.appendChild(layer_toDownload);
             layers_list.appendChild(layer_element);

@@ -10,5 +10,5 @@ urlpatterns = [
     path('aav', views.aav, name='aav'),
     path('download', views.download, name='download'),
     path('export/csv/', views.export_equipements_csv, name='export_equipements_csv'),
-    path('export/variable/', views.export_variable_csv, name='export_variable_csv'),
+    path('export/variable/', views.export_variable_excel, name='export_variable_csv'),
 ]
