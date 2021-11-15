@@ -3,8 +3,8 @@ const categoriesDuRuralEtDeLurbain = (indicator,dataVariable) => {
       var layers = ["rural sous forte influence d'un pôle", "rural sous faible influence d'un pôle", "rural autonome peu dense", "rural autonome très peu dense", "urbain dense", "urbain à densité intérmediaire"];
       var colors = ['#bae4b3', '#74c476', '#31a354', '#006d2c', '#d01c8b', '#f1b6da'];
 
-      // addLegend(indicator, layers, colors);
-      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addLegend(indicator, layers, colors);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       //add zonage rural layer
       map.addLayer(

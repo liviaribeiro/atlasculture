@@ -3,8 +3,8 @@ const densiteDeLaPopulation = (indicator,dataVariable) => {
       var layers = ['0 à 50 habitants/km²', '50 à 100 habitants/km²', '100 à 1 000 habitants/km²', '1 000 à 1 0000 habitants/km²', 'plus de 10 000 habitants/km²', 'données non disponibles'];
       var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c', "#d9d9d9"];
 
-      // addLegend(indicator, layers, colors);
-      // addInfo(indicator,dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addLegend(indicator, layers, colors);
+      addInfo(indicator,dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {

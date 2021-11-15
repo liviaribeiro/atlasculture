@@ -5,7 +5,7 @@ const niveauDeVieMedian = (indicator,dataVariable) => {
       var indicator = "Niveau de vie médian";
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {

@@ -3,8 +3,8 @@ const entreprisesCulturellesDuSecteurMarchand = (indicator,dataVariable) => {
       var layers = ['0', '0 à 2,5%', '2,5 à 5%', '5 à 7,5%', 'plus de 7,5%'];
       var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
 
-      // addLegend(indicator, layers, colors);
-      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addLegend(indicator, layers, colors);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {

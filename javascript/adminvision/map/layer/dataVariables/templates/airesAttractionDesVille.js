@@ -4,8 +4,8 @@ const airesAttractionDesVille = (indicator,dataVariable) => {
       var colors = ['#fdb863', '#e66101', '#b2abd2', '#5e3c99'];
       var indicator = "Aires d'attraction des villes";
 
-      // addLegend(indicator, layers, colors);
-      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addLegend(indicator, layers, colors);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer({
               'id': "Aires d'attraction des villes",

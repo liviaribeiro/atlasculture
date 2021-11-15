@@ -4,8 +4,8 @@ const population = (indicator,dataVariable) => {
       var radius = [10, 40]
       var color = 'rgba(107, 174, 214, 0.75)';
 
-      // addLegendCircle(indicator, layers, radius, color);
-      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
+      addLegendCircle(indicator, layers, radius, color);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
 
       map.addLayer(
           {
