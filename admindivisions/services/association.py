@@ -4,14 +4,15 @@ def ressource_variable():
     for variable in Variable.objects.all():
         info_dict = build_dict_variable(variable)
         i = 0
+        list_cr = []
         if len(variable.complementaryressource_set.all()) > 0:
-
             for cr in variable.complementaryressource_set.all():
-                info_dict[f"cr_{i}"] = build_dict_cr(cr=cr)
+                list_cr.append(build_dict_cr(cr=cr))
                 i = i + 1
         else:
-            info_dict[f"cr_{i}"] = build_dict_cr(cr="")
+            list_cr.append(build_dict_cr(cr=''))
 
+        info_dict["complementary_ressource"] = list_cr
         data_variables.append(info_dict)
     return data_variables
 
@@ -29,7 +30,8 @@ def build_dict_variable(variable):
                         "definition": variable.definition,
                         "source": variable.source,
                         "year": variable.year
-                        }
+                        },
+                        "complementary_ressource":"[]"
                     }
     return variable_dict
 

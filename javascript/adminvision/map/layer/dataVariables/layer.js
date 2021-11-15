@@ -22,6 +22,10 @@ import { indiceDeJeunesse } from './templates/indiceDeJeunesse.js';
 
 const layerDataVariables = (indicator,dataVariable) => {
 
+  addLegend(indicator, layers, colors);
+  addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
+
+
   densiteDeLaPopulation(indicator,dataVariable);
   tauxDePauvrete(indicator,dataVariable);
   evolutionDeLaPopulation(indicator,dataVariable);

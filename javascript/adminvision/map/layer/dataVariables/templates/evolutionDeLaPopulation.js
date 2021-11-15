@@ -3,8 +3,8 @@ const evolutionDeLaPopulation = (indicator,dataVariable) => {
       var layers = ['Croissance totale', 'Croissance liée à un solde naturel positif', 'Croissance liée à un solde migratoire apparent positif', 'Décroissance liée à un solde naturel négatif', 'Décroissance liée à un solde migratoire apparent négatif', 'Décroissance totale'];
       var colors = ['#b2182b', '#ef8a62', '#fddbc7', '#d1e5f0', '#67a9cf','#2166ac'];
 
-      addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      // addLegend(indicator, layers, colors);
+      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
 
       map.addLayer(
           {

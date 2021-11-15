@@ -53,7 +53,7 @@ const buildMap = () => {
       dataVariables(zoomThreshold,zoomComThreshold);
 
       // Comment equipement to speed loading page
-      // dataDomaines();
+      dataDomaines();
 
   });
 
