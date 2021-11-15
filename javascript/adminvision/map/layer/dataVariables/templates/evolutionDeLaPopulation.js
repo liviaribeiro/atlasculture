@@ -4,7 +4,7 @@ const evolutionDeLaPopulation = (indicator,dataVariable) => {
       var colors = ['#b2182b', '#ef8a62', '#fddbc7', '#d1e5f0', '#67a9cf','#2166ac'];
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {

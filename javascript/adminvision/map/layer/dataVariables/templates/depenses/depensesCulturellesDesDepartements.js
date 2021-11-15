@@ -3,8 +3,8 @@ const depensesCulturellesDesDepartements = (indicator,dataVariable) => {
       var layers = ['0 à 10 €/habitant', '10 à 13 €/habitant', '13 à 17 €/habitant', '17 à 22 €/habitant', 'plus de 22 €/habitant', 'données non disponibles'];
       var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c', "#d9d9d9"];
 
-      addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      // addLegend(indicator, layers, colors);
+      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
 
       map.addLayer(
           {

@@ -4,7 +4,7 @@ const tauxDePauvrete = (indicator,dataVariable) => {
       var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c', "#d9d9d9"];
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {
@@ -40,7 +40,7 @@ const tauxDePauvrete = (indicator,dataVariable) => {
 
       map.on('click', indicator, function (e) {
           if (e.features.length > 0) {
-              tauxpauvrete = e.features[0].properties.TAUXPAUVRETE17
+              let tauxpauvrete = e.features[0].properties.TAUXPAUVRETE17
               if (tauxpauvrete == -1) {
                   tauxpauvrete = "Données non disponibles"
               }

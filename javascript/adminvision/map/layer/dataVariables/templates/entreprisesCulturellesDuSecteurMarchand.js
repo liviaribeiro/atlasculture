@@ -4,7 +4,7 @@ const entreprisesCulturellesDuSecteurMarchand = (indicator,dataVariable) => {
       var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {
@@ -38,9 +38,9 @@ const entreprisesCulturellesDuSecteurMarchand = (indicator,dataVariable) => {
 
       map.on('click', 'Entreprises culturelles du secteur marchand régions', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
-              nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
-              texte = '<p>'+e.features[0].properties.NOM_REG+"</p><p>Part d'entreprises culturelles du secteur marchand : "
+              let pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
+              let nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
+              let texte = '<p>'+e.features[0].properties.NOM_REG+"</p><p>Part d'entreprises culturelles du secteur marchand : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'entreprises culturelles du secteur marchand : "+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -84,9 +84,9 @@ const entreprisesCulturellesDuSecteurMarchand = (indicator,dataVariable) => {
 
       map.on('click', 'Entreprises culturelles du secteur marchand départements', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
-              nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
-              texte = '<p>'+e.features[0].properties.NOM_DEP+"</p><p>Part d'entreprises culturelles du secteur marchand : "
+              let pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
+              let nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
+              let texte = '<p>'+e.features[0].properties.NOM_DEP+"</p><p>Part d'entreprises culturelles du secteur marchand : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'entreprises culturelles du secteur marchand : "+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -129,9 +129,9 @@ const entreprisesCulturellesDuSecteurMarchand = (indicator,dataVariable) => {
 
       map.on('click', 'Entreprises culturelles du secteur marchand', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
-              nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
-              texte = '<p>'+e.features[0].properties.nom+"</p><p>Part d'entreprises culturelles du secteur marchand : "
+              let pourcentage = e.features[0].properties.POURCENTAGEETABLISSEMENTS*100
+              let nombre = e.features[0].properties.ETLABISSEMENTSCULTURE17
+              let texte = '<p>'+e.features[0].properties.nom+"</p><p>Part d'entreprises culturelles du secteur marchand : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'entreprises culturelles du secteur marchand : "+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"

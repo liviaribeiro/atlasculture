@@ -2,7 +2,7 @@ const actionCoeurDeVille = (indicator,dataVariable) => {
     if (indicator == "Action coeur de ville") {
       let marker = 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png';
       addLegendSymbol("Action coeur de ville", marker);
-      addInfo(indicator, dataVariable.name, dataVariable.definition, dataVariable.source,dataVariable.year);
+      addInfo(indicator, dataVariable.name, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
 
       map.addLayer({
           'id': 'Action coeur de ville',

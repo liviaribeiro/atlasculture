@@ -5,7 +5,7 @@ const population = (indicator,dataVariable) => {
       var color = 'rgba(107, 174, 214, 0.75)';
 
       addLegendCircle(indicator, layers, radius, color);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source,dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
 
       map.addLayer(
           {
@@ -26,7 +26,7 @@ const population = (indicator,dataVariable) => {
 
       map.on('click', 'Population', function (e) {
           if (e.features.length > 0) {
-              population = e.features[0].properties.POPULATION
+              let population = e.features[0].properties.POPULATION
               if (population == -1) {
                   population = "Données non disponibles"
               }

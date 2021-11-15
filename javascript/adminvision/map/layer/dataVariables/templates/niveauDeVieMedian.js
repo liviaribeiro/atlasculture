@@ -5,7 +5,7 @@ const niveauDeVieMedian = (indicator,dataVariable) => {
       var indicator = "Niveau de vie médian";
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {
@@ -41,7 +41,7 @@ const niveauDeVieMedian = (indicator,dataVariable) => {
 
       map.on('click', indicator, function (e) {
           if (e.features.length > 0) {
-              niveaudevie = e.features[0].properties.NIVEAUDEVIE17
+              let niveaudevie = e.features[0].properties.NIVEAUDEVIE17
               if (niveaudevie == -1) {
                   niveaudevie = "Données non disponibles"
               }

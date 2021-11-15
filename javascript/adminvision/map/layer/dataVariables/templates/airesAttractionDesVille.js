@@ -5,7 +5,7 @@ const airesAttractionDesVille = (indicator,dataVariable) => {
       var indicator = "Aires d'attraction des villes";
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer({
               'id': "Aires d'attraction des villes",
@@ -36,7 +36,7 @@ const airesAttractionDesVille = (indicator,dataVariable) => {
 
       map.on('click', "Aires d'attraction des villes", function (e) {
           if (e.features.length > 0) {
-              texte = e.features[0].properties.LIBAAV2020
+              let texte = e.features[0].properties.LIBAAV2020
 
               popup.setLngLat(e.lngLat)
                   .setHTML(texte)

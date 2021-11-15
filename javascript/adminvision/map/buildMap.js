@@ -54,7 +54,7 @@ const buildMap = () => {
 
 
       // Comment equipement to speed loading page
-      // dataDomaines();
+      dataDomaines();
 
   });
 

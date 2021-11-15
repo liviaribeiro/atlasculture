@@ -4,7 +4,7 @@ const actifsDansLesSecteursCulturels = (indicator,dataVariable) => {
       var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {
@@ -39,9 +39,9 @@ const actifsDansLesSecteursCulturels = (indicator,dataVariable) => {
 
       map.on('click', 'Actifs dans les secteurs culturels', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.part_secteur_culturel*100
-              nombre = e.features[0].properties.nombre_secteur_culturel
-              texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Part d'actifs dans les secteurs culturels : "
+              let pourcentage = e.features[0].properties.part_secteur_culturel*100
+              let nombre = e.features[0].properties.nombre_secteur_culturel
+              let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Part d'actifs dans les secteurs culturels : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -84,9 +84,9 @@ const actifsDansLesSecteursCulturels = (indicator,dataVariable) => {
 
       map.on('click', 'Actifs dans les secteurs culturels région', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.part_secteur_culturel*100
-              nombre = e.features[0].properties.nombre_secteur_culturel
-              texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Part d'actifs dans les secteurs culturels : "
+              let pourcentage = e.features[0].properties.part_secteur_culturel*100
+              let nombre = e.features[0].properties.nombre_secteur_culturel
+              let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Part d'actifs dans les secteurs culturels : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -129,9 +129,9 @@ const actifsDansLesSecteursCulturels = (indicator,dataVariable) => {
 
       map.on('click', 'Actifs dans les secteurs culturels ZE', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.part_secteur_culturel*100
-              nombre = e.features[0].properties.nombre_secteur_culturel
-              texte = '<p style="font-weight: bold;">'+"Zone d'emploi "+e.features[0].properties.libelle+"</p><p>Part d'actifs dans les secteurs culturels : "
+              let pourcentage = e.features[0].properties.part_secteur_culturel*100
+              let nombre = e.features[0].properties.nombre_secteur_culturel
+              let texte = '<p style="font-weight: bold;">'+"Zone d'emploi "+e.features[0].properties.libelle+"</p><p>Part d'actifs dans les secteurs culturels : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"

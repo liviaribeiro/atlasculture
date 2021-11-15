@@ -4,7 +4,7 @@ const densiteDeLaPopulation = (indicator,dataVariable) => {
       var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c', "#d9d9d9"];
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator,dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator,dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       map.addLayer(
           {
@@ -39,7 +39,7 @@ const densiteDeLaPopulation = (indicator,dataVariable) => {
 
       map.on('click', indicator, function (e) {
           if (e.features.length > 0) {
-              densite = e.features[0].properties.DENSITE17
+              let densite = e.features[0].properties.DENSITE17
               if (densite == -1) {
                   densite = "Données non disponibles"
               }
