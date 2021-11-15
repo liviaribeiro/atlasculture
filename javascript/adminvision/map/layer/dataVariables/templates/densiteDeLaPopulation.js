@@ -39,7 +39,7 @@ const densiteDeLaPopulation = (indicator,dataVariable) => {
 
       map.on('click', indicator, function (e) {
           if (e.features.length > 0) {
-              densite = e.features[0].properties.DENSITE17
+              let densite = e.features[0].properties.DENSITE17
               if (densite == -1) {
                   densite = "Données non disponibles"
               }

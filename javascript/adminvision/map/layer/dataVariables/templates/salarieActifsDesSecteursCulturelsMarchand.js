@@ -38,9 +38,9 @@ const salarieActifsDesSecteursCulturelsMarchand = (indicator,dataVariable) => {
 
       map.on('click', 'Salariés actifs des secteurs culturels marchands régions', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
-              nombre = e.features[0].properties.EFFECTIFSCULTURE17
-              texte = '<p>'+e.features[0].properties.NOM_REG+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
+              let pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
+              let nombre = e.features[0].properties.EFFECTIFSCULTURE17
+              let texte = '<p>'+e.features[0].properties.NOM_REG+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
                       +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -84,9 +84,9 @@ const salarieActifsDesSecteursCulturelsMarchand = (indicator,dataVariable) => {
 
       map.on('click', 'Salariés actifs des secteurs culturels marchands départements', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
-              nombre = e.features[0].properties.EFFECTIFSCULTURE17
-              texte = '<p>'+e.features[0].properties.NOM_DEP+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
+              let pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
+              let nombre = e.features[0].properties.EFFECTIFSCULTURE17
+              let texte = '<p>'+e.features[0].properties.NOM_DEP+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
                       +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -129,9 +129,9 @@ const salarieActifsDesSecteursCulturelsMarchand = (indicator,dataVariable) => {
 
       map.on('click', 'Salariés actifs des secteurs culturels marchands', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
-              nombre = e.features[0].properties.EFFECTIFSCULTURE17
-              texte = '<p>'+e.features[0].properties.nom+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
+              let pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
+              let nombre = e.features[0].properties.EFFECTIFSCULTURE17
+              let texte = '<p>'+e.features[0].properties.nom+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
                       +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
