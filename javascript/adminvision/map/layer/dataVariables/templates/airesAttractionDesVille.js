@@ -36,7 +36,7 @@ const airesAttractionDesVille = (indicator,dataVariable) => {
 
       map.on('click', "Aires d'attraction des villes", function (e) {
           if (e.features.length > 0) {
-              texte = e.features[0].properties.LIBAAV2020
+              let texte = e.features[0].properties.LIBAAV2020
 
               popup.setLngLat(e.lngLat)
                   .setHTML(texte)

@@ -40,7 +40,7 @@ const tauxDePauvrete = (indicator,dataVariable) => {
 
       map.on('click', indicator, function (e) {
           if (e.features.length > 0) {
-              tauxpauvrete = e.features[0].properties.TAUXPAUVRETE17
+              let tauxpauvrete = e.features[0].properties.TAUXPAUVRETE17
               if (tauxpauvrete == -1) {
                   tauxpauvrete = "Données non disponibles"
               }

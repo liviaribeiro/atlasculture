@@ -26,7 +26,7 @@ const population = (indicator,dataVariable) => {
 
       map.on('click', 'Population', function (e) {
           if (e.features.length > 0) {
-              population = e.features[0].properties.POPULATION
+              let population = e.features[0].properties.POPULATION
               if (population == -1) {
                   population = "Données non disponibles"
               }

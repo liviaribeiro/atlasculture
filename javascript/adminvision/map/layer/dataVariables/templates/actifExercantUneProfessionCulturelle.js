@@ -39,9 +39,9 @@ const actifExercantUneProfessionCulturelle = (indicator,dataVariable) => {
 
       map.on('click', 'Actifs exerçant une profession culturelle', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.part_profession_culturelle*100
-              nombre = e.features[0].properties.nombre_profession_culturelle
-              texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Part d'actifs exerçant une profession culturelle : "
+              let pourcentage = e.features[0].properties.part_profession_culturelle*100
+              let nombre = e.features[0].properties.nombre_profession_culturelle
+              let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Part d'actifs exerçant une profession culturelle : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs exerçant une profession culturelle : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -84,9 +84,9 @@ const actifExercantUneProfessionCulturelle = (indicator,dataVariable) => {
 
       map.on('click', 'Actifs exerçant une profession culturelle région', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.part_profession_culturelle*100
-              nombre = e.features[0].properties.nombre_profession_culturelle
-              texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Part d'actifs exerçant une profession culturelle : "
+              let pourcentage = e.features[0].properties.part_profession_culturelle*100
+              let nombre = e.features[0].properties.nombre_profession_culturelle
+              let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Part d'actifs exerçant une profession culturelle : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs exerçant une profession culturelle : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
@@ -129,9 +129,9 @@ const actifExercantUneProfessionCulturelle = (indicator,dataVariable) => {
 
       map.on('click', 'Actifs exerçant une profession culturelle ZE', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.part_profession_culturelle*100
-              nombre = e.features[0].properties.nombre_profession_culturelle
-              texte = '<p style="font-weight: bold;">'+"Zone d'emploi "+e.features[0].properties.libelle+"</p><p>Part d'actifs exerçant une profession culturelle : "
+              let pourcentage = e.features[0].properties.part_profession_culturelle*100
+              let nombre = e.features[0].properties.nombre_profession_culturelle
+              let texte = '<p style="font-weight: bold;">'+"Zone d'emploi "+e.features[0].properties.libelle+"</p><p>Part d'actifs exerçant une profession culturelle : "
                       +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs exerçant une profession culturelle : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
