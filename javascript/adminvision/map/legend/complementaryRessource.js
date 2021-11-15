@@ -9,6 +9,12 @@ const addcomplementaryRessource = (indicator) => {
           const elementLegendeBox = event.currentTarget.parentNode.parentNode
           const infoElement = elementLegendeBox.querySelector(`.info-indicator-${cleanIndicator}`)
           let i = 0
+          infoElement.insertAdjacentHTML("beforeend", `
+            <div style='background-color: #FFE2DE; padding:8px;' id='info-indicator-${cleanIndicator}-active'>
+              <p class='subtitle3'>
+                Pour aller plus loin
+              </p>
+            </div>`);
           dataRich.complementary_ressource.forEach(cr => {
             if (cr.link != '') {
               const htmlCR = `
@@ -17,7 +23,9 @@ const addcomplementaryRessource = (indicator) => {
               <p>${cr.link}</p>
               <p>${cr.logo}</p>
               `
-              infoElement.insertAdjacentHTML("beforeend", `${htmlCR}`);
+              debugger
+              const coco = document.getElementById(`info-indicator-${cleanIndicator}-active`)
+              coco.insertAdjacentHTML("beforeend", `${htmlCR}`);
               i = i + 1
             }
           })
