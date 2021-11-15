@@ -3,8 +3,8 @@ const grilleCommunaleDeDensite = (indicator,dataVariable) => {
       var layers = ['Très dense', 'Densité intermediaire', 'Peu dense', 'Très peu dense'];
       var colors = ['#d01c8b', '#f1b6da', '#bae4b3', '#31a354'];
 
-      addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      // addLegend(indicator, layers, colors);
+      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
 
       //add zonage rural layer
       map.addLayer(

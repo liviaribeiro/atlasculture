@@ -4,8 +4,8 @@ const indiceDeJeunesse = (indicator,dataVariable) => {
     var layers = ['0 à 50', '50 à 80', '80 à 100', '100 à 150', 'plus de 150'];
     var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
     // debugger
-    addLegend(indicator, layers, colors);
-    addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
+    // addLegend(indicator, layers, colors);
+    // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
     map.addLayer(
         {

@@ -4,7 +4,7 @@ const quartiersPrioritairesDeLaPolitiqueDeLaVille = (indicator,dataVariable) => 
       var colors = ['#3182bd'];
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom, dataVariable.year);
 
       //add zonage quartiers prioritaires
       map.addLayer(
