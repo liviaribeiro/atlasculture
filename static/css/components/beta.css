@@ -1,0 +1,12 @@
+.banner-beta {
+    background: red;
+    padding: 16px 8px;
+    transform: rotate(45deg);
+    width: 100%;
+    position: relative;
+    left: 131px;
+    text-align: center;
+    color: wheat;
+    font-weight: bold;
+    font-size: 25px;
+}
