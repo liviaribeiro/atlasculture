@@ -38,7 +38,9 @@ const addLegend = (indicator, layers, colors) => {
     legend.appendChild(closeButton);
     legend.appendChild(infoButton);
     legend.className = "legend shadow-sm p-3 my-2 bg-white";
+
     legend.setAttribute('id', "legend-"+indicator);
+    console.log(indicator)
     var title = document.createElement('div');
     title.className = "title-legend mb-3 mt-3";
     title.innerHTML = indicator;
