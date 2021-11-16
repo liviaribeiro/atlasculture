@@ -76,7 +76,7 @@ const dataDomaines = () => {
         img = `/static/icones/${symbol}.png`;
     }
     if (`${equipementTypeName}` == "Zénith"){
-        symbol = 'musique-noir';
+        symbol = 'musique-bleu';
         img = `/static/icones/${symbol}.png`;
     }
     //Patrimoine

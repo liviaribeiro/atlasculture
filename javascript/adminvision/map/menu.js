@@ -8,7 +8,9 @@ const openNav = (itemMenu)  => {
     }
     else {
         var w = document.documentElement.clientWidth-63;
-        document.getElementById(itemMenu).style.width = w.toString()+"px";
+        if (itemMenu) {
+          document.getElementById(itemMenu).style.width = w.toString()+"px";
+        }
     }
     const menus = ["equipement-menu", "politiques-menu", "depenses-menu", "entreprises-menu", "contexte-menu", "Arts du spectacle",
     "Arts visuels", "Cinéma", "Archives", "Éducation et formation", "Patrimoine", "Livre, lecture et presse"]

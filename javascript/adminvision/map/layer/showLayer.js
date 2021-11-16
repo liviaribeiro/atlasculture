@@ -1,9 +1,6 @@
 
 
 const showLayer = (layer) => {
-    console.log('******************')
-    console.log(layer)
-    console.log('******************')
     const aplats = ['Indice de jeunesse', 'Densité de la population', 'Évolution de la population', 'Niveau de vie médian', 'Taux de pauvreté',
     'Grille communale de densité', "Aires d'attraction des villes", "Catégories du rural et de l’urbain", "Entreprises culturelles du secteur marchand", "Entreprises culturelles du secteur marchand départements", "Entreprises culturelles du secteur marchand régions",
     'Salariés actifs des secteurs culturels marchands', "Salariés actifs des secteurs culturels marchands départements", "Salariés actifs des secteurs culturels marchands régions",
