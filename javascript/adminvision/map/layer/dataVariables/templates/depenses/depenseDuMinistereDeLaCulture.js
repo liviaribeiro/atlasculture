@@ -3,8 +3,8 @@ const depenseDuMinistereDeLaCulture = (indicator,dataVariable) => {
       var layers = ['0 à 35 €/habitant', '35 à 60 €/habitant', '60 à 90 €/habitant', '90 à 130 €/habitant', 'plus de 130 €/habitant', 'données non disponibles'];
       var colors = ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c', "#d9d9d9"];
 
-      // addLegend(indicator, layers, colors);
-      // addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
+      addLegend(indicator, layers, colors);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source, dataVariable.year);
 
       map.addLayer(
           {
@@ -40,9 +40,9 @@ const depenseDuMinistereDeLaCulture = (indicator,dataVariable) => {
 
       map.on('click', 'Dépenses du ministère de la Culture', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.DEPENSESHABITANTS
-              nombre = e.features[0].properties.DEPENSESTOTALES
-              texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses du ministère de la Culture : "
+              let pourcentage = e.features[0].properties.DEPENSESHABITANTS
+              let nombre = e.features[0].properties.DEPENSESTOTALES
+              let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Dépenses du ministère de la Culture : "
                       +"<p>- "+formatNumber(nombre.toFixed(0))+" euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
               if (nombre == -1) {
                   texte = "Données non disponibles"
