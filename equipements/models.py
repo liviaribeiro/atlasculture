@@ -35,7 +35,7 @@ class TypologieLieux(models.Model):
     domaine = models.ForeignKey(DomaineAtlas, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.name
-        
+
 class DetailLieux(models.Model):
     name = models.CharField(max_length=100)
     typologie = models.ForeignKey(TypologieLieux, on_delete=models.CASCADE, null=True)
@@ -57,7 +57,7 @@ class EquipementType(models.Model):
     year = models.CharField(max_length=4, null=True, blank=True)
     def __str__(self):
         return self.name
-    
+
     class Meta:
         ordering = ('name',)
 
@@ -81,7 +81,7 @@ class Equipement(models.Model):
     labels = models.ManyToManyField(Label, through = 'EquipementLabel')
     id_origine = models.CharField(max_length=20, null=True)
     gps = models.PointField(null=True)
-    
+
     def __str__(self):
         return self.nom
 
@@ -147,3 +147,11 @@ class Unesco(models.Model):
 
     def __str__(self):
         return self.equipement.nom
+
+class ComplementaryRessource(models.Model):
+    link = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    logo = models.CharField(max_length=100)
+    equipement_types = models.ManyToManyField(EquipementType)
+    def __str__(self):
+        return self.name
