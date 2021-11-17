@@ -184,6 +184,7 @@
 <div data-variables="{{ data_variables }}" id='data-variables'></div>
 
 <div data-variables-rich="{{ data_variables_rich }}" id="data-variables-rich"></div>
+<div data-equipement-type-rich="{{ data_equipement_type_rich }}" id="data-equipement-type-rich"></div>
 
 {% for domaine in domaines %}
   {% for equipement_type in domaine.equipementtype_set.all %}
@@ -212,9 +213,6 @@
 
 
 <script src="{% static 'index-bundle.js' %}"></script>
-
-
-
 <script src="{% static 'contexte.js' %}"></script>
 
 

@@ -1,6 +1,0 @@
-const crEquipement = () => {
-
-}
-
-
-export { crEquipement }
