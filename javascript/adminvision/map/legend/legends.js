@@ -119,6 +119,15 @@ const addLegendCircle = (indicator, layers, radius, color) => {
 const addLegendEquipement = (indicator, equipementID, color) => {
     let legendBox = document.getElementById('legend-box');
     var infoButton = document.createElement('button');
+
+    const cleanIndicator = indicator.toLowerCase().replace(/[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]/g,'-')
+
+    infoButton.id = `info-btn-id-${cleanIndicator}`;
+
+    // if (indicator == 'Zénith') {
+    //     debugger
+
+    //   }
     infoButton.className = "infobtn";
     infoButton.onclick = function () {showInfo(equipementID)};
     var closeButton = document.createElement('button');

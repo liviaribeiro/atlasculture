@@ -1,0 +1,6 @@
+const crEquipement = () => {
+
+}
+
+
+export { crEquipement }
