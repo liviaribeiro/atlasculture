@@ -21,6 +21,43 @@ const addcomplementaryRessource = (indicator) => {
 
 const insertEquipementTypeCR = (indicator,cleanIndicator) => {
 
+  dataEquipementTypesRicheGlobal.forEach((dataRich) => {
+    if (dataRich.equipement_type.name == indicator) {
+      if (document.getElementById(`info-indicator-${cleanIndicator}-active`) == null) {
+        const elementLegendeBox = event.currentTarget.parentNode.parentNode
+        const infoElement = elementLegendeBox.querySelector(`.info-indicator-${cleanIndicator}`)
+        let i = 0
+
+        if (dataRich.complementary_ressource[0].name != '') {
+          infoElement.insertAdjacentHTML("beforeend", `
+            <div style='background-color: #FFE2DE; padding:8px;' id='info-indicator-${cleanIndicator}-active'>
+              <p class='subtitle3'>
+                Pour aller plus loin
+              </p>
+            </div>`);
+
+        }
+        dataRich.complementary_ressource.forEach(cr => {
+          if (cr.link != '') {
+            const htmlCR = `
+            <div class="cr-content">
+              <p>
+                <a href="${cr.link}" target='_blank'>
+                  ${cr.name}
+                </a>
+              </p>
+            </div>
+            `
+            const insertContentInfoCR = document.getElementById(`info-indicator-${cleanIndicator}-active`)
+            insertContentInfoCR.insertAdjacentHTML("beforeend", `${htmlCR}`);
+            i = i + 1
+          }
+        })
+
+      }
+    }
+  })
+
 }
 const insertVariableCR = (indicator,cleanIndicator) => {
         dataVariablesRichGlobal.forEach((dataRich) => {

@@ -30,6 +30,7 @@ const loadDataEquipementType = () => {
   dataEquipementTypes = JSON.parse(dataEquipementTypes);
 
   window.dataEquipementTypesRicheGlobal = dataEquipementTypes
+
 }
 
 export { loadDataEquipementType }
