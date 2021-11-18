@@ -67,12 +67,14 @@ const insertVariableCR = (indicator,cleanIndicator) => {
             const elementLegendeBox = event.currentTarget.parentNode.parentNode
             const infoElement = elementLegendeBox.querySelector(`.info-indicator-${cleanIndicator}`)
             let i = 0
-            infoElement.insertAdjacentHTML("beforeend", `
-              <div style='background-color: #FFE2DE; padding:8px;' id='info-indicator-${cleanIndicator}-active'>
-                <p class='subtitle3'>
-                  Pour aller plus loin
-                </p>
-              </div>`);
+            if (dataRich.complementary_ressource[0].name != '') {
+              infoElement.insertAdjacentHTML("beforeend", `
+                <div style='background-color: #FFE2DE; padding:8px;' id='info-indicator-${cleanIndicator}-active'>
+                  <p class='subtitle3'>
+                    Pour aller plus loin
+                  </p>
+                </div>`);
+            }
             dataRich.complementary_ressource.forEach(cr => {
               if (cr.link != '') {
                 const htmlCR = `
