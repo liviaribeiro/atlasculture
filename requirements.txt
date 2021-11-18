@@ -26,5 +26,6 @@ Pillow
 django-storages==1.11.1
 boto3
 ipdb
+xlwt
 
 django-environ
