@@ -10,9 +10,8 @@ import os
 import json
 from django.http import JsonResponse
 import csv
-from admindivisions.services import association
-from admindivisions.services import export_csv
-
+import xlwt
+from admindivisions.services import association, export_csv, export_excel
 
 # Create your views here.
 def map(request):
@@ -21,12 +20,20 @@ def map(request):
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
     data_variables_rich = association.ressource_variable()
+    data_variables = []
+    for variable in variables:
+        if variable.file:
+            data_variables.append({'nom': variable.nom, 'definition': variable.definition, 'source__nom': variable.source.nom, 'year': variable.year, 'pk': variable.pk, 'file': variable.file.url})
+        else:
+            data_variables.append({'nom': variable.nom, 'source__nom': variable.source.nom, 'pk': variable.pk, 'file': "none"})
+
     data_equipement_type_rich = association.ressource_equipement_type(domaines)
+
     context = {'communes': communes,
     'domaines': domaines,
     'zonagerural': zonagerural,
     'variables': variables,
-    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source__nom','year', 'pk')],
+    'data_variables': data_variables,
     'data_variables_rich': data_variables_rich,
     'data_equipement_type_rich': data_equipement_type_rich,
     'data_domaines': domaines
@@ -60,19 +67,32 @@ def export_equipements_csv(request):
     writer.writerow(['ID Deps', 'Equipement', 'Domaine', 'Adresse', 'Commune', 'Source'])
     equipement_type = EquipementType.objects.filter(pk__in=pks_list)
     equipements = Equipement.objects.filter(equipement_type__in=equipement_type).values_list('id_DEPS', 'nom', 'equipement_type__name', 'adresse', 'commune__name', 'source__name')
-    export_csv_variables(variable_name)
     for equipement in equipements:
         writer.writerow(equipement)
     return response
 
 def export_variable_csv(request):
-    variable_name="Indice de jeunesse"
+    variable_id = int(request.GET.get('variable_id'))
+    variable = Variable.objects.get(pk=variable_id)
+    variable_name=variable.nom
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.csv"'
-    variable = Variable.objects.get(nom=variable_name)
     writer = csv.writer(response)
     writer = export_csv.variables(variable=variable,response=response,writer=writer)
+    return response
 
+def export_variable_excel(request):
+    variable_id = int(request.GET.get('variable_id'))
+    variable = Variable.objects.get(pk=variable_id)
+    variable_name=variable.nom
+    response = HttpResponse(content_type='text/csv')
+
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="'+variable_name+'.xls"'
+
+    writer = xlwt.Workbook(encoding='utf-8')
+    writer = export_excel.variables(variable=variable,response=response,writer=writer)
+    writer.save(response)
     return response
 
 def pdr(request):

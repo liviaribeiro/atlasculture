@@ -13,7 +13,8 @@ const loadDataVariables = () => {
   dataVariables = dataVariables.replace(/', "/g,`", "`)
   dataVariables = dataVariables.replace(/'pk'/g,`"pk"`)
   dataVariables = dataVariables.replace(/',/g,`",`)
-
+  dataVariables = dataVariables.replace(/'file'/g,`"file"`)
+  dataVariables = dataVariables.replace(/None/g,`"none"`)
 
 
   dataVariables = JSON.parse(dataVariables);
@@ -52,6 +53,9 @@ const loadDataVariablesRich = () => {
   dataVariablesRich = dataVariablesRich.replace(/'}, {"/g,`"}, {"`)
   dataVariablesRich = dataVariablesRich.replace(/'}]/g,`"}]`)
   dataVariablesRich = dataVariablesRich.replace(/>, "/g,`>", "`)
+  dataVariablesRich = dataVariablesRich.replace(/'complementary_ressource'/g,`"complementary_ressource"`)
+  
+
 
   dataVariablesRich = JSON.parse(dataVariablesRich);
 
