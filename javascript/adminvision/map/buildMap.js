@@ -7,8 +7,11 @@ import { addZoneLayer } from './layer/addZoneLayer.js';
 import { addMultipleZoneLayer } from './layer/addMultipleZoneLayer.js'
 import { festival } from './layer/templates/festival.js';
 import { loadDataVariablesRich } from './context/loadDataVariables.js'
+import { loadDataEquipementType } from './context/loadDataEquipementType.js'
+
 const buildMap = () => {
   loadDataVariablesRich()
+  loadDataEquipementType()
 
 
   map.on('load', function () {
