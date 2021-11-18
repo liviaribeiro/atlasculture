@@ -20,11 +20,18 @@ def map(request):
     zonagerural = ZonageRural.objects.all()
     variables = Variable.objects.all()
     data_variables_rich = association.ressource_variable()
+    data_variables = []
+    for variable in variables:
+        if variable.file:
+            data_variables.append({'nom': variable.nom, 'definition': variable.definition, 'source__nom': variable.source.nom, 'year': variable.year, 'pk': variable.pk, 'file': variable.file.url})
+        else:
+            data_variables.append({'nom': variable.nom, 'source__nom': variable.source.nom, 'pk': variable.pk, 'file': "none"})
+
     context = {'communes': communes,
     'domaines': domaines,
     'zonagerural': zonagerural,
     'variables': variables,
-    'data_variables': [variable for variable in Variable.objects.values('nom','definition','source__nom','year', 'pk', 'file')],
+    'data_variables': data_variables,
     'data_variables_rich': data_variables_rich,
     'data_domaines': domaines
     }

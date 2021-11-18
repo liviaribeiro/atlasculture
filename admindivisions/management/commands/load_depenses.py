@@ -53,11 +53,11 @@ class Command(BaseCommand):
             with open('admindivisions/data/REGION_DEPENSES.json', 'w') as f:
                 json.dump(data, f)
           """  
-        """
+        
         source_file = os.path.join(BASE_DIR, 'admindivisions/data/Base_Depenses_Departements_2019.xlsx')
 
         df = pd.read_excel(source_file, dtype={'Departement':'string'})
-
+        
         for i in df.index:
             codeinsee = df['Departement'][i]
             nom_secteur = df['Secteur'][i]
@@ -70,7 +70,7 @@ class Command(BaseCommand):
             
             DepensesDepartement.objects.get_or_create(departement=departement, secteur=secteur, depenses_fonctionnement=depenses_fonctionnement,
             depenses_investissement=depenses_investissement, depenses_totales=depenses_totales, annee=annee)
-        """
+        
         """
         with open('admindivisions/data/DEPARTEMENT_SIMPLIFIED.json') as f:
             data = json.load(f)
@@ -96,14 +96,17 @@ class Command(BaseCommand):
                                                                                              
             with open('admindivisions/data/DEPARTEMENT_DEPENSES.json', 'w') as f:
                 json.dump(data, f)
-        
-
+        """
+        """
         source_file = os.path.join(BASE_DIR, 'admindivisions/data/Base_Depenses_Communes_2019.xlsx')
 
         df = pd.read_excel(source_file, dtype={'Departement':'string'})
 
         for i in df.index:
             codeinsee = df['Departement'][i]
+            print(codeinsee)
+            if codeinsee not in ("976", "974", "973", "972", "971"):
+                codeinsee = codeinsee[1:]
             nom_secteur = df['Secteur'][i]
             depenses_fonctionnement = df['Depenses_Fonctionnement'][i]
             depenses_investissement = df['Depenses_Investissement'][i]
@@ -280,6 +283,7 @@ class Command(BaseCommand):
             with open('admindivisions/data/MINISTERE_REGION_DEPENSES.json', 'w') as f:
                 json.dump(data, f)
         """
+        """
         with open('admindivisions/data/DEPARTEMENT_SIMPLIFIED.json') as f:
             data = json.load(f)
 
@@ -305,3 +309,4 @@ class Command(BaseCommand):
                                                                                              
             with open('admindivisions/data/MINISTERE_DEPARTEMENT_DEPENSES.json', 'w') as f:
                 json.dump(data, f)
+        """

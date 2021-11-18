@@ -2,25 +2,38 @@ from admindivisions.models import (DepensesCommunes, DepensesDepartement, Depens
 Commune_AAV, Region, Commune, Cadrage, Departement, Entreprises_regions, Entreprises_departements, Entreprises_communes)
 import xlwt
 
+def addMetadata(sheet, variable):
+    sheet.write(0, 0, 'Definition')
+    sheet.write(0, 1, variable.definition)
+    sheet.write(1, 0, 'Source')
+    sheet.write(1, 1, variable.source.nom)
+    sheet.write(2, 0, 'Année')
+    sheet.write(2, 1, variable.year)
+
 def variables(variable='',response='',writer=''):
     variable_name = variable.nom
     
     #Données de contexte
     if variable_name=="Population":
         sheet = writer.add_sheet("Population")
-        sheet_1 = writer.add_sheet("Population_1")
+        sheet_1 = writer.add_sheet("Meta")
         row_num = 0
         font_style = xlwt.XFStyle()
-        columns = ['Commune', 'Population totale']
+        font_style2 = xlwt.XFStyle()
+        font_style.font.bold = True
+        columns = ['Commune', 'Code Insee', 'Population totale']
         for col_num in range(len(columns)):
             sheet.write(row_num, col_num, columns[col_num], font_style)
-        cadrages = Cadrage.objects.filter(year="2017").values_list('commune__name', 'population')
+        cadrages = Cadrage.objects.filter(year="2017").values_list('commune__name', 'commune__codeinsee', 'population')
         for cadrage in cadrages:
             row_num += 1
             for col_num in range(len(cadrage)):
-                sheet.write(row_num, col_num, cadrage[col_num], font_style)
+                sheet.write(row_num, col_num, cadrage[col_num], font_style2)
+        addMetadata(sheet_1, variable)
 
     if variable_name=="Indice de jeunesse":
+        sheet = writer.add_sheet("Indice de jeunesse")
+        row_num = 0
         writer.writerow(['Commune', 'Indice de Jeunesse'])
         cadrages = Cadrage.objects.filter(year="2017").values_list('commune__name', 'youthindex')
         for cadrage in cadrages:
