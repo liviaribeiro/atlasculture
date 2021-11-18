@@ -27,12 +27,15 @@ def map(request):
         else:
             data_variables.append({'nom': variable.nom, 'source__nom': variable.source.nom, 'pk': variable.pk, 'file': "none"})
 
+    data_equipement_type_rich = association.ressource_equipement_type(domaines)
+
     context = {'communes': communes,
     'domaines': domaines,
     'zonagerural': zonagerural,
     'variables': variables,
     'data_variables': data_variables,
     'data_variables_rich': data_variables_rich,
+    'data_equipement_type_rich': data_equipement_type_rich,
     'data_domaines': domaines
     }
 

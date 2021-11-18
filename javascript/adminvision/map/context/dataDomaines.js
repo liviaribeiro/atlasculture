@@ -76,7 +76,7 @@ const dataDomaines = () => {
         img = `/static/icones/${symbol}.png`;
     }
     if (`${equipementTypeName}` == "Zénith"){
-        symbol = 'musique-noir';
+        symbol = 'musique-bleu';
         img = `/static/icones/${symbol}.png`;
     }
     //Patrimoine
@@ -210,8 +210,8 @@ const dataDomaines = () => {
 
       var circleColor = '#074382';
 
-      addInfo(`${equipementTypeName}`, `${equipementTypePk}`, `${equipementTypeDefinition}`, `${equipementTypeSource}`, `${equipementTypeYear}`);
       addLegendEquipement(`${equipementTypeName}`, `${equipementTypePk}`, img);
+      addInfo(`${equipementTypeName}`, `${equipementTypePk}`, `${equipementTypeDefinition}`, `${equipementTypeSource}`, `${equipementTypeYear}`);
 
       map.on('click', `${equipementTypePk}`, function (e) {
           var coordinates = e.features[0].geometry.coordinates.slice();

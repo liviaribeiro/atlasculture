@@ -81,7 +81,7 @@
                 {% for sousdomaine in domaine.sousdomaine_set.all%}
                 <p class="sousdomaine-title">{{ sousdomaine.name }}</p>
                     {% for equipement_type in sousdomaine.equipementtype_set.all %}
-                        <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+                        <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }} </button>
                     {% endfor %}
                 {% endfor %}
             {% else %}
@@ -184,6 +184,7 @@
 <div data-variables="{{ data_variables }}" id='data-variables'></div>
 
 <div data-variables-rich="{{ data_variables_rich }}" id="data-variables-rich"></div>
+<div data-equipement-type-rich="{{ data_equipement_type_rich }}" id="data-equipement-type-rich"></div>
 
 {% for domaine in domaines %}
   {% for equipement_type in domaine.equipementtype_set.all %}
@@ -212,18 +213,9 @@
 
 
 <script src="{% static 'index-bundle.js' %}"></script>
-
-
-<script>
-
-
-
-
-</script>
-
 <script src="{% static 'contexte.js' %}"></script>
 
-<!--<script src="{% static 'map.js' %}"></script>-->
+
 
 
  {% endblock content %}

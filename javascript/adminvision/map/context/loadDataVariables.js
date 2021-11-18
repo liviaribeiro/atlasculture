@@ -31,8 +31,7 @@ const loadDataVariablesRich = () => {
   dataVariablesRich = dataVariablesRich.replace(/'year'/g,`"year"`)
   dataVariablesRich = dataVariablesRich.replace(/'variable'/g,`"variable"`)
   dataVariablesRich = dataVariablesRich.replace(/'link'/g,`"link"`)
-  dataVariablesRich = dataVariablesRich.replace(/'}}/g,`"}}`)
-  dataVariablesRich = dataVariablesRich.replace(/'}/g,`"}`)
+
   dataVariablesRich = dataVariablesRich.replace(/'name'/g,`"name"`)
   dataVariablesRich = dataVariablesRich.replace(/'logo'/g,`"logo"`)
 
@@ -41,16 +40,26 @@ const loadDataVariablesRich = () => {
   dataVariablesRich = dataVariablesRich.replace(/'cr_1'/g,`"cr_1"`)
   dataVariablesRich = dataVariablesRich.replace(/'cr_2'/g,`"cr_2"`)
   dataVariablesRich = dataVariablesRich.replace(/'cr_3'/g,`"cr_3"`)
+
+
+  dataVariablesRich = dataVariablesRich.replace(/: <Source:/g,`: "<Source:`)
+  dataVariablesRich = dataVariablesRich.replace(/>, "/g,`>", "`)
+  dataVariablesRich = dataVariablesRich.replace(/'complementary_ressource'/g,`"complementary_ressource"`)
+
+  dataVariablesRich = dataVariablesRich.replace(/'}}/g,`"}}`)
+  dataVariablesRich = dataVariablesRich.replace(/'}/g,`"}`)
   dataVariablesRich = dataVariablesRich.replace(/: '/g,`: "`)
   dataVariablesRich = dataVariablesRich.replace(/', "/g,`", "`)
   dataVariablesRich = dataVariablesRich.replace(/'}, {"/g,`"}, {"`)
   dataVariablesRich = dataVariablesRich.replace(/'}]/g,`"}]`)
-  dataVariablesRich = dataVariablesRich.replace(/: <Source:/g,`: "<Source:`)
   dataVariablesRich = dataVariablesRich.replace(/>, "/g,`>", "`)
   dataVariablesRich = dataVariablesRich.replace(/'complementary_ressource'/g,`"complementary_ressource"`)
   
 
+
   dataVariablesRich = JSON.parse(dataVariablesRich);
+
+
 
   window.dataVariablesRichGlobal = dataVariablesRich
 

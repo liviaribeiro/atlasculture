@@ -7,7 +7,7 @@
     <meta name="description" content="Atlas Culture des territoires : Visualiser les dynamiques culturelles en France">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="icon" type="image/png" href="{% static 'favicon-32.png' %}"/>
@@ -16,37 +16,46 @@
 </head>
 
 <body>
-        
+
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container-fluid n px-0">
+      <div class="container-fluid n px-0">
         <a class="navbar-brand" href="{% url 'homepage' %}">
-            <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" style="height:70px; margin-right:10px"/></a>
-            <div class="navbar-brand justify-content-start">
-            <img class="logo" alt="Logo Atlas Culture" src="{% static 'ATLAS_FavIcon 1.png' %}"/></a>
-            <a href="{% url 'homepage' %}" class="b1" style="line-height:24px;">Atlas Culture des territoires</a></div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'homepage' %}">Accueil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'map' %}">Carte interactive</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'portraits' %}">Fiches portraits culturels</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">À propos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-        </li>
-      </ul>
-    </div>
-    </div>
+          <img alt="Logo Ministère de la Culture" src="{% static 'Logo.png' %}" style="height:70px; margin-right:10px"/>
+        </a>
+        <div class="navbar-brand justify-content-start">
+          <img class="logo" alt="Logo Atlas Culture" src="{% static 'ATLAS_FavIcon 1.png' %}"/>
+
+          <a href="{% url 'homepage' %}" class="b1" style="line-height:24px;">
+            Atlas Culture des territoires
+          </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'homepage' %}">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'map' %}">Carte interactive</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'portraits' %}">Fiches portraits culturels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">À propos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div class="banner-beta">
+          Beta
+        </div>
+      </div>
+
   </nav>
 
 
