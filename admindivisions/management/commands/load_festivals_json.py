@@ -13,18 +13,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        with open('admindivisions/data/COMMUNE_POINTS.json') as f:
+        with open('admindivisions/data/communes-20210101.json') as f:
             data = json.load(f)
 
-        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/Festivals par commune.xlsx')
+        csv_file = os.path.join(BASE_DIR, 'admindivisions/data/festivals par commune.xlsx')
 
         df = pd.read_excel(csv_file, dtype="string")
 
         for feature in data['features']: 
 
-            codeinsee=feature['properties']['INSEE_COM']
+            codeinsee=feature['properties']['insee']
 
-            nombre_festivals = df[df['CODE INSEE']==codeinsee]['Nombre Festivals'].values
+            nombre_festivals = df[df['Code INSEE']==codeinsee]['Nombre de festivals'].values
             
             try:
                 nombre_festivals = int(nombre_festivals[0])
@@ -36,7 +36,7 @@ class Command(BaseCommand):
                   
             feature["properties"].update({'NOMBREFESTIVALS': nombre_festivals})
                                                                                       
-        with open('admindivisions/data/COMMUNE_FESTIVALS.json', 'w') as f:
+        with open('admindivisions/data/COMMUNES-FESTIVALS.json', 'w') as f:
             json.dump(data, f)
         
         
