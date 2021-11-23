@@ -47,12 +47,13 @@ const layerDataVariables = (indicator,dataVariable) => {
   depenseDuMinistereDeLaCulture(indicator,dataVariable);
   airesAttractionDesVille(indicator,dataVariable);
 
+  indiceDeJeunesse(indicator,dataVariable);
+
   population(indicator,dataVariable);
 
   actionCoeurDeVille(indicator,dataVariable);
   planDeRelance(indicator,dataVariable);
 
-  indiceDeJeunesse(indicator,dataVariable);
 }
 
 export { layerDataVariables }

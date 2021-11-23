@@ -2,7 +2,7 @@ const planDeRelance = (indicator,dataVariable) => {
   if (indicator == "Plan de relance") {
       let marker = 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png';
       addLegendSymbol("Plan de relance", marker);
-      addInfo(indicator, dataVariable.name, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
 
       map.addLayer({
               'id': "Plan de relance",
