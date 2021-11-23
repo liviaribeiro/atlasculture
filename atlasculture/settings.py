@@ -19,6 +19,8 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -101,7 +103,7 @@ WSGI_APPLICATION = 'atlasculture.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'atlas-culture',
+        'NAME': 'atlasculture',
         'USER' : env('DB_USER'),
     }
 }

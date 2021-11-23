@@ -4,7 +4,7 @@ const festival = () => {
         'id': 'Festivals',
         'type': 'circle',
         'source': 'festivals',
-        'source-layer': 'COMMUNE_FESTIVALS-91tdqh',
+        'source-layer': 'COMMUNES-FESTIVALS-0tfiyw',
         'paint': {
          'circle-radius': ['*', 30, ['/',['sqrt', ["get", "NOMBREFESTIVALS"]],['sqrt', 290]]],
          'circle-color': "#de2d26",
@@ -19,7 +19,7 @@ const festival = () => {
   map.on('click', 'Festivals', function (e) {
           var coordinates = e.features[0].geometry.coordinates.slice();
           var nombre = e.features[0].properties.NOMBREFESTIVALS;
-          var commune = e.features[0].properties.NOM_COM;
+          var commune = e.features[0].properties.nom;
 
           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
               coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
