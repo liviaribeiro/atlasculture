@@ -4,7 +4,7 @@ const festival = () => {
         'id': 'Festivals',
         'type': 'circle',
         'source': 'festivals',
-        'source-layer': 'COMMUNES-FESTIVALS-0l97cc',
+        'source-layer': 'COMMUNES-FESTIVALS-3odwrk',
         'paint': {
          'circle-radius': ['*', 30, ['/',['sqrt', ["get", "NOMBREFESTIVALS"]],['sqrt', 290]]],
          'circle-color': "#de2d26",

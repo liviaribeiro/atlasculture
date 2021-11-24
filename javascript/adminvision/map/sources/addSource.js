@@ -91,7 +91,7 @@ const addSource = () => {
         //Festivals
         map.addSource('festivals', {
                 'type': 'vector',
-                'url': "mapbox://liviaribeiro.b8sfsw59"
+                'url': "mapbox://liviaribeiro.1t2bgtcf"
         });
 }
 
