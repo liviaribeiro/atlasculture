@@ -51,10 +51,10 @@ const buildMap = () => {
 
       addMultipleZoneLayer();
       addSource();
-      festival();
 
       dataVariables(zoomThreshold,zoomComThreshold);
 
+      festival();
 
       // Comment equipement to speed loading page
       dataDomaines();

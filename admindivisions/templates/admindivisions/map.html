@@ -15,7 +15,10 @@
 </div>
 
 
-<div class="regions-wrapper">
+<div class="regions-wrapper" id="regions-wrapper">
+    <div class="row">
+        <button class="btn btn-regions-wrapper" value="regions-wrapper" onclick="openCloseRegionsWrapper(this.value)">RÉGIONS D'OUTRE-MER<span><img style="margin-left:10px" src="{% static 'arrow.png' %}" /></span></button>
+    </div>
     <div class="row region-row">
         <div class="col p-0 text-center">
             <button class="region-btn" value="Guadeloupe" onclick="goToRegion(this.value)">Guadeloupe<span><img src="{% static 'Guadeloupe.png' %}" /></span></button>
@@ -178,9 +181,6 @@
       </div>
     </div>
   </div>
-
-
-
 
 <!-- <div dataset="{% static 'icones/theatre-rouge.png' %}" id='testing'></div> -->
 
