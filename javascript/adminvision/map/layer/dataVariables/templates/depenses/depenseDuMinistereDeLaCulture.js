@@ -87,9 +87,9 @@ const depenseDuMinistereDeLaCulture = (indicator,dataVariable) => {
 
       map.on('click', 'Dépenses du ministère de la Culture Département', function (e) {
           if (e.features.length > 0) {
-              pourcentage = e.features[0].properties.DEPENSESHABITANTS
-              nombre = e.features[0].properties.DEPENSESTOTALES
-              texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses du ministère de la Culture : "
+              let pourcentage = e.features[0].properties.DEPENSESHABITANTS
+              let nombre = e.features[0].properties.DEPENSESTOTALES
+              let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Dépenses du ministère de la Culture : "
                       +"<p>- "+formatNumber(nombre.toFixed(0))+" milliers d'euros</p><p>- "+pourcentage.toFixed(0)+" euros/habitant</p>"
               if (nombre == -1) {
                   texte = "Données non disponibles"

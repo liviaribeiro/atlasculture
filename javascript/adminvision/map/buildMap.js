@@ -36,25 +36,25 @@ const buildMap = () => {
       map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']);
       map.setLayoutProperty('state-label', 'text-field', ['get', 'name_fr']);
       //map.setLayoutProperty('settlement-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('road-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('waterway-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('natural-line-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('natural-point-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('settlement-subdivision-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('road-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('waterway-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('natural-line-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('natural-point-label', 'text-field', ['get', 'name_fr']);
       map.setLayoutProperty('water-line-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('water-point-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_fr']);
-      //map.setLayoutProperty('airport-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('water-point-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('poi-label', 'text-field', ['get', 'name_fr']);
+      map.setLayoutProperty('airport-label', 'text-field', ['get', 'name_fr']);
 
       map.setPaintProperty("water", 'fill-color', "#a8e0f5");
       map.setPaintProperty("national-park", 'fill-color', "#b4e49b");
 
       addMultipleZoneLayer();
       addSource();
-      festival();
 
       dataVariables(zoomThreshold,zoomComThreshold);
 
+      festival();
 
       // Comment equipement to speed loading page
       dataDomaines();

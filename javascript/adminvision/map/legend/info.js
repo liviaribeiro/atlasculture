@@ -1,6 +1,8 @@
 import { addcomplementaryRessource } from './complementaryRessource.js'
 
 const addInfo = (indicator, equipementID, definition, source, year) => {
+
+  
     let legendBox = document.getElementById('legend-box');
     let closeButton = document.createElement('button');
     closeButton.className = "closebtn";

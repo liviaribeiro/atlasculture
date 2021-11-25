@@ -38,8 +38,19 @@ const openSubmenuNav = (itemMenu) => {
     }
 }
 
+const openCloseRegionsWrapper = (wrapper) => {
+    const regionWrapper = document.getElementById(wrapper)
+    if (regionWrapper.style.height == "30px") {
+        regionWrapper.style.height = "140px";
+    }
+    else {
+        regionWrapper.style.height = "30px";
+    }
+}
+
 window.openNav = openNav
 window.closeNav = closeNav
 window.openSubmenuNav = openSubmenuNav
+window.openCloseRegionsWrapper = openCloseRegionsWrapper
 
-export { openNav, closeNav }
+export { openNav, closeNav, openCloseRegionsWrapper}

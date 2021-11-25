@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'atlasculture.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'atlasculture',
+        'NAME': env('DB_NAME'),
         'USER' : env('DB_USER'),
     }
 }

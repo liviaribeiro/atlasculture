@@ -4,7 +4,7 @@ const actifExercantUneProfessionCulturelle = (indicator,dataVariable) => {
       var colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
 
       addLegend(indicator, layers, colors);
-      addInfo(indicator, dataVariable.name, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
+      addInfo(indicator, dataVariable.nom, dataVariable.definition, dataVariable.source__nom,dataVariable.year);
 
       map.addLayer(
           {
