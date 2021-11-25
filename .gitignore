@@ -5,7 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-static/index-bundle.js
+# static/index-bundle.js
 # Distribution / packaging
 .Python
 build/
