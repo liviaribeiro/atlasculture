@@ -1,0 +1,11 @@
+<ul style="list-style-type:none;">
+<p class="title-list">{{ variable }}</p>
+{% for elem in content %}
+<li>
+<div class="elem-list">
+    <p class="elem-list-title">{{ elem.name }}</p>
+    <p class="elem-list-text">{{ elem.text }}</p>
+</div>
+</li>
+{% endfor %}
+</ul>

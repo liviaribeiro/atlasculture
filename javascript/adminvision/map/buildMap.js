@@ -8,6 +8,7 @@ import { addMultipleZoneLayer } from './layer/addMultipleZoneLayer.js'
 import { festival } from './layer/templates/festival.js';
 import { loadDataVariablesRich } from './context/loadDataVariables.js'
 import { loadDataEquipementType } from './context/loadDataEquipementType.js'
+import { openViewList } from './openViewList.js';
 
 const buildMap = () => {
   loadDataVariablesRich()
@@ -58,6 +59,8 @@ const buildMap = () => {
 
       // Comment equipement to speed loading page
       dataDomaines();
+
+
 
   });
 

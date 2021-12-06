@@ -11,7 +11,7 @@ import json
 from django.http import JsonResponse
 import csv
 import xlwt
-from admindivisions.services import association, export_csv, export_excel
+from admindivisions.services import association, export_csv, export_excel, view_list
 
 # Create your views here.
 def map(request):
@@ -57,6 +57,19 @@ def equipements(request, domaine):
         data["features"] = filtered_data
         response = JsonResponse(data, safe=False)
     return response
+
+def list_equipements(request):
+    equipement_id = int(request.GET.get('equipement_id'))
+    equipement_type = EquipementType.objects.get(pk=equipement_id)
+    equipements = Equipement.objects.filter(equipement_type=equipement_type)
+    context = {'equipements': equipements, 'equipement_type': equipement_type}
+    return render(request,'admindivisions/equipements_list.html', context)
+
+def list_variables(request):
+    variable_name= request.GET.get('variable_name')
+    variable = Variable.objects.get(nom=variable_name)
+    context = view_list.variables(variable)
+    return render(request,'admindivisions/variables_list.html', context)
 
 def export_equipements_csv(request):
     response = HttpResponse(content_type='text/csv')

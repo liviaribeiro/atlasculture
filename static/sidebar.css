@@ -71,10 +71,91 @@
     background-color: transparent;
 }
 
+.list-wrapper {
+    display: none;
+    align-items: stretch;
+    position: fixed;
+    right: 0;
+    margin-right: 0;
+    z-index: 5;
+    width: 302px;
+    display: block;
+    overflow-y:auto;
+    top: 56px;
+    bottom: 70px;
+    background-color: white;
+}
+.title-list {
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 28px;
+    color: #000074;
+}
+
+.elem-list {
+    width: 254px;
+    left: 0px;
+    top: 0px;
+    border: 0.5px solid #C0C0FF;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 24px;
+}
+
+.elem-list-title {
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    color: #000074;
+}
+
+.elem-list-text {
+    font-family: Marianne;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    color: #000074;
+}
+
 .btn-download-map {
     position: fixed;
     bottom: 25px;
     right: 25px;
+    background: #000074;
+    border-radius: 30px;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: white;
+    width: 135px;
+    height: 43px;
+    border: none;
+}
+
+.btn-list-view {
+    position: fixed;
+    bottom: 25px;
+    right: 175px;
+    background: #000074;
+    border-radius: 30px;
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: white;
+    width: 135px;
+    height: 43px;
+    border: none;
+}
+
+.btn-show-list {
     background: #000074;
     border-radius: 30px;
     font-family: 'Marianne', Arial, sans-serif;

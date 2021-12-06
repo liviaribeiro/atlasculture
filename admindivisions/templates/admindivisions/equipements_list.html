@@ -1,0 +1,7 @@
+
+<ul class="ul-list">{{ equipement_type }}
+{% for equipement in equipements %}
+<li class='li-list'>{{ equipement.nom }}</li>
+<p class="li-list">{{ equipement.adresse }}</p>
+{% endfor %}
+</ul>

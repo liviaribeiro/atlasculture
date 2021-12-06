@@ -283,6 +283,44 @@ body {
     position: absolute; top: 56px; bottom: 0; right: 0; z-index: -1; left: 63px;
 }
 
+#list-view {
+    position: absolute; 
+    top: 56px; 
+    bottom: 0; 
+    right: 0; 
+    z-index: -1; 
+    left: 63px; 
+    display: none; 
+    background-color: #EFEFFF;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.title-list-view {
+    font-family: Marianne;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 55px;
+    letter-spacing: 0px;
+    text-align: center;
+}
+
+.div-item-list {
+    width: 760px;
+    height: 116px;
+    border-radius: 20px 20px 20px 20px;
+    background-color: white;
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000074;
+    padding: 24px;
+    margin: 12px;
+}
+
 .geocoder {
     position: relative;
     z-index: 20;

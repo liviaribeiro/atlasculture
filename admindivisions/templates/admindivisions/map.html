@@ -7,6 +7,16 @@
 <div id="map">
 </div>
 
+<div id="list-view" class="justify-content-center">
+    <p class="title-list-view">Explorer les données</p>
+    <ul id="div-list" class="container mx-auto" style="list-style-type:none;">
+
+    </ul>
+</div>
+
+<div id="list-wrapper" class="list-wrapper"></div>
+</div>
+
 <div id="legend-wrapper" class="legend-wrapper">
     <div id="geocoder" class="geocoder"></div>
 
@@ -84,15 +94,15 @@
                 {% for sousdomaine in domaine.sousdomaine_set.all%}
                 <p class="sousdomaine-title">{{ sousdomaine.name }}</p>
                     {% for equipement_type in sousdomaine.equipementtype_set.all %}
-                        <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }} </button>
+                        <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" data-name="{{ equipement_type.name }}" >{{ equipement_type.name }}</button>
                     {% endfor %}
                 {% endfor %}
             {% endif%}
             {% if domaine.name == "Festivals" %}
-                <button class="btn-tag" id="Festivals" value="Festivals" onclick="showLayer(this.value)">Festivals</button>
+                <button class="btn-tag" id="Festivals" value="Festivals" data-name="Festivals">Festivals</button>
             {% else %}
             {% for equipement_type in domaine.equipementtype_set.all %}
-                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" data-name="{{ equipement_type.name }}" >{{ equipement_type.name }}</button>
             {% endfor %}
             {% endif%}
         </div>
@@ -163,6 +173,9 @@
     <img src="{% static 'download-icon.png' %}" />Télécharger
 </button>
 
+<button type="button" class="btn btn-list-view" id="myBtn" style="display: block" onclick="openViewList()">Vue liste
+</button>
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -210,8 +223,12 @@
 {% endfor %}
 
 <div data-url-export-equipements-csv="{% url 'export_equipements_csv' %}" id='url-export-equipement-csv'></div>
-
 <div data-url-export-variable-csv="{% url 'export_variable_csv' %}" id='url-export-variable-csv'></div>
+
+<div data-url-list-equipements="{% url 'list_equipements' %}" id='url-list-equipements'></div>
+<div data-url-list-variables="{% url 'list_variables' %}" id='url-list-variables'></div>
+
+
 
 
 

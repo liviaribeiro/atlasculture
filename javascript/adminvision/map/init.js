@@ -6,7 +6,8 @@ const initMap = () => {
         style: 'mapbox://styles/mapbox/light-v10',
         center: [2.209666999999996, 46.232192999999995],
         minZoom: 3,
-        zoom: 5
+        zoom: 5,
+        preserveDrawingBuffer: true
     });
 
     // Add the control to the map.

@@ -1,4 +1,5 @@
 import { loadDataVariables } from './context/loadDataVariables.js';
+
 const callModal = () => {
   $(document).ready(function(){
     $("#myBtn").click(function(){
@@ -20,6 +21,17 @@ const generate_modal_body = () => {
     const dataDomainesElements = document.querySelectorAll('.datas-equipements-types')
     let equipementPkList = []
     let exportEquipements = false
+
+    //var layer_element = document.createElement('li');
+    //layer_element.innerHTML = "Image de la carte";
+    ///var layer_toDownload = document.createElement('a');
+    //layer_toDownload.className = "btn btn-export btn-link";
+    //var img = map.getCanvas().toDataURL();
+    //layer_toDownload.href = img;
+    //layer_toDownload.innerHTML = 'télécharger';
+    //layer_element.appendChild(layer_toDownload);
+    //layers_list.appendChild(layer_element);
+    
     dataDomainesElements.forEach((dataDomainesElement) => {
         const equipementType = dataDomainesElement.dataset.equipementType
         const equipementTypePk = dataDomainesElement.dataset.equipementTypePk
@@ -71,6 +83,7 @@ const generate_modal_body = () => {
     }
 
     modal.appendChild(layers_list);
+
 
   })
 
