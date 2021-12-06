@@ -42,7 +42,7 @@ const actifsDansLesSecteursCulturels = (indicator,dataVariable) => {
               let pourcentage = e.features[0].properties.part_secteur_culturel*100
               let nombre = e.features[0].properties.nombre_secteur_culturel
               let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_DEP+"</p><p>Part d'actifs dans les secteurs culturels : "
-                      +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
+                      +pourcentage.toFixed(1)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
               }
@@ -87,7 +87,7 @@ const actifsDansLesSecteursCulturels = (indicator,dataVariable) => {
               let pourcentage = e.features[0].properties.part_secteur_culturel*100
               let nombre = e.features[0].properties.nombre_secteur_culturel
               let texte = '<p style="font-weight: bold;">'+e.features[0].properties.NOM_REG+"</p><p>Part d'actifs dans les secteurs culturels : "
-                      +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
+                      +pourcentage.toFixed(1)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
               }
@@ -132,7 +132,7 @@ const actifsDansLesSecteursCulturels = (indicator,dataVariable) => {
               let pourcentage = e.features[0].properties.part_secteur_culturel*100
               let nombre = e.features[0].properties.nombre_secteur_culturel
               let texte = '<p style="font-weight: bold;">'+"Zone d'emploi "+e.features[0].properties.libelle+"</p><p>Part d'actifs dans les secteurs culturels : "
-                      +pourcentage.toFixed(0)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
+                      +pourcentage.toFixed(1)+ "%</p><p>Nombre d'actifs dans les secteurs culturels : "+formatNumber(Math.round( nombre / 10 ) * 10)+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
               }
