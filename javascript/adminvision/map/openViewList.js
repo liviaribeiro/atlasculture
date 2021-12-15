@@ -1,27 +1,27 @@
-const addViewListVariables = (equipementTypePk) => {
+const addViewListVariables = (layerName, layerPk) => {
     const layers_list = document.getElementById('div-list');
     var layer_element_li = document.createElement('li');
     var layer_element = document.createElement('div');
     layer_element.className = "div-item-list d-flex justify-content-between"
-    layer_element.innerHTML = equipementTypePk;
+    layer_element.innerHTML = layerName;
     var layer_toDownload = document.createElement('button');
     layer_toDownload.className = "btn btn-show-list";
-    layer_toDownload.onclick = function() {showListVariables(equipementTypePk);}
+    layer_toDownload.onclick = function() {showListVariables(layerPk);}
     layer_toDownload.innerHTML = 'Afficher la liste';
     layer_element.appendChild(layer_toDownload);
     layer_element_li.appendChild(layer_element);
     layers_list.appendChild(layer_element);
 }
 
-const addViewListEquipements = (equipementTypePk) => {
+const addViewListEquipements = (layerName, layerPk) => {
     const layers_list = document.getElementById('div-list');
     var layer_element_li = document.createElement('li');
     var layer_element = document.createElement('div');
     layer_element.className = "div-item-list d-flex justify-content-between"
-    layer_element.innerHTML = equipementTypePk;
+    layer_element.innerHTML = layerName;
     var layer_toDownload = document.createElement('button');
     layer_toDownload.className = "btn btn-show-list";
-    layer_toDownload.onclick = function() {showListEquipements(equipementTypePk);}
+    layer_toDownload.onclick = function() {showListEquipements(layerPk);}
     layer_toDownload.innerHTML = 'Afficher la liste';
     layer_element.appendChild(layer_toDownload);
     layer_element_li.appendChild(layer_element);

@@ -206,7 +206,6 @@ def create_excel(variable='',writer=''):
         for col_num in range(len(columns)):
             sheet.write(row_num, col_num, columns[col_num], font_style)
         depenses = DepensesDepartement.objects.filter(annee="2019")
-        print(len(depenses))
         for depense in depenses:
             row_num += 1
             dep = depense.departement

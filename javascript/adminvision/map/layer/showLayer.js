@@ -1,11 +1,22 @@
 import { addViewListEquipements, addViewListVariables } from "../openViewList";
 
-const btns = document.querySelectorAll('.btn-tag')
-console.log(btns)
-btns.forEach((btn) => {
+const btnEquipements= document.querySelectorAll('.btn-tag-eq')
+btnEquipements.forEach((btn) => {
     btn.addEventListener('click', (event) => {
-        console.log(event.currentTarget.dataset.nameEquipement)
-        console.log(event.currentTarget.value)
+        var layerName = event.currentTarget.dataset.name;
+        var layerPk = event.currentTarget.value;
+        addViewListEquipements(layerName, layerPk);
+        showLayer(layerPk);
+    })
+}) 
+
+const btnVariables = document.querySelectorAll('.btn-tag-var')
+btnVariables.forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+        var layerName = event.currentTarget.dataset.name;
+        var layerPk = event.currentTarget.value;
+        addViewListVariables(layerName, layerPk);
+        showLayer(layerPk);
     })
 }) 
 
@@ -114,10 +125,7 @@ const showLayer = (layer) => {
         legend.style.display = "none";
         var info = document.getElementById("info-"+layer);
         info.style.display = "none";
-    }
-    
-    addViewListVariables(layer);
- 
+    } 
 
 }
 window.showLayer = showLayer;

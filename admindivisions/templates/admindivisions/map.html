@@ -94,15 +94,15 @@
                 {% for sousdomaine in domaine.sousdomaine_set.all%}
                 <p class="sousdomaine-title">{{ sousdomaine.name }}</p>
                     {% for equipement_type in sousdomaine.equipementtype_set.all %}
-                        <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" data-name="{{ equipement_type.name }}" >{{ equipement_type.name }}</button>
+                        <button class="btn-tag btn-tag-eq" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" data-name="{{ equipement_type.name }}" >{{ equipement_type.name }}</button>
                     {% endfor %}
                 {% endfor %}
             {% endif%}
             {% if domaine.name == "Festivals" %}
-                <button class="btn-tag" id="Festivals" value="Festivals" data-name="Festivals">Festivals</button>
+                <button class="btn-tag btn-tag-var" id="Festivals" value="Festivals" data-name="Festivals">Festivals</button>
             {% else %}
             {% for equipement_type in domaine.equipementtype_set.all %}
-                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" data-name="{{ equipement_type.name }}" >{{ equipement_type.name }}</button>
+                <button class="btn-tag btn-tag-eq" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" data-name="{{ equipement_type.name }}" >{{ equipement_type.name }}</button>
             {% endfor %}
             {% endif%}
         </div>
@@ -113,7 +113,7 @@
         <button href="javascript:void(0)" value="politiques-menu" class="closebtn" onclick="closeNav(this.value)"></button>
         <p class="title">Politiques culturelles territoriales</p>
         <div class="item">
-            <button class="btn-tag" value="Contrats territoire lecture" id="Contrats territoire lecture" onclick="showLayer(this.value)">Contrats territoire lecture</button>
+            <button class="btn-tag btn-tag-var" id="Contrats territoire lecture" value="Contrats territoire lecture" data-name="Contrats territoire lecture" >Contrats territoire lecture</button>
         </div>
     </div>
 
@@ -122,13 +122,13 @@
         <p class="title">Dépenses culturelles publiques</p>
         <div class="item">
             <p class="sousdomaine-title">Dépenses des collectivités territoriales</p>
-            <button class="btn-tag" value="Dépenses culturelles des régions" id="Dépenses culturelles des régions" onclick="showLayer(this.value)">Dépenses culturelles des régions</button>
-            <button class="btn-tag" value="Dépenses culturelles des départements" id="Dépenses culturelles des départements" onclick="showLayer(this.value)">Dépenses culturelles des départements</button>
-            <button class="btn-tag" value="Dépenses culturelles des intercommunalités" id="Dépenses culturelles des intercommunalités" onclick="showLayer(this.value)">Dépenses culturelles des intercommunalités</button>
-            <button class="btn-tag" value="Dépenses culturelles des communes" id="Dépenses culturelles des communes" onclick="showLayer(this.value)">Dépenses culturelles des communes</button>
+            <button class="btn-tag btn-tag-var" id="Dépenses culturelles des régions" value="Dépenses culturelles des régions" data-name="Dépenses culturelles des régions" >Dépenses culturelles des régions</button>
+            <button class="btn-tag btn-tag-var" id="Dépenses culturelles des départements" value="Dépenses culturelles des départements" data-name="Dépenses culturelles des départements" >Dépenses culturelles des départements</button>
+            <button class="btn-tag btn-tag-var" id="Dépenses culturelles des intercommunalités" value="Dépenses culturelles des intercommunalités" data-name="Dépenses culturelles des intercommunalités" >Dépenses culturelles des intercommunalités</button>
+            <button class="btn-tag btn-tag-var" id="Dépenses culturelles des communes" value="Dépenses culturelles des communes" data-name="Dépenses culturelles des communes" >Dépenses culturelles des communes</button>
             <p class="sousdomaine-title">Dépenses de l'État</p>
-            <button class="btn-tag" value="Plan de relance" id="Plan de relance" onclick="showLayer(this.value)">Plan de relance</button>
-            <button class="btn-tag" value="Dépenses du ministère de la Culture" id="Dépenses du ministère de la Culture" onclick="showLayer(this.value)">Dépenses du ministère de la Culture</button>
+            <button class="btn-tag" id="Plan de relance" value="Plan de relance" data-name="Plan de relance" >Plan de relance</button>     
+            <button class="btn-tag btn-tag-var" id="Dépenses du ministère de la Culture" value="Dépenses du ministère de la Culture" data-name="Dépenses du ministère de la Culture" >Dépenses du ministère de la Culture</button>
         </div>
     </div>
 
@@ -137,12 +137,12 @@
         <p class="title">Entreprises et emploi culturels</p>
         <div class="item">
             <p class="sousdomaine-title">Entreprises</p>
-            <button class="btn-tag" value="Entreprises culturelles du secteur marchand" id="Entreprises culturelles du secteur marchand" onclick="showLayer(this.value)">Entreprises culturelles du secteur marchand</button>
-            <button class="btn-tag" value="Salariés actifs des secteurs culturels marchands" id="Salariés actifs des secteurs culturels marchands" onclick="showLayer(this.value)">Salariés actifs des secteurs culturels marchands</button>
+            <button class="btn-tag btn-tag-var" id="Entreprises culturelles du secteur marchand" value="Entreprises culturelles du secteur marchand" data-name="Entreprises culturelles du secteur marchand" >Entreprises culturelles du secteur marchand</button>
+            <button class="btn-tag btn-tag-var" id="Salariés actifs des secteurs culturels marchands" value="Salariés actifs des secteurs culturels marchands" data-name="Salariés actifs des secteurs culturels marchands" >Salariés actifs des secteurs culturels marchands</button>
             <p class="sousdomaine-title">Emploi</p>
-            <button class="btn-tag" value="Actifs exerçant une profession culturelle" id="Actifs exerçant une profession culturelle" onclick="showLayer(this.value)">Actifs exerçant une profession culturelle</button>
-            <button class="btn-tag" value="Actifs dans les secteurs culturels" id="Actifs dans les secteurs culturels" onclick="showLayer(this.value)">Actifs dans les secteurs culturels</button>
-        </div>
+            <button class="btn-tag btn-tag-var" id="Actifs exerçant une profession culturelle" value="Actifs exerçant une profession culturelle" data-name="Actifs exerçant une profession culturelle" >Actifs exerçant une profession culturelle</button>
+            <button class="btn-tag btn-tag-var" id="Actifs dans les secteurs culturels" value="Actifs dans les secteurs culturels" data-name="Actifs dans les secteurs culturels" >Actifs dans les secteurs culturels</button>
+            </div>
     </div>
 
     <div id="contexte-menu" class="submenu">
@@ -150,21 +150,21 @@
         <p class="title">Données de contexte</p>
         <div class="item">
             <p class="sousdomaine-title">Population</p>
-            <button class="btn-tag" value="Population" id="Population" onclick="showLayer(this.value)">Population totale</button>
-            <button class="btn-tag" value="Indice de jeunesse" id="Indice de jeunesse" onclick="showLayer(this.value)">Indice de jeunesse</button>
-            <button class="btn-tag" value="Densité de la population" id="Densité de la population" onclick="showLayer(this.value)">Densité de la population</button>
-            <button class="btn-tag" value="Évolution de la population" id="Évolution de la population" onclick="showLayer(this.value)">Évolution de la population</button>
+            <button class="btn-tag btn-tag-var" id="Population" value="Population" data-name="Population" >Population</button>
+            <button class="btn-tag btn-tag-var" id="Indice de jeunesse" value="Indice de jeunesse" data-name="Indice de jeunesse" >Indice de jeunesse</button>
+            <button class="btn-tag btn-tag-var" id="Densité de la population" value="Densité de la population" data-name="Densité de la population" >Densité de la population</button>
+            <button class="btn-tag btn-tag-var" id="Évolution de la population" value="Évolution de la population" data-name="Évolution de la population" >Évolution de la population</button>
             <p class="sousdomaine-title" style="display: none;">Structure de la population par âge</p>
             <p class="sousdomaine-title">Niveaux de vie et redistribution</p>
-            <button class="btn-tag" value="Niveau de vie médian" id="Niveau de vie médian" onclick="showLayer(this.value)">Niveau de vie médian</button>
-            <button class="btn-tag" value="Taux de pauvreté" id="Taux de pauvreté" onclick="showLayer(this.value)">Taux de pauvreté</button>
+            <button class="btn-tag btn-tag-var" id="Niveau de vie médian" value="Niveau de vie médian" data-name="Niveau de vie médian" >Niveau de vie médian</button>
+            <button class="btn-tag btn-tag-var" id="Taux de pauvreté" value="Taux de pauvreté" data-name="Taux de pauvreté" >Taux de pauvreté</button>
             <p class="sousdomaine-title">Politiques publiques</p>
-            <button class="btn-tag" value="Action coeur de ville" id="Action coeur de ville" onclick="showLayer(this.value)">Action coeur de ville</button>
-            <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" id="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this.value)">Quartiers prioritaires de la politique de la ville</button>
+            <button class="btn-tag btn-tag-var" id="Action coeur de ville" value="Action coeur de ville" data-name="Action coeur de ville" >Action coeur de ville</button>
+            <button class="btn-tag btn-tag-var" id="Quartiers prioritaires de la politique de la ville" value="Quartiers prioritaires de la politique de la ville" data-name="Quartiers prioritaires de la politique de la ville" >Quartiers prioritaires de la politique de la ville</button>
             <p class="sousdomaine-title">Zonage d'études</p>
-            <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
-            <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
-            <button class="btn-tag" value="Catégories du rural et de l’urbain" id="Catégories du rural et de l’urbain" onclick="showLayer(this.value)">Catégories du rural et de l’urbain</button>
+            <button class="btn-tag btn-tag-var" id="Grille communale de densité" value="Grille communale de densité" data-name="Grille communale de densité" >Grille communale de densité</button>
+            <button class="btn-tag btn-tag-var" id="Aires d'attraction des villes" value="Aires d'attraction des villes" data-name="Aires d'attraction des villes" >Aires d'attraction des villes</button>
+            <button class="btn-tag btn-tag-var" id="Catégories du rural et de l’urbain" value="Catégories du rural et de l’urbain" data-name="Catégories du rural et de l’urbain" >Catégories du rural et de l’urbain</button>
         </div>
     </div>
 </div>

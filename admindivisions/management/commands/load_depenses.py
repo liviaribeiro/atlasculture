@@ -56,15 +56,17 @@ class Command(BaseCommand):
         
         source_file = os.path.join(BASE_DIR, 'admindivisions/data/Base_Depenses_Departements_2019.xlsx')
 
-        df = pd.read_excel(source_file, dtype={'Departement':'string'})
+        df = pd.read_excel(source_file, dtype={'N_Departement':'string'})
         
         for i in df.index:
-            codeinsee = df['Departement'][i]
+            codeinsee = df['N_Departement'][i]
+            print(codeinsee)
             nom_secteur = df['Secteur'][i]
             depenses_fonctionnement = df['Depenses_Fonctionnement'][i]
             depenses_investissement = df['Depenses_Investissement'][i]
             depenses_totales = depenses_fonctionnement + depenses_investissement
             secteur = Secteur.objects.get(nom=nom_secteur)
+            print(nom_secteur)
             departement = Departement.objects.get(codeinsee=codeinsee)
             annee = "2019"
             
