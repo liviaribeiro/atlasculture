@@ -90,10 +90,11 @@
             {% endif%}
             {% if domaine.name == "Festivals" %}
                 <button class="btn-tag" id="Festivals" value="Festivals" onclick="showLayer(this.value)">Festivals</button>
-            {% else %}
-            {% for equipement_type in domaine.equipementtype_set.all %}
-                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
-            {% endfor %}
+            {% endif %}
+            {% if domaine.sousdomaine_set.all|length == 0 %}
+                {% for equipement_type in domaine.equipementtype_set.all %}
+                    <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+                {% endfor %}
             {% endif%}
         </div>
     </div>
