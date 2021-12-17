@@ -21,6 +21,7 @@ import { actionCoeurDeVille } from './templates/actionCoeurDeVille.js';
 import { petitesVillesDeDemain } from './templates/petitesVillesDeDemain.js';
 import { planDeRelance } from './templates/planDeRelance.js';
 import { indiceDeJeunesse } from './templates/indiceDeJeunesse.js';
+import {partDesCadres} from './templates/partDesCadres.js';
 
 const layerDataVariables = (indicator,dataVariable) => {
 
@@ -57,6 +58,8 @@ const layerDataVariables = (indicator,dataVariable) => {
   actionCoeurDeVille(indicator,dataVariable);
   petitesVillesDeDemain(indicator, dataVariable);
   planDeRelance(indicator,dataVariable);
+
+  partDesCadres(indicator, dataVariable);
 
 }
 

@@ -11,6 +11,10 @@ const addSource = () => {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.0coathhb'
         });
+        map.addSource('part_des_cadres', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.6fjdlgng'
+            });
         map.addSource('zonage rural', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.3u0ajjj4'
