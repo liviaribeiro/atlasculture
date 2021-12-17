@@ -19,6 +19,10 @@ const addSource = () => {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.bumheafq'
         });
+        map.addSource('zrr', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.7ujhx5s1'
+        });
         map.addSource('qp', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.82f38xhh'
@@ -83,6 +87,10 @@ const addSource = () => {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.8msgii19',
         });
+        map.addSource('pvd', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.6v0osget',
+            });
         map.addSource('pdr', {
                 'type': 'vector',
                 'url': 'mapbox://liviaribeiro.2kyv2902'

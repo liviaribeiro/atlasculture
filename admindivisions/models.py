@@ -52,6 +52,9 @@ class ZoneEmploi(models.Model):
 class ActionCoeurVille(models.Model):
     code_acv = models.CharField(max_length=6)
 
+class PetitesVillesDeDemain(models.Model):
+    code_pvd = models.CharField(max_length=20)
+
 class TypologieEvolution(models.Model):
     code = models.IntegerField(null=True)
     typologie = models.CharField(max_length=200)
@@ -67,6 +70,7 @@ class Commune(models.Model):
     year = models.CharField(max_length=4, null=True)
     zone_emploi = models.ForeignKey(ZoneEmploi, on_delete=models.CASCADE, null=True)
     acv = models.ForeignKey(ActionCoeurVille, on_delete=models.CASCADE, null=True)
+    pvd = models.ForeignKey(PetitesVillesDeDemain, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.name
 

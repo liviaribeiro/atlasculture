@@ -22,9 +22,6 @@ const showLayer = (layer) => {
                 var otherLayerVisibility = map.getLayoutProperty(other_layer, 'visibility');
                 if (otherLayerVisibility == 'visible') {
 
-
-
-
                     map.setLayoutProperty(other_layer, 'visibility', 'none');
                     try {
 

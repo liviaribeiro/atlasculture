@@ -56,7 +56,7 @@ const loadDataVariablesRich = () => {
   dataVariablesRich = dataVariablesRich.replace(/'complementary_ressource'/g,`"complementary_ressource"`)
   
 
-
+  debugger
   dataVariablesRich = JSON.parse(dataVariablesRich);
 
 
