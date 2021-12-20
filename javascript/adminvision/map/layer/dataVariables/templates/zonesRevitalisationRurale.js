@@ -1,5 +1,5 @@
 const zonesRevitalisationRurale = (indicator,dataVariable) => {
-    if (indicator == "Zones de Revitalisation Rurale") {
+    if (indicator == "Zones de revitalisation rurale") {
       var layers = ['Classée en ZRR', 'Classée en ZRR au titre de la baisse de population depuis 40 ans', 'Partiellement classée en ZRR', 'Sortante en 2017 classée en zone de montagne continuant de bénéficier des effets du classement depuis 2017', 'Sortante en 2017 continuant de bénéficier des effets du classement depuis 2018', 'Non classée'];
       var colors = ['#4dac26', '#b8e186', '#2c7bb6', '#a6611a', '#f1b6da', '#ffffff'];
 

@@ -11,7 +11,6 @@ import { loadDataEquipementType } from './context/loadDataEquipementType.js'
 
 const buildMap = () => {
   loadDataVariablesRich()
-  debugger
   loadDataEquipementType()
 
 

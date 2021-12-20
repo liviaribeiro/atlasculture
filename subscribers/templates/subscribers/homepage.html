@@ -11,18 +11,15 @@
                 </div>
                 <div class="col-md text-center d-flex justify-content-center">
                     <div style="max-width: 390px;">
-                    <p class="title main-title">Comprendre les dynamiques culturelles</p>
-                    <p class="subtitle main-subtitle">Bienvenue sur la ressource dédiée aux données publiques de la culture, de la région à la commune</p>
-                    <a href="{% url 'map' %}">
-                        <img alt="Explorer carte interactive" src="{% static 'Btn-Accueil.png' %}" onmouseover="this.src='{% static "Btn-Accueil-rose.png" %}'" 
-                        onmouseout="this.src='{% static "Btn-Accueil.png" %}'" width="212px">
-                     </a>
+                    <p class="main-title">Comprendre les dynamiques culturelles</p>
+                    <p class="main-subtitle">Bienvenue sur la ressource dédiée aux données publiques de la culture, de la région à la commune</p>
+                    <a href="{% url 'map' %}" class="btn-homepage">Explorer la carte interactive</a>
                      </div>
                 </div>
             </div>
         </div>
 
-        <div class="container-fluid container-img">
+        <div class="container-fluid container-homepage">
             <div class="container p-5 text-center">
                 <p class="title2">Portraits culturels des régions</p>
                 <p class="text2">Des analyses pour éclairer les données de l'atlas</p>
@@ -30,7 +27,7 @@
                     {% csrf_token %}
                     <div class="form-group">
                     <select class="selector" name="selected_region" id="selected_region">
-                    <option class="text-selector" value="00" selected="selected" style="display:none;">Choissez une région</option>
+                    <option class="text-selector" value="00" selected="selected" style="display:none;">Sélectionner une région</option>
                     <option value="00">- France -</option>
                         {% for region in regions %}
                         <option value="{{region.codeinsee}}">
@@ -48,7 +45,7 @@
         <div class="container p-5 text-center">
             <p class="title">L'Atlas Culture des territoires</p>
             <p class="subtitle">Une initiative du ministère de la Culture pour partager<br>la connaissance de la vie culturelle en France</p>
-            <a class='btn btn-download d-inline-flex align-items-center btn-link' href="{% url 'about' %}" >En savoir plus</a>
+            <a class='btn-en-savoir-plus d-inline-flex align-items-center' href="{% url 'about' %}" >En savoir plus</a>
         </div>
 
         <div class="container p-4">
@@ -94,19 +91,19 @@
             </div>
         </div>
 
-        <div class="container-fluid p-5 container-img">
+        <div class="container-fluid p-5 container-homepage-bas">
             <div class="row mx-auto container-80">
                 <div class="col">
-                    <p class="title2">Vous utilisez cet atlas numérique régulièrement ?</p>
-                    <p class="text2">Rejoignez notre communauté pour suivre les actualités de l’outil et participer à nos événements autour de la cartographie et de la valorisation des données publiques.</p>
+                    <p class="title3">Vous utilisez cet atlas numérique régulièrement ?</p>
+                    <p class="text3">Rejoignez notre communauté pour suivre les actualités de l’outil et participer à nos événements autour de la cartographie et de la valorisation des données publiques.</p>
                 </div>
                 <div class="col text-cente d-flex justify-content-center">
                     <form method="POST">
                         {% csrf_token %}       
                         <div class="row d-flex justify-content-center pt-4" style="max-width: 290px;">
-                            <div class="form-group align-center ">
-                                {{form.email}}
-                                <button type="submit" name="subscribers" style="width: 266px; min-height:40px; margin-top: 20px;" class="btn btn-selector" >S'inscrire à la liste de diffusion</button>
+                            <div class="align-center">
+                                <input type="email" class="email_input" name="email" placeholder="Courriel" required="id_email">
+                                <button type="submit" name="subscribers" class="btn-liste-diffusion" >S'inscrire à la liste de diffusion</button>
                         
                             </div>
                         </div>

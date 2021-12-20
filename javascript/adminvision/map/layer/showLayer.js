@@ -8,7 +8,7 @@ const showLayer = (layer) => {
     'Actifs exerçant une profession culturelle', "Actifs exerçant une profession culturelle ZE", "Actifs exerçant une profession culturelle région",
     'Actifs dans les secteurs culturels', "Actifs dans les secteurs culturels ZE", "Actifs dans les secteurs culturels région",
     'Dépenses culturelles des régions', 'Dépenses culturelles des départements', 'Dépenses culturelles des intercommunalités',
-    'Dépenses culturelles des communes', 'Dépenses du ministère de la Culture', "Dépenses du ministère de la Culture Département", "Part des cadres et professions intellectuelles supérieures", "Zones de Revitalisation Rurale"]
+    'Dépenses culturelles des communes', 'Dépenses du ministère de la Culture', "Dépenses du ministère de la Culture Département", "Part des cadres et professions intellectuelles supérieures", "Zones de revitalisation rurale"]
 
     const btnLayer = document.getElementById(layer);
 
