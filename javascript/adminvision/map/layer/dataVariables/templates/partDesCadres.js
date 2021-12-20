@@ -1,6 +1,6 @@
 const partDesCadres = (indicator,dataVariable) => {
     if (indicator == "Part des cadres et professions intellectuelles supérieures") {
-        var layers = ['0 à 1', '1 à 5', '5 à 10', '10 à 20', '20 à 100', 'Données non disponibles'];
+        var layers = ['0 à 2,3%', '2,3 à 6,0%', '6,1 à 10,4%', '10,5 à 17%', '17,1 à 100%', 'Données non disponibles'];
         var colors = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c', '#d9d9d9'];
   
         addLegend(indicator, layers, colors);
@@ -19,13 +19,13 @@ const partDesCadres = (indicator,dataVariable) => {
                         "#d9d9d9",
                         0,
                         "#eff3ff",
-                        1,
+                        2.3,
                         "#bdd7e7",
-                        5,
+                        6.0,
                         "#6baed6",
-                        10,
+                        10.4,
                         "#3182bd",
-                        20,
+                        17.0,
                         "#08519c"
                         ],
                     'fill-opacity': 0.75,
@@ -40,7 +40,7 @@ const partDesCadres = (indicator,dataVariable) => {
         map.on('click', 'Part des cadres et professions intellectuelles supérieures', function (e) {
             if (e.features.length > 0) {
                 let pourcentage = e.features[0].properties.PARTDESCADRES
-                let texte = '<p>'+e.features[0].properties.NOM_COM+"</p><p>Part des cadres et professions intellectuelles supérieures dans la population : "+pourcentage
+                let texte = '<p>'+e.features[0].properties.NOM_COM+"</p><p>Part des cadres et professions intellectuelles supérieures dans la population : "+pourcentage+"%"
                 if (pourcentage == -1) {
                     texte = "<p>Données non disponibles</p>"
                 }
