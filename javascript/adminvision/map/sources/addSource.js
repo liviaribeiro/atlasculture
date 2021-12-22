@@ -6,6 +6,19 @@ const addSourceZoneLayer = (zoneLayer,zoneLayerURL) => {
 }
 const addSource = () => {
 
+        // impact COVID
+        map.addSource('impact_covid_spectacle', {
+          'type': 'vector',
+          'url': 'mapbox://liviaribeiro.tileset_spectacle'
+        });
+        map.addSource('impact_covid_cinema', {
+          'type': 'vector',
+          'url': 'mapbox://liviaribeiro.tileset_cinema'
+        });
+        map.addSource('impact_covid_librairie', {
+          'type': 'vector',
+          'url': 'mapbox://liviaribeiro.tileset_librairie'
+        });
           // mapbox sources
         map.addSource('cadrage', {
             'type': 'vector',
@@ -105,6 +118,7 @@ const addSource = () => {
                 'type': 'vector',
                 'url': "mapbox://liviaribeiro.1t2bgtcf"
         });
+
 }
 
 export { addSource, addSourceZoneLayer}

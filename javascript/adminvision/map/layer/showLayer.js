@@ -8,13 +8,15 @@ const showLayer = (layer) => {
     'Actifs exerçant une profession culturelle', "Actifs exerçant une profession culturelle ZE", "Actifs exerçant une profession culturelle région",
     'Actifs dans les secteurs culturels', "Actifs dans les secteurs culturels ZE", "Actifs dans les secteurs culturels région",
     'Dépenses culturelles des régions', 'Dépenses culturelles des départements', 'Dépenses culturelles des intercommunalités',
-    'Dépenses culturelles des communes', 'Dépenses du ministère de la Culture', "Dépenses du ministère de la Culture Département", "Part des cadres et professions intellectuelles supérieures", "Zones de revitalisation rurale"]
+    'Dépenses culturelles des communes', 'Dépenses du ministère de la Culture', "Dépenses du ministère de la Culture Département",'impact-of-cinema','impact-of-librairie','impact-of-spectacle']
+    // "Part des cadres et professions intellectuelles supérieures", "Zones de revitalisation rurale"
 
     const btnLayer = document.getElementById(layer);
+    // useCaseParticulars.includes(layer)
 
     var visibility = map.getLayoutProperty(layer, 'visibility');
-    let other_layer = ''
 
+    let other_layer = ''
     if (visibility == 'none') {
         if (aplats.includes(layer)) {
             for (var i = 0; i < aplats.length; i++){
@@ -73,9 +75,11 @@ const showLayer = (layer) => {
         map.moveLayer("country-label");
 
         var legend = document.getElementById("legend-"+layer);
+        if (legend) {
+          legend.style.display = "block";
+          console.log(map.getStyle().layers)
 
-        legend.style.display = "block";
-        console.log(map.getStyle().layers)
+        }
     }
     if (visibility == 'visible') {
         if (layer == "Entreprises culturelles du secteur marchand"){
@@ -102,9 +106,12 @@ const showLayer = (layer) => {
         map.setLayoutProperty(layer, 'visibility', 'none');
 
         var legend = document.getElementById("legend-"+layer);
-        legend.style.display = "none";
-        var info = document.getElementById("info-"+layer);
-        info.style.display = "none";
+        if (legend) {
+          legend.style.display = "none";
+          var info = document.getElementById("info-"+layer);
+          info.style.display = "none";
+
+        }
     }
 
 }
