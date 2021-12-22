@@ -23,6 +23,10 @@ import { planDeRelance } from './templates/planDeRelance.js';
 import { indiceDeJeunesse } from './templates/indiceDeJeunesse.js';
 import {partDesCadres} from './templates/partDesCadres.js';
 
+import { impactCovidSpectacle } from './templates/impactCovid/impactCovidSpectacle.js';
+import { impactCovidCinema } from './templates/impactCovid/impactCovidCinema.js';
+import { impactCovidLibrairie } from './templates/impactCovid/impactCovidLibrairie.js';
+
 const layerDataVariables = (indicator,dataVariable) => {
 
 
@@ -60,6 +64,10 @@ const layerDataVariables = (indicator,dataVariable) => {
   planDeRelance(indicator,dataVariable);
 
   partDesCadres(indicator, dataVariable);
+
+  impactCovidSpectacle(indicator, dataVariable);
+  impactCovidCinema(indicator, dataVariable);
+  impactCovidLibrairie(indicator, dataVariable);
 
 }
 
