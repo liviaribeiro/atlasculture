@@ -90,10 +90,11 @@
             {% endif%}
             {% if domaine.name == "Festivals" %}
                 <button class="btn-tag" id="Festivals" value="Festivals" onclick="showLayer(this.value)">Festivals</button>
-            {% else %}
-            {% for equipement_type in domaine.equipementtype_set.all %}
-                <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
-            {% endfor %}
+            {% endif %}
+            {% if domaine.sousdomaine_set.all|length == 0 and domaine.name != "Festivals" %}
+                {% for equipement_type in domaine.equipementtype_set.all %}
+                    <button class="btn-tag" id="{{ equipement_type.pk }}" value="{{ equipement_type.pk }}" onclick="showLayer(this.value)">{{ equipement_type.name }}</button>
+                {% endfor %}
             {% endif%}
         </div>
     </div>
@@ -144,22 +145,25 @@
             <button class="btn-tag" value="Indice de jeunesse" id="Indice de jeunesse" onclick="showLayer(this.value)">Indice de jeunesse</button>
             <button class="btn-tag" value="Densité de la population" id="Densité de la population" onclick="showLayer(this.value)">Densité de la population</button>
             <button class="btn-tag" value="Évolution de la population" id="Évolution de la population" onclick="showLayer(this.value)">Évolution de la population</button>
+            <button class="btn-tag" value="Part des cadres et professions intellectuelles supérieures" id="Part des cadres et professions intellectuelles supérieures" onclick="showLayer(this.value)">Part des cadres et professions intellectuelles supérieures</button>
             <p class="sousdomaine-title" style="display: none;">Structure de la population par âge</p>
             <p class="sousdomaine-title">Niveaux de vie et redistribution</p>
             <button class="btn-tag" value="Niveau de vie médian" id="Niveau de vie médian" onclick="showLayer(this.value)">Niveau de vie médian</button>
             <button class="btn-tag" value="Taux de pauvreté" id="Taux de pauvreté" onclick="showLayer(this.value)">Taux de pauvreté</button>
             <p class="sousdomaine-title">Politiques publiques</p>
             <button class="btn-tag" value="Action coeur de ville" id="Action coeur de ville" onclick="showLayer(this.value)">Action coeur de ville</button>
+            <button class="btn-tag" value="Petites villes de demain" id="Petites villes de demain" onclick="showLayer(this.value)">Petites villes de demain</button>
             <button class="btn-tag" value="Quartiers prioritaires de la politique de la ville" id="Quartiers prioritaires de la politique de la ville" onclick="showLayer(this.value)">Quartiers prioritaires de la politique de la ville</button>
             <p class="sousdomaine-title">Zonage d'études</p>
             <button class="btn-tag" value="Grille communale de densité" id="Grille communale de densité" onclick="showLayer(this.value)">Grille communale de densité</button>
             <button class="btn-tag" value="Aires d'attraction des villes" id="Aires d'attraction des villes" onclick="showLayer(this.value)">Aires d'attraction des villes</button>
             <button class="btn-tag" value="Catégories du rural et de l’urbain" id="Catégories du rural et de l’urbain" onclick="showLayer(this.value)">Catégories du rural et de l’urbain</button>
+            <button class="btn-tag" value="Zones de revitalisation rurale" id="Zones de revitalisation rurale" onclick="showLayer(this.value)">Zones de revitalisation rurale</button>
         </div>
     </div>
 </div>
 
-<button type="button" class="btn btn-download-map" id="myBtn" style="display: block">
+<button type="button" class="btn-download-map" id="myBtn" style="display: block">
     <img src="{% static 'download-icon.png' %}" />Télécharger
 </button>
 

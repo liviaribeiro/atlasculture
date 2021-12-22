@@ -4,6 +4,7 @@ import { evolutionDeLaPopulation } from './templates/evolutionDeLaPopulation.js'
 import { niveauDeVieMedian } from './templates/niveauDeVieMedian.js';
 import { grilleCommunaleDeDensite } from './templates/grilleCommunaleDeDensite.js';
 import { categoriesDuRuralEtDeLurbain } from './templates/categoriesDuRuralEtDeLurbain.js';
+import {zonesRevitalisationRurale} from './templates/zonesRevitalisationRurale.js';
 import { quartiersPrioritairesDeLaPolitiqueDeLaVille } from './templates/quartiersPrioritairesDeLaPolitiqueDeLaVille.js';
 import { entreprisesCulturellesDuSecteurMarchand } from './templates/entreprisesCulturellesDuSecteurMarchand.js';
 import { salarieActifsDesSecteursCulturelsMarchand } from './templates/salarieActifsDesSecteursCulturelsMarchand.js';
@@ -17,8 +18,10 @@ import { depenseDuMinistereDeLaCulture } from './templates/depenses/depenseDuMin
 import { airesAttractionDesVille } from './templates/airesAttractionDesVille.js';
 import { population } from './templates/population.js';
 import { actionCoeurDeVille } from './templates/actionCoeurDeVille.js';
+import { petitesVillesDeDemain } from './templates/petitesVillesDeDemain.js';
 import { planDeRelance } from './templates/planDeRelance.js';
 import { indiceDeJeunesse } from './templates/indiceDeJeunesse.js';
+import {partDesCadres} from './templates/partDesCadres.js';
 
 const layerDataVariables = (indicator,dataVariable) => {
 
@@ -30,6 +33,7 @@ const layerDataVariables = (indicator,dataVariable) => {
   grilleCommunaleDeDensite(indicator,dataVariable);
   categoriesDuRuralEtDeLurbain(indicator,dataVariable);
 
+  zonesRevitalisationRurale(indicator,dataVariable);
   quartiersPrioritairesDeLaPolitiqueDeLaVille(indicator,dataVariable);
   entreprisesCulturellesDuSecteurMarchand(indicator,dataVariable);
   salarieActifsDesSecteursCulturelsMarchand(indicator,dataVariable);
@@ -52,7 +56,10 @@ const layerDataVariables = (indicator,dataVariable) => {
   population(indicator,dataVariable);
 
   actionCoeurDeVille(indicator,dataVariable);
+  petitesVillesDeDemain(indicator, dataVariable);
   planDeRelance(indicator,dataVariable);
+
+  partDesCadres(indicator, dataVariable);
 
 }
 

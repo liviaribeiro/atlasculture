@@ -52,6 +52,85 @@
     margin-left:200px;
 }
 
+.main-subtitle {
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 40px;
+    margin-top: 24px;
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 30px;
+    /* or 150% */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    /* light/text/title-grey */
+
+    color: #161616;
+}
+
+.btn-homepage {
+    padding: 12px 32px;
+    background: #0909B9;
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
+    color: #F5F5FE;
+    margin-top: 40px;
+    width: 363px;
+    height: 56px;
+}
+
+.btn-liste-diffusion {
+    width: 292px;
+    height: 40px;
+    padding: 8px 24px;
+    border: 1px solid #000091;
+    background-color: #FCCFC9;
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    text-align: center;
+
+    /* light/text/title-blue-france */
+
+    color: #000091;
+    margin-top: 10px;
+}
+
+.btn-en-savoir-plus {
+    margin: 24px 0px;
+    background-color: #FFFFFF;
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    text-align: center;
+
+    /* light/text/action-high-blue-france */
+
+    color: #000091;
+    border: 1px solid #000091;
+    width: 153px;
+    height: 40px;
+    padding: 8px, 24px, 8px, 24px;
+    justify-content: center;
+    align-items: center;
+}
 
 .form-box {
     width: 380px;
@@ -64,17 +143,26 @@
 .title {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 800;
-    font-size: 40px;
-    color: #150091;
-    line-height: 55px;
+    font-size: 32px;
+    color: #161616;
+    line-height: 40px;
 }
 
 .title2 {
-    font-family: 'Marianne', Arial, sans-serif;
+    font-family: Marianne;
+    font-style: normal;
     font-weight: 800;
     font-size: 32px;
-    line-height: 38px;
+    line-height: 40px;
     color: #FFFFFF;
+}
+
+.title3 {
+    font-family: 'Marianne', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 36px;
+    color: #161616;
 }
 
 .text {
@@ -82,22 +170,33 @@
     font-weight: 400;
     font-size: 14px;
     line-height:24px;
-    color: #150091;
+    color: #161616;
 }
 
 .text2 {
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.text3 {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 16px;
     line-height:22px;
-    color: #FFFFFF;
+    color: #161616;
 }
 
 .subtitle {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 16px;
-    color: #150091;
+    color: #161616;
     line-height:22px;
 }
 
@@ -144,14 +243,14 @@ p {
     font-weight: 300;
     font-size: 16px;
     line-height:33px;
-    color: #150091;
+    color: #161616;
 }
 
 a {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 16px;
-    color: #150091;
+    color: #161616;
 }
 
 .logo {
@@ -161,8 +260,8 @@ a {
 
 
 nav .navbar-nav li a{
-    color: #150091 !important;
-    font-weight: 500;
+    color: #161616 !important;
+    font-weight: 400;
     margin-right: 20px;
 }
 
@@ -183,22 +282,22 @@ a.link-footer {
 a:link {
     font-size: 16px;
     text-decoration: none;
-    color: #150091;
+    color: #161616;
     font-weight: 700;
 }
 
 a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
-    font-weight: 800;
-    font-size: 24px;
-    color: #150091;
+    font-weight: 700;
+    font-size: 20px;
+    color: #161616;
 }
 
 .b2 {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 16px;
-    color: #383838;
+    color: #161616;
 }
 
 .orange {
@@ -235,10 +334,18 @@ a.b1 {
     width: 80%;
 }
 
-.container-img {
+.container-homepage {
     height:auto;
-    background-image: url('/static/ATLAS_banner 1.png');
-    background-size:cover;
+    background: #0909B9;
+    padding: 40px;
+    min-height: 284px;
+}
+
+.container-homepage-bas {
+    height:auto;
+    background: #FCCFC9;
+    padding: 40px;
+    min-height: 202px;
 }
 
 .btn-accueil {
@@ -254,6 +361,20 @@ a.b1 {
 
 .main-title {
     margin-top: 50px;
+    font-size: 40px;
+    line-height: 45px;
+    font-family: Marianne;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 45px;
+    /* or 112% */
+
+    text-align: center;
+
+    /* light/text/title-grey */
+
+    color: #161616;
 }
 
 .main-container {
@@ -264,36 +385,39 @@ a.b1 {
 }
 
 .btn-selector {
-    height: 60px;
-    background: #150091;
-    border-radius: 30px;
+    width: 137px;
+    height: 40px;    
+    background: #0909B9;
     border: none;
     color: white;
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;
+    border: 1px solid #FFFFFF;
+
 }
 
 .btn-selector:hover {
-    background: #FFB1A7;
-    color: #000074;
+    background: #FCCFC9;
+    color: #0909B9;
 }
 
 .btn-download {
     height: 60px;
-    background: #150091;
-    border-radius: 30px;
+    background: #000091;
     border: none;
     color: white;
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;
     vertical-align: middle;
+    padding: 8px 24px;
+
 }
 
 .btn-download:hover {
     background: #FEB1A8;
-    color: #150091;
+    color: #000091;
 }
 
 .btn-base {
@@ -326,6 +450,11 @@ a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-size: 16px;
     font-weight: 700;
+}
+
+.email_input {
+    width: 292px;
+    height: 40px;
 }
 
 .btn-blue {

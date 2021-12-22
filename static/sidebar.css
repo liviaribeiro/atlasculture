@@ -71,17 +71,16 @@
 }
 
 .btn-download-map {
+    padding: 16px;
     position: fixed;
     bottom: 25px;
     right: 25px;
-    background: #000074;
-    border-radius: 30px;
+    background: #000091;
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 500;
     font-size: 14px;
     color: white;
     width: 135px;
-    height: 43px;
     border: none;
 }
 

@@ -11,6 +11,10 @@ const addSource = () => {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.0coathhb'
         });
+        map.addSource('part_des_cadres', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.6fjdlgng'
+            });
         map.addSource('zonage rural', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.3u0ajjj4'
@@ -18,6 +22,10 @@ const addSource = () => {
         map.addSource('zonage urbain', {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.bumheafq'
+        });
+        map.addSource('zrr', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.7ujhx5s1'
         });
         map.addSource('qp', {
             'type': 'vector',
@@ -83,6 +91,10 @@ const addSource = () => {
             'type': 'vector',
             'url': 'mapbox://liviaribeiro.8msgii19',
         });
+        map.addSource('pvd', {
+                'type': 'vector',
+                'url': 'mapbox://liviaribeiro.6v0osget',
+            });
         map.addSource('pdr', {
                 'type': 'vector',
                 'url': 'mapbox://liviaribeiro.2kyv2902'

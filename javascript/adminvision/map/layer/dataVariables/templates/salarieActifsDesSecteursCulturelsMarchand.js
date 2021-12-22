@@ -41,7 +41,7 @@ const salarieActifsDesSecteursCulturelsMarchand = (indicator,dataVariable) => {
               let pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
               let nombre = e.features[0].properties.EFFECTIFSCULTURE17
               let texte = '<p>'+e.features[0].properties.NOM_REG+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
-                      +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
+                      +pourcentage.toFixed(1)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
               }
@@ -87,7 +87,7 @@ const salarieActifsDesSecteursCulturelsMarchand = (indicator,dataVariable) => {
               let pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
               let nombre = e.features[0].properties.EFFECTIFSCULTURE17
               let texte = '<p>'+e.features[0].properties.NOM_DEP+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
-                      +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
+                      +pourcentage.toFixed(1)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
               }
@@ -132,7 +132,7 @@ const salarieActifsDesSecteursCulturelsMarchand = (indicator,dataVariable) => {
               let pourcentage = e.features[0].properties.POURCENTAGEEFFECTIFS*100
               let nombre = e.features[0].properties.EFFECTIFSCULTURE17
               let texte = '<p>'+e.features[0].properties.nom+'</p><p>Part de salariés actifs des secteurs culturels marchands : '
-                      +pourcentage.toFixed(0)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
+                      +pourcentage.toFixed(1)+ '%</p><p> Nombre de salariés actifs des secteurs culturels marchands : '+nombre+' </p>'
               if (nombre == -1) {
                   texte = "Données non disponibles"
               }

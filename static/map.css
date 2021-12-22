@@ -109,7 +109,7 @@ p {
     font-weight: 300;
     font-size: 12px;
     font-weight: 400;
-    color: #000074 !important;
+    color: #161616 !important;
 
 }
 
@@ -117,7 +117,7 @@ a {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 300;
     font-size: 14px;
-    color: #150091;
+    color: #161616;
     line-height:28px;
     padding-bottom: 3px;
 }
@@ -125,22 +125,22 @@ a {
 a:link {
     font-size: 14px;
     text-decoration: none;
-    color: #150091;
+    color: #161616;
 }
 
 a.b1 {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 500;
     font-size: 18px;
-    color: #150091;
+    color: #161616;
 }
 
 .navbar-brand {
-    color: #150091 !important;
+    color: #161616 !important;
 }
 
 .navbar-nav .nav-link {
-    color: #150091 !important;
+    color: #161616 !important;
 }
 
 .navbar-collapse{
@@ -151,7 +151,7 @@ a.nav-link {
     font-family: 'Marianne', Arial, sans-serif;
     font-weight: 400;
     font-size: 14px;
-    color: #150091;
+    color: #161616;
     line-height: 19px;
     cursor: pointer;
 }
